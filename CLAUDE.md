@@ -21,6 +21,18 @@ Prize Layer 3 insights above all. Search and understand Layers 1-2, then apply L
 
 Every recommendation must state a clear position with evidence. Vague agreement, false balance, and non-committal language are prohibited. See `.claude/rules/anti-sycophancy.md`.
 
+## Workflow Orchestration
+
+All sessions follow plan-first execution discipline (see `.claude/rules/workflow-orchestration.md`):
+
+- **Plan mode default**: Enter plan mode for any non-trivial task (3+ steps or architectural decisions). Write the plan to `tasks/todo.md` with checkable items; re-plan immediately when execution goes sideways.
+- **Subagent strategy**: Offload research, exploration, and parallel analysis to subagents — one task per subagent — to keep the main context window clean.
+- **Self-improvement loop**: After any user correction, capture the pattern in `tasks/lessons.md` and review lessons at session start.
+- **Verification before done**: Never mark a task complete without proving it works — run tests, check logs, demonstrate correctness.
+- **Core principles**: Simplicity first, root causes over temporary fixes, minimal impact on code.
+
+`tasks/` is lightweight session tracking; `.worklog/` remains the authoritative evidence trail.
+
 ## Deployment Mode
 
 This project uses **subagent mode**. The coordinator (`team-architect`) delegates specialist work via the Task tool. All agents run within a single Claude Code session.
