@@ -1,0 +1,76 @@
+{
+  "env": {},
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Agent",
+      "WebSearch",
+      "WebFetch",
+      "Bash(mkdir *)",
+      "Bash(jq *)",
+      "Bash(date *)",
+      "Bash(test *)",
+      "Write(.worklog/**)",
+      "Write(output/**)",
+      "Edit(.worklog/**)",
+      "Edit(output/**)"
+    ],
+    "ask": [
+      "Write",
+      "Edit",
+      "Bash(curl *)",
+      "Bash(rm *)",
+      "mcp__Higgsfield__generate_image",
+      "mcp__Higgsfield__generate_video"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p .worklog/$(date +%Y%m)",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p .worklog/$(date +%Y%m) && jq -r '.prompt' >> .worklog/$(date +%Y%m)/session-ledger.md",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq '{ts:now, reason:.reason}' > .worklog/$(date +%Y%m)/compact-checkpoint.json",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "test -d .worklog/$(date +%Y%m) || echo 'WARN: no worklog dir' >&2",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
