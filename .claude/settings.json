@@ -1,5 +1,16 @@
 {
   "env": {},
+  "extraKnownMarketplaces": {
+    "agricidaniel-claude-seo": {
+      "source": {
+        "source": "github",
+        "repo": "AgricIDaniel/claude-seo"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "claude-seo@agricidaniel-claude-seo": true
+  },
   "permissions": {
     "allow": [
       "Read",
