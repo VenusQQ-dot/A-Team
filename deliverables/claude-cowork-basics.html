@@ -655,31 +655,19 @@ body[data-skin="candy"] .stage{background:none}
 body[data-skin="candy"] .layout{gap:0}
 body[data-skin="candy"] .coach{background:var(--paper);border:4px solid var(--ink);border-radius:26px;margin:14px 0 14px 14px;box-shadow:6px 6px 0 var(--ink)}
 body[data-skin="candy"] .sim{border:4px solid var(--ink);border-radius:28px;box-shadow:8px 8px 0 var(--ink)}
-body[data-skin="candy"] .sim-chrome{background:#B9A8FF;border-bottom:3px solid var(--ink)}
-body[data-skin="candy"] .sb{background:#E4DBFF;border-right:3px solid var(--ink)}
-body[data-skin="candy"] .rp{background:#FFD3EC;border-left:3px solid var(--ink)}
-body[data-skin="candy"] .modes{background:#fff;border:3px solid var(--ink)}
-body[data-skin="candy"] .modes button.on{background:var(--ink);color:#fff;box-shadow:none}
-body[data-skin="candy"] .sim-badge{background:#fff;border:2px solid var(--ink);color:var(--ink);font-weight:700}
-body[data-skin="candy"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.empty,.upill,.tip,.cards .kcard span,.menu-list button,.pcard,.sample){border:3px solid var(--ink)}
-body[data-skin="candy"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.pcard,.menu-list button){box-shadow:4px 4px 0 var(--ink)}
 body[data-skin="candy"] .sample{border-style:dashed}
-body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.upill,.vctl button){border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
-body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.sg,.bk,.fchip):active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
-body[data-skin="candy"] :is(.sg,.bk,.fchip,.item,.kcard):hover{transform:translate(-1px,-2px) rotate(-.4deg)}
+body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.upill,.vctl button):not(.sim *){border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
+body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.sg,.bk,.fchip):not(.sim *):active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+body[data-skin="candy"] :is(.sg,.bk,.fchip,.item,.kcard):not(.sim *):hover{transform:translate(-1px,-2px) rotate(-.4deg)}
 body[data-skin="candy"] .vsw{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
 body[data-skin="candy"] .vsw button.on{background:var(--ink);color:#fff}
 body[data-skin="candy"] .btn{background:var(--accent);color:#fff;font-weight:800}
 body[data-skin="candy"] .btn.ghost{background:var(--card);color:var(--ink)}
-body[data-skin="candy"] .chip.pri,body[data-skin="candy"] .send{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
-body[data-skin="candy"] .send{background:var(--accent)}
 body[data-skin="candy"] .opt.good{background:var(--green-soft)}
 body[data-skin="candy"] .step.ok,body[data-skin="candy"] .q.ok{border-color:var(--ink)}
 body[data-skin="candy"] .chk{border:3px solid var(--ink)}
 body[data-skin="candy"] .pbar{height:14px;border:3px solid var(--ink);background:#fff}
 body[data-skin="candy"] .pbar i{background:var(--green)}
-body[data-skin="candy"] .home{max-width:600px}
-body[data-skin="candy"] .composer{border-radius:18px}
 body[data-skin="candy"] .rd-h,body[data-skin="candy"] .hello h1,body[data-skin="candy"] .lyh{font-weight:900;letter-spacing:-.01em}
 body[data-skin="candy"] .toast{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);color:#fff}
 body[data-skin="candy"] .toast.ok{background:var(--green)}
@@ -721,27 +709,19 @@ body[data-skin="arcade"]{
  background:var(--bg) radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/20px 20px;
  font-family:ui-monospace,"Courier New","Noto Sans TC",monospace;
 }
-body[data-skin="arcade"] *{border-radius:0!important}
-body[data-skin="arcade"] :is(.skins button,.circ,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
+body[data-skin="arcade"] *:not(.sim *){border-radius:0!important}
+body[data-skin="arcade"] :is(.skins button,.circ,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i):not(.sim *){border-radius:50%!important}
 body[data-skin="arcade"] .topbar{background:#0A1238;border-bottom:3px solid var(--line)}
 body[data-skin="arcade"] .coach{background:var(--paper);border:3px solid var(--line);margin:12px 0 12px 12px;box-shadow:5px 5px 0 #000}
 body[data-skin="arcade"] .stage{background:none}
 body[data-skin="arcade"] .sim{border:3px solid var(--line);box-shadow:6px 6px 0 #000}
-body[data-skin="arcade"] .sim-chrome{background:#1A2A78}
-body[data-skin="arcade"] .sb{background:#0C1538}
-body[data-skin="arcade"] .rp{background:#0C1538}
-body[data-skin="arcade"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.empty,.upill,.tip,.kcard span,.menu-list button,.pcard,.mn-box){border:3px solid var(--line)!important;box-shadow:4px 4px 0 #000}
-body[data-skin="arcade"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.vctl button){border:3px solid var(--line);box-shadow:3px 3px 0 #000}
-body[data-skin="arcade"] :is(.btn,.chip,.circ,.opt,.sg,.bk):active{transform:translate(3px,3px);box-shadow:none}
-body[data-skin="arcade"] :is(.btn,.chip.pri,.send,.vplay,.circ.go,.upill.on .n,.num,.sn,.step.ok .chk){color:#0B1030!important}
+body[data-skin="arcade"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.vctl button):not(.sim *){border:3px solid var(--line);box-shadow:3px 3px 0 #000}
+body[data-skin="arcade"] :is(.btn,.chip,.circ,.opt,.sg,.bk):not(.sim *):active{transform:translate(3px,3px);box-shadow:none}
+body[data-skin="arcade"] :is(.btn,.chip.pri,.send,.vplay,.circ.go,.upill.on .n,.num,.sn,.step.ok .chk):not(.sim *){color:#0B1030!important}
 body[data-skin="arcade"] .step.ok .chk{background:var(--green)}
-body[data-skin="arcade"] .btn,body[data-skin="arcade"] .chip.pri,body[data-skin="arcade"] .send{background:var(--accent)}
 body[data-skin="arcade"] .pcard .ph{color:#0B1030;background:#FFD23F}
 body[data-skin="arcade"] .pcard.dg .ph{background:#FF8FA3}
 body[data-skin="arcade"] .vsw{background:#0C1538;border:3px solid var(--line)}
-body[data-skin="arcade"] .vsw button,body[data-skin="arcade"] .modes button{color:var(--muted)}
-body[data-skin="arcade"] .modes{background:#0C1538;border:3px solid var(--line)}
-body[data-skin="arcade"] .modes button.on{background:var(--accent);color:#0B1030}
 body[data-skin="arcade"] .vsw button.on{background:var(--accent);color:#0B1030}
 body[data-skin="arcade"] .pbar{border:3px solid var(--line);height:14px;background:#0C1538}
 body[data-skin="arcade"] .pbar i{background:var(--accent)}
@@ -760,15 +740,6 @@ body[data-skin="arcade"] .vcard.on{background:#2A3A00}
 body[data-skin="arcade"] .tip{background:var(--amber-soft)}
 body[data-skin="arcade"] .sample{background:var(--soft)}
 body[data-skin="arcade"] .sheet-bg{background:rgba(0,0,0,.7)}
-body[data-skin="arcade"] .m-u{color:var(--ink)}
-body[data-skin="arcade"] .perm{background:#2D2410}
-body[data-skin="arcade"] .perm.danger{background:#3A1220}
-body[data-skin="arcade"] .xl th{background:#1E2F7A;color:var(--ink);border-color:var(--line)}
-body[data-skin="arcade"] .xl td{border-color:#2A3C90;color:var(--ink)}
-body[data-skin="arcade"] .xl .bad td{background:var(--warn-soft);color:#FF8FA3}
-body[data-skin="arcade"] .xl .warn td{background:var(--amber-soft);color:#FFD23F}
-body[data-skin="arcade"] .md,body[data-skin="arcade"] .mail{background:var(--soft);border-color:var(--line);color:var(--ink)}
-body[data-skin="arcade"] .vcol,body[data-skin="arcade"] .vbox,body[data-skin="arcade"] .vf{color:var(--ink)}
 body[data-skin="arcade"] .vcol span,body[data-skin="arcade"] .vbox small{color:var(--muted)}
 
 /* ================= 深夜綠 ================= */
@@ -790,7 +761,6 @@ body[data-skin="forest"] .pbar{background:#21504E}
 body[data-skin="forest"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
 body[data-skin="forest"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
 body[data-skin="forest"] .sim{border:1px solid #2C6663;box-shadow:0 18px 50px rgba(0,0,0,.45)}
-body[data-skin="forest"] .btn,body[data-skin="forest"] .chip.pri,body[data-skin="forest"] .send,body[data-skin="forest"] .circ.go{background:var(--accent);color:#06241F}
 body[data-skin="forest"] .mmbar,body[data-skin="forest"] .mmlegend{background:#0A2323;border-color:#21504E;color:#B5D6CF}
 body[data-skin="forest"] .mmbar .mtab,body[data-skin="forest"] .mmtools button{background:#123B3B;color:#fff;border-color:#2C6663}
 body[data-skin="forest"] #mmv{background:var(--mmbg)}
@@ -806,11 +776,80 @@ body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3
 body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}
 body[data-skin="arcade"] mark{background:var(--accent)}
 
-body[data-skin="candy"] .mtoggle{background:#fff;border:2.5px solid var(--ink)}
-body[data-skin="candy"] .mtoggle button.on{background:var(--ink);color:#fff;box-shadow:none}
-body[data-skin="candy"] .plus{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
-body[data-skin="arcade"] .mtoggle{background:#0C1538;border:3px solid var(--line)}
-body[data-skin="arcade"] .mtoggle button.on{background:var(--accent);color:#0B1030}
+
+/* ===== 模擬器：固定使用 Claude 風格（不受皮膚影響）===== */
+.sim{
+ --bg:#FAF9F5;--paper:#FAF9F5;--card:#FFFFFF;--ink:#1F1E1D;--muted:#76746D;--line:#E6E3D8;
+ --accent:#D97757;--accent-d:#C4623F;--accent-soft:#F6E4DB;--green:#2F7D56;--green-soft:#E1EFE5;
+ --blue:#3B6EA5;--blue-soft:#E1EAF5;--warn:#B4382B;--warn-soft:#F8E0DB;--amber:#8A6D1E;--amber-soft:#F7EDCF;
+ --soft:#F0EEE6;--soft2:#E6E3D8;--bubble:#EFEDE4;--mmbg:#F5F2EA;--dot:#E6E3D8;--bw:1px;--r:12px;
+ --inv:#1F1E1D;--inv-fg:#FFFFFF;--sh:none;--font-head:"Noto Serif TC","Source Han Serif TC","Songti TC",Georgia,serif;
+ background:var(--bg);color:var(--ink);
+ font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+.sim-body{grid-template-columns:216px 1fr;flex:1}
+.sb-top{display:flex;align-items:center;justify-content:space-between}
+.sim-badge{font-size:11px;color:var(--amber);background:var(--amber-soft);border:0;border-radius:99px;padding:1px 10px}
+.sb{background:var(--soft);border-right:1px solid var(--line);padding:12px 10px;gap:2px}
+.sb-top{padding:2px 6px 12px}
+.sb button{border-radius:8px;font-size:14px;color:#3d3b37}
+.sb-new{background:transparent;color:var(--ink);font-weight:600;margin-bottom:2px}
+.sb-new svg{color:var(--accent);background:var(--accent-soft);border-radius:50%;padding:3px;font-size:20px}
+.sb-i:hover,.sb-t:hover,.sb-new:hover{background:var(--soft2)}
+.sb-i.on,.sb-t.on{background:var(--soft2);font-weight:600}
+.sb-h{margin:16px 10px 4px;font-size:12px;color:var(--muted);letter-spacing:0}
+.sb-foot{display:flex;align-items:center;gap:10px;border-top:0;padding:10px 6px 2px;font-size:13px;margin-top:auto}
+.sb-foot .avt{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
+.sb-foot .who{flex:1;display:grid;line-height:1.25}.sb-foot small{color:var(--muted);font-size:11.5px}
+.sb-foot .lang{width:auto;padding:1px 8px;border:1px solid var(--line);background:var(--card);font-size:11.5px;font-weight:700;border-radius:99px}
+.sim-main{background:var(--bg)}
+.home{max-width:700px;gap:22px}
+.hello h1{font-family:var(--font-head);font-weight:500;font-size:30px}
+.hello svg{color:var(--accent);font-size:34px}
+.composer{border:1px solid var(--line);border-radius:22px;box-shadow:0 6px 28px rgba(31,30,29,.07);padding:14px 16px 10px;background:var(--card)}
+.composer:focus-within{border-color:#cfcabb;box-shadow:0 6px 28px rgba(31,30,29,.1)}
+.composer textarea{min-height:84px;font-size:15.5px}
+.comp-bar .chip,.comp-bar .plus{border:1px solid var(--line);background:var(--card);box-shadow:none}
+.mtoggle{background:var(--soft)}
+.mtoggle button.on{background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.send{background:var(--accent);border:0;box-shadow:none;color:#fff}
+.sugg{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.sg{flex-direction:row;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:99px;padding:6px 14px;background:var(--card);box-shadow:none}
+.sg svg{font-size:16px}.sg b{font-size:13.5px;font-weight:500}.sg small{display:none}
+.sg:hover{background:var(--soft);border-color:#cfcabb;transform:none}
+.sg.dg{color:var(--warn)}.sg.dg svg{color:var(--warn)}
+.sugg-h{text-align:center;font-size:12.5px;color:var(--muted);margin:-6px 0 0}
+.task{grid-template-columns:1fr 268px}
+.t-title{font-family:var(--font-head);font-weight:500;font-size:19px;border-bottom:0;padding-top:4px}
+.chat{padding:16px 22px}
+.m-u{background:var(--bubble);border-radius:14px;align-self:flex-start;max-width:90%}
+.m-c .av{background:transparent;color:var(--accent)}
+.fup{border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 18px rgba(31,30,29,.06)}
+.rp{background:var(--bg);border-left:1px solid var(--line);padding:12px;gap:10px}
+.rcard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.rh{display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;text-align:left;font-size:13.5px}
+.rh b{font-weight:600}.rh span{margin-left:auto;color:var(--muted);font-size:12px}
+.rh i{font-style:normal;color:var(--muted);transition:transform .15s;font-size:12px}
+.rcard.shut .rh i{transform:rotate(-90deg)}
+.rcard.shut .rb{display:none}
+.rb{padding:2px 12px 12px}
+.dim{font-size:13px;color:var(--muted);margin:0}
+.perm{border:1px solid var(--line);background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(31,30,29,.05)}
+.perm.danger{border-color:#E9C0B9;background:#FFF8F6}
+.perm-h{color:var(--ink)}
+.chip.pri{background:var(--accent);border-color:var(--accent)}
+.cust,.sched{max-width:760px}
+.cust h2,.sched h2{font-weight:500}
+.tabs button.on{color:var(--ink);border-color:var(--ink)}
+.item{border-radius:12px;box-shadow:none}
+.fchip{border-radius:12px;box-shadow:none}
+.modal{border-radius:18px}
+.menu-list button,.mopts .opt,.modal .btn{box-shadow:none}
+@media (max-width:1000px){.sim-body{grid-template-columns:1fr}.sb{display:none}.task{grid-template-columns:1fr}}
+
+.home{padding:22px 16px}
+.comp-bar{flex-wrap:nowrap}
+.comp-bar .grow{min-width:0}
 
 </style>
 </head>
@@ -1040,7 +1079,7 @@ const UNITS=[
   steps:[
    U('7-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:7')),
    U('7-2','完成「四個名詞」配對遊戲（4 題）','替每個情境選一個名詞','#match',()=>MATCH.ext.items.every(x=>has('match_ok:'+x.id))),
-   U('7-3','在模擬器依序點側邊欄的「專案」、「排程」、「自訂」','三個項目各點一次，看看裡面有什麼','[data-act="nav"][data-v="projects"]',()=>has('nav_projects')&&has('nav_scheduled')&&has('nav_customize'))],
+   U('7-3','在模擬器依序點側邊欄的「專案 Projects」、「排程 Scheduled」、「自訂 Customize」','三個項目各點一次，看看裡面有什麼（畫面右下角的 EN／中 可切換語言）','[data-act="nav"][data-v="projects"]',()=>has('nav_projects')&&has('nav_scheduled')&&has('nav_customize'))],
   quiz:[
    {q:'「Skill」最像下面哪一樣？',o:['公司作業手冊（SOP）','一台新電腦','一封電子郵件'],a:0,why:'Skill 是寫給 Claude 的做事說明書，寫一次、每次照做。'},
    {q:'MCP（連接器）是做什麼用的？',o:['讓 Claude 回答得更快','讓 Claude 連到 Gmail、雲端硬碟等外部工具','幫檔案備份'],a:1,why:'它像插頭，把 Claude 接到外部工具。'},
@@ -1048,13 +1087,13 @@ const UNITS=[
    {q:'排程任務每次執行，有什麼要特別注意？',o:['它會記得上次聊過什麼','每次都是全新對話，指令要自己就看得懂','一定要在電腦前面看著'],a:1,why:'每次排程都是新的對話，不會記得上次；「跟上次一樣」這種話沒用，指令要寫清楚。'},
    {q:'想讓 Claude 直接把催款信存進 Gmail 草稿匣，要先做什麼？',o:['建立排程','連接 Gmail（連接器）','建立 Skill'],a:1,why:'要連外部工具，先連接器。'}]},
  {id:2,tips:['看完動畫再動手，會更快找到位置。','點卡片翻面看比喻。','側邊欄每個項目都點點看，不會弄壞任何東西。','兩題就好，輕鬆過關。'],short:'介面導覽',title:'介面導覽：三個區塊看懂 Cowork',goal:'找到新任務、排程、自訂與資料夾選擇的位置。',
-  cards:[{f:'側邊欄',s:'功能入口',b:'像檔案櫃目錄：新任務、專案、排程、自訂都從這裡進出。'},{f:'輸入框＋資料夾',s:'下指令',b:'像請款單：寫清楚要做什麼（輸入框）、資料放哪（資料夾）。'},{f:'進度面板',s:'任務畫面右側',b:'像專案進度表：一眼看到做到第幾步、產出了什麼檔案。'}],
+  cards:[{f:'側邊欄',s:'功能入口',b:'像檔案櫃目錄：New task 新任務、Projects 專案、Scheduled 排程、Customize 自訂都從這裡進出。'},{f:'輸入框＋資料夾',s:'下指令',b:'像請款單：寫清楚要做什麼（輸入框）、資料放哪（資料夾）。'},{f:'進度面板 Progress',s:'任務畫面右側',b:'右側有 Progress、Working folder、Context 三塊：做到第幾步、動到哪個資料夾、用了哪些工具。'}],
   steps:[
    U('2-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:2')),
-   U('2-2','點側邊欄的「新任務」','左上角橘色按鈕','.sb-new',()=>has('nav_new')),
-   U('2-3','點側邊欄的「排程」','側邊欄第二個','[data-act="nav"][data-v="scheduled"]',()=>has('nav_scheduled')),
-   U('2-4','點側邊欄的「自訂」','側邊欄第三個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
-   U('2-5','回到新任務，點輸入框下方的資料夾按鈕','先回「新任務」，再點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_chip'))],
+   U('2-2','點側邊欄的「新任務（New task）」','側邊欄最上面','.sb-new',()=>has('nav_new')),
+   U('2-3','點側邊欄的「排程（Scheduled）」','側邊欄的第三個','[data-act="nav"][data-v="scheduled"]',()=>has('nav_scheduled')),
+   U('2-4','點側邊欄的「自訂（Customize）」','側邊欄的第四個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
+   U('2-5','回到新任務，點輸入框下方的資料夾按鈕（Choose folder）','先回「新任務」，再點「Choose folder」','[data-act="folder-open"]',()=>has('folder_chip'))],
   quiz:[
    {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 模式'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
    {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
@@ -1062,7 +1101,7 @@ const UNITS=[
   cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
   steps:[
    U('3-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:3')),
-   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_picker_open')),
+   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「Choose folder（選擇資料夾）」','[data-act="folder-open"]',()=>has('folder_picker_open')),
    U('3-3','點一下「個人文件」預覽內容，看看裡面有什麼','先看，不要按授權','[data-act="peek"][data-id="personal"]',()=>has('folder_peek:personal')),
    U('3-4','改為授權「發票_2026Q3」','點該資料夾，再按「授權此資料夾」','[data-act="peek"][data-id="invoices"]',()=>S.folder==='invoices')],
   quiz:[
@@ -1076,7 +1115,7 @@ const UNITS=[
    U('4-2','用下方「指令組裝器」產生指令並送到輸入框','按「送到 Cowork 輸入框」','#pb-send',()=>has('prompt_built')),
    U('4-3','確認已授權「發票_2026Q3」資料夾','不是這個資料夾的話，請重新選','[data-act="folder-open"]',()=>S.folder==='invoices'),
    U('4-4','在模擬器按送出（箭頭按鈕）','輸入框右下角','.send',()=>has('task_started:invoices')||has('task_started:bank')),
-   U('4-5','回應權限請求：看清楚後按「允許」或「拒絕」（請維持「手動核准」模式）','出現黃色權限卡時回應；若沒出現，點輸入框下方的盾牌鈕切回「手動核准」','.perm',()=>has('perm_allowed:rename')||has('perm_denied:rename')),
+   U('4-5','回應權限請求：看清楚後按「允許 Allow」或「拒絕 Deny」（請維持預設的「Manual 手動核准」模式）','出現黃色權限卡時回應；若沒出現，點輸入框下方的盾牌鈕切回「手動核准」','.perm',()=>has('perm_allowed:rename')||has('perm_denied:rename')),
    U('4-6','等任務完成後，點開產出的 Excel 檢查','點對話中的檔案按鈕','.fchip',()=>has('file_open:xlsx'))],
   quiz:[
    {q:'哪一個指令比較好？',o:['幫我處理一下發票','請把「發票_2026Q3」每張發票的日期、廠商、統編、金額整理成 Excel，缺統編標紅，不要改原始檔','整理檔案'],a:1,why:'有資料來源、輸出格式與限制，Claude 不用猜。'},
@@ -1086,10 +1125,10 @@ const UNITS=[
   cards:[{f:'連接器',s:'接外部服務',b:'像銀行的電子對帳介面：讓 Claude 連到 Gmail、雲端硬碟。'},{f:'Skill',s:'你的 SOP',b:'像公司作業手冊：寫一次，每次都照做。'},{f:'Plugin',s:'整包套件',b:'像會計部「新人套組」：SOP、工具、範本一次裝好。'}],
   steps:[
    U('5-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:5')),
-   U('5-2','到「自訂 → 連接器」，連接 Gmail','先點側邊欄「自訂」','[data-act="nav"][data-v="customize"]',()=>has('connector_on:gmail')),
-   U('5-3','到「外掛」分頁，安裝「財務會計」外掛','自訂頁面上方的分頁','[data-act="ctab"][data-t="plugins"]',()=>has('plugin_on:finance')),
-   U('5-4','在「技能」分頁建立一個 Skill，例如「月結報表格式」','按「建立 Skill」','[data-act="ctab"][data-t="skills"]',()=>has('skill_created')),
-   U('5-5','回新任務，點「寫催款信草稿」卡片並送出，讓 Claude 在 Gmail 建草稿','Gmail 要先連接','.sg',()=>has('task_done:dunning_gmail'))],
+   U('5-2','到「自訂 Customize → 連接器 Connectors」，連接 Gmail','先點側邊欄「Customize」','[data-act="nav"][data-v="customize"]',()=>has('connector_on:gmail')),
+   U('5-3','到「外掛 Plugins」分頁，安裝「財務會計」外掛','自訂頁面上方的分頁','[data-act="ctab"][data-t="plugins"]',()=>has('plugin_on:finance')),
+   U('5-4','在「技能 Skills」分頁建立一個 Skill，例如「月結報表格式」','按「建立 Skill」','[data-act="ctab"][data-t="skills"]',()=>has('skill_created')),
+   U('5-5','回新任務，點「寫催款信草稿」建議並送出，讓 Claude 在 Gmail 建草稿','Gmail 要先連接','.sg',()=>has('task_done:dunning_gmail'))],
   quiz:[
    {q:'連接器的用途是？',o:['讓 Claude 連到 Gmail、雲端硬碟等外部服務','加快 Claude 的速度','讓檔案自動備份'],a:0,why:'連接器就是 Claude 與外部工具之間的橋。'},
    {q:'想讓 Claude 每次都用公司的月結報表格式，應該？',o:['每次都重新貼格式','建立 Skill','換一個資料夾'],a:1,why:'Skill 是可重複使用的作業說明，寫一次就能一直用。'},
@@ -1098,8 +1137,8 @@ const UNITS=[
   cards:[{f:'排程',s:'定時任務',b:'像月結行事曆：時間到就自動提醒並執行。'},{f:'拒絕',s:'覆核權',b:'覆核有權退件：不確定就先不放行。'},{f:'人工覆核',s:'責任在人',b:'AI 做初稿，簽核的人是你，責任也在你。'}],
   steps:[
    U('6-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:6')),
-   U('6-2','到「排程」建立一個「每月 5 日 09:00 產出月結報表」','側邊欄「排程」→「新增排程」','[data-act="nav"][data-v="scheduled"]',()=>has('schedule_created')),
-   U('6-3','危險演練：授權「舊檔案_2023前」，送出「清理舊檔案」，並按「拒絕」','點「清理舊檔案」卡片，記得先選資料夾','.sg.dg',()=>has('perm_denied:delete'))],
+   U('6-2','到「排程 Scheduled」建立一個「每月 5 日 09:00 產出月結報表」','側邊欄「Scheduled」→「新增排程」','[data-act="nav"][data-v="scheduled"]',()=>has('schedule_created')),
+   U('6-3','危險演練：授權「舊檔案_2023前」，送出「清理舊檔案」，並按「拒絕」','點「清理舊檔案」建議，記得先選資料夾','.sg.dg',()=>has('perm_denied:delete'))],
   quiz:[
    {q:'Claude 要求永久刪除 47 個檔案，而你沒有備份。該怎麼辦？',o:['允許，Claude 不會出錯','拒絕，先備份再決定','關掉視窗當作沒看到'],a:1,why:'刪除無法復原。沒備份就拒絕，先確認清單與備份。'},
    {q:'排程任務要用到「你電腦裡的檔案」時，要注意什麼？',o:['不用注意，一定會跑','電腦和 Claude 桌面版要開著，否則可能延後或略過','要先把檔案刪掉'],a:1,why:'只用連接器的排程多半在雲端跑；要讀你電腦裡的檔案或程式，就需要電腦開著。實際以你的版本與官方說明為準。'},
@@ -1122,8 +1161,14 @@ Object.keys(VIDEOS).forEach(u=>VIDEOS[u].forEach((s,i)=>{if(i>0)s.tag='②③④
 const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
  conn:{},plugins:{},plugOpen:{},
  skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
- schedules:[],pmode:'manual',chat:[],model:'Opus 5.5',effort:'High',
+ schedules:[],pmode:'manual',lang:'en',rp:{prog:1,folder:1,ctx:1},chat:[],model:'Opus 5.5',effort:'High',
  projects:[{id:'p1',name:'2026 月結專案',inst:'金額用千分位、科目依公司科目表排序、異常項目標紅。',folder:'invoices'}]};
+/* ===== 介面語言（實際畫面是英文，預設 EN；可切換中文） ===== */
+const UI={
+ en:{newTask:'New task',projects:'Projects',scheduled:'Scheduled',customize:'Customize',code:'Code',recents:'Recents',noTasks:'No tasks yet',user:'Student',plan:'Practice',greet:'What can I do for you?',greetChat:'How can I help you today?',ph:'Describe the task…  (Enter to send, Shift+Enter for new line)',phChat:'Ask a question…  (Chat only answers, never touches your files)',pickFolder:'Choose folder',progress:'Progress',folder:'Working folder',context:'Context',allow:'Allow',deny:'Deny',needs:'Claude needs your permission',skills:'Skills',connectors:'Connectors',plugins:'Plugins',pm:{manual:'Manual',auto:'Auto',skip:'Skip'},pmFull:{manual:'Manually approve',auto:'Auto',skip:'Skip all approvals'},followup:'Reply…',notStarted:'Not started',noFolder:'No folder selected',noConn:'No connectors connected'},
+ zh:{newTask:'新任務',projects:'專案',scheduled:'排程',customize:'自訂',code:'Code',recents:'最近的任務',noTasks:'還沒有任務',user:'學員',plan:'練習',greet:'想請 Claude 幫你處理什麼？',greetChat:'想問 Claude 什麼？',ph:'描述你要完成的任務…（Enter 送出，Shift+Enter 換行）',phChat:'問一個問題…（Chat 只回答，不會動你的檔案）',pickFolder:'選擇資料夾',progress:'進度',folder:'工作資料夾',context:'情境',allow:'允許',deny:'拒絕',needs:'Claude 請求你的許可',skills:'技能',connectors:'連接器',plugins:'外掛',pm:{manual:'手動核准',auto:'自動',skip:'全部略過'},pmFull:{manual:'手動核准',auto:'自動',skip:'全部略過'},followup:'追問或補充…',notStarted:'尚未開始',noFolder:'未選擇資料夾',noConn:'未連接任何服務'}
+};
+const tx=k=>UI[S.lang][k];
 const LOG=new Set();
 let _uid=0;
 function emit(e){LOG.add(e);if(typeof Course!=='undefined')Course.evaluate()}
@@ -1150,16 +1195,17 @@ function renderSim(){
  const c=$('#chat');if(c&&wasBottom)c.scrollTop=c.scrollHeight;
  if(keep!==null){const n=$('#composer');if(n){n.focus();try{n.setSelectionRange(keep,keep)}catch(e){}}}
 }
-const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="sim-title">Claude</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
+const simChrome=()=>'';
 const sidebar=()=>`<aside class="sb">
- <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>新任務</span></button>
- <button class="sb-i ${S.view==='projects'?'on':''}" data-act="nav" data-v="projects">${IC.layers}<span>專案</span></button>
- <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>排程</span></button>
- <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>自訂</span></button>
- <button class="sb-i ${S.mode==='code'?'on':''}" data-act="mode" data-m="code">${IC.code}<span>Code</span></button>
- <div class="sb-h">最近的任務</div>
- ${S.tasks.length?S.tasks.map(k=>`<button class="sb-t ${S.view==='task'&&S.active===k.id?'on':''}" data-act="open-task" data-id="${k.id}"><i class="dot ${k.status}"></i><span>${esc(k.title)}</span></button>`).join(''):'<p class="sb-empty">還沒有任務</p>'}
- <div class="sb-foot"><b>學員</b>教學模擬環境<br>不會動到真實檔案</div></aside>`;
+ <div class="sb-top"><div class="dots"><i></i><i></i><i></i></div><span class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</span></div>
+ <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>${tx('newTask')}</span></button>
+ <button class="sb-i ${S.view==='projects'?'on':''}" data-act="nav" data-v="projects">${IC.layers}<span>${tx('projects')}</span></button>
+ <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>${tx('scheduled')}</span></button>
+ <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>${tx('customize')}</span></button>
+ <button class="sb-i ${S.mode==='code'?'on':''}" data-act="mode" data-m="code">${IC.code}<span>${tx('code')}</span></button>
+ <div class="sb-h">${tx('recents')}</div>
+ ${S.tasks.length?S.tasks.map(k=>`<button class="sb-t ${S.view==='task'&&S.active===k.id?'on':''}" data-act="open-task" data-id="${k.id}"><i class="dot ${k.status}"></i><span>${esc(k.title)}</span></button>`).join(''):`<p class="sb-empty">${tx('noTasks')}</p>`}
+ <div class="sb-foot"><span class="avt">${S.lang==='en'?'S':'學'}</span><span class="who"><b>${tx('user')}</b><small>${tx('plan')}</small></span><button class="lang" data-act="lang" title="Switch language / 切換語言">${S.lang==='en'?'EN':'中'}</button></div></aside>`;
 
 function main(){
  if(S.mode==='chat')return chatView();
@@ -1178,21 +1224,20 @@ function compBar(cowork){
  const f=S.folder?FOLDERS[S.folder]:null;
  return `<div class="comp-bar"><button class="plus" data-act="attach" aria-label="附加">${IC.plus}</button>
  <div class="mtoggle" role="tablist" aria-label="模式"><button role="tab" aria-selected="${!cowork}" class="${cowork?'':'on'}" data-act="mode" data-m="chat">Chat</button><button role="tab" aria-selected="${cowork}" class="${cowork?'on':''}" data-act="mode" data-m="cowork">Cowork</button></div>
- ${cowork?`<button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="pmode" title="點一下切換權限模式">${IC.shield}<span>${{manual:'手動核准',auto:'自動',skip:'全部略過'}[S.pmode]}</span></button>`:''}
+ ${cowork?`<button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):tx('pickFolder')}</span></button><button class="chip ghost" data-act="pmode" title="${tx('pmFull')[S.pmode]}（點一下切換權限模式）">${IC.shield}<span>${tx('pm')[S.pmode]}</span></button>`:''}
  <span class="grow"></span><button class="mdl" data-act="model-menu" title="選擇模型與強度"><b>${S.model}</b> <span>${S.effort}</span></button><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div>`;
 }
 function homeView(){
- return `<div class="home"><div class="hello">${IC.spark}<h1>想請 Claude 幫你處理什麼？</h1></div>
- <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>${compBar(true)}</div>
- <div class="sugg-h">不知道從哪開始？點一張卡片，指令會自動填入輸入框：</div>
- <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}">${IC[s.ic]}<b>${s.t}</b><small>${s.s}</small></button>`).join('')}</div></div>`;
+ return `<div class="home"><div class="hello">${IC.spark}<h1>${tx('greet')}</h1></div>
+ <div class="composer"><textarea id="composer" placeholder="${tx('ph')}">${esc(S.prompt)}</textarea>${compBar(true)}</div>
+ <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}" title="${esc(s.s)}">${IC[s.ic]}<b>${s.t}</b></button>`).join('')}</div><p class="sugg-h">點一個建議，指令會自動填入輸入框</p></div>`;
 }
 const CHATQ=['應付帳款和應付票據差在哪？','請用白話解釋收入認列五步驟','幫我把這封催款信改得更有禮貌'];
 function chatView(){
- return `<div class="home"><div class="hello">${IC.chat}<h1>想問 Claude 什麼？</h1></div>
- <div class="composer"><textarea id="composer" placeholder="問一個問題…（Chat 只回答，不會動你的檔案）">${esc(S.prompt)}</textarea>${compBar(false)}</div>
+ return `<div class="home"><div class="hello">${IC.spark}<h1>${tx('greetChat')}</h1></div>
+ <div class="composer"><textarea id="composer" placeholder="${tx('phChat')}">${esc(S.prompt)}</textarea>${compBar(false)}</div>
  ${S.chat.length?`<div class="chatlog" id="chat">${S.chat.map(m=>m.r==='u'?`<div class="m-u">${esc(m.t)}</div>`:`<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns"><button class="chip pri" data-act="mode" data-m="cowork">切換到 Cowork</button></div>`:''}</div></div>`).join('')}</div>`
- :`<div class="sugg-h">試試這些問題：</div><div class="sugg">${CHATQ.map(q=>`<button class="sg" data-act="chat-q" data-q="${esc(q)}">${IC.chat}<b>${esc(q)}</b></button>`).join('')}</div>`}</div>`;
+ :`<div class="sugg">${CHATQ.map(q=>`<button class="sg" data-act="chat-q" data-q="${esc(q)}">${IC.chat}<b>${esc(q)}</b></button>`).join('')}</div>`}</div>`;
 }
 function chatSend(p){
  S.chat.push({r:'u',t:p});S.prompt='';renderSim();
@@ -1209,35 +1254,38 @@ function taskView(){
  const k=S.tasks.find(x=>x.id===S.active);if(!k)return homeView();
  const f=k.folder?FOLDERS[k.folder]:null;
  const newFiles=k.status==='done'?k.out:[];
+ const done=k.steps.filter(x=>x.st==='done').length;
+ const sec=(key,title,meta,body)=>`<section class="rcard ${S.rp[key]?'':'shut'}"><button class="rh" data-act="rp-toggle" data-k="${key}" aria-expanded="${!!S.rp[key]}"><b>${title}</b><span>${meta}</span><i>▾</i></button><div class="rb">${body}</div></section>`;
+ const prog=k.steps.length?`<ol class="prog">${k.steps.map(x=>`<li class="${x.st}"><i>${x.st==='done'?IC.check:x.st==='skip'?'—':x.st==='run'?'<b class="spin"></b>':''}</i><span>${x.t}</span></li>`).join('')}</ol>`:`<p class="dim">${tx('notStarted')}</p>`;
+ const fold=f?`<div class="ff"><div><b>${esc(f.name)}</b></div>${f.files.slice(0,5).map(n=>`<div>${esc(n)}</div>`).join('')}${f.count>5?`<div>…${f.count}</div>`:''}${newFiles.map(o=>`<div class="new">+ ${esc(o.name)}</div>`).join('')}</div>`:`<p class="dim">${tx('noFolder')}</p>`;
+ const ctx=`<div class="ff"><div>${CONNECTORS.filter(c=>S.conn[c.id]).map(c=>`<span class="tag ok">${c.name}</span>`).join(' ')||tx('noConn')}</div><div>${S.skills.filter(x=>x.on).length} ${S.lang==='en'?'skills on':'個技能啟用中'}</div></div>`;
  return `<div class="task"><div class="chat" id="chat"><div class="t-title">${esc(k.title)}</div>${k.msgs.map(m=>msgHtml(m,k)).join('')}
- <div class="fup"><textarea id="composer" placeholder="追問或補充…" aria-label="追問">${esc(S.prompt)}</textarea><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
- <aside class="rp"><section><h4>進度</h4>${k.steps.length?`<ol class="prog">${k.steps.map(s=>`<li class="${s.st}"><i>${s.st==='done'?IC.check:s.st==='skip'?'—':s.st==='run'?'<b class="spin"></b>':''}</i><span>${s.t}</span></li>`).join('')}</ol>`:'<p style="font-size:13px;color:var(--muted)">尚未開始</p>'}</section>
- <section><h4>工作資料夾</h4>${f?`<div class="ff"><div><b>${esc(f.name)}</b></div>${f.files.slice(0,5).map(n=>`<div>${esc(n)}</div>`).join('')}${f.count>5?`<div>…共 ${f.count} 個檔案</div>`:''}${newFiles.map(o=>`<div class="new">+ ${esc(o.name)}</div>`).join('')}</div>`:'<p style="font-size:13px;color:var(--muted)">未選擇資料夾</p>'}</section>
- <section><h4>情境</h4><div class="ff"><div>${CONNECTORS.filter(c=>S.conn[c.id]).map(c=>`<span class="tag ok">${c.name}</span>`).join(' ')||'未連接任何服務'}</div><div>${S.skills.filter(s=>s.on).length} 個技能啟用中</div></div></section></aside></div>`;
+ <div class="fup"><textarea id="composer" placeholder="${tx('followup')}" aria-label="reply">${esc(S.prompt)}</textarea><button class="send" data-act="send" aria-label="send">${IC.send}</button></div></div>
+ <aside class="rp">${sec('prog',tx('progress'),k.steps.length?done+'/'+k.steps.length:'',prog)}${sec('folder',tx('folder'),'',fold)}${sec('ctx',tx('context'),'',ctx)}</aside></div>`;
 }
 function msgHtml(m,k){
  if(m.r==='u')return `<div class="m-u">${esc(m.t)}</div>`;
  if(m.r==='c')return `<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns">${m.btn.map(b=>`<button class="chip pri" data-act="${b.act}">${b.l}</button>`).join('')}</div>`:''}</div></div>`;
  if(m.r==='files')return `<div class="m-files">${m.f.map(f=>`<button class="fchip" data-act="file-open" data-type="${f.type}" data-pv="${f.pv}" data-name="${esc(f.name)}">${IC[f.type==='xlsx'?'sheet':f.type==='gmail'?'mail':'file']}<span>${esc(f.name)}</span></button>`).join('')}</div>`;
- if(m.r==='perm'){const p=m.perm;return `<div class="perm ${p.danger?'danger':''} ${m.state}"><div class="perm-h">${IC[p.danger?'warn':'shield']}<b>Claude 請求你的許可</b></div><p><b>${p.text}</b></p><small>${p.detail}</small>${m.state==='ask'?`<div class="perm-b"><button class="chip" data-act="perm" data-ok="0">拒絕</button><button class="chip pri" data-act="perm" data-ok="1">允許</button></div>`:`<div class="perm-r">${m.state==='allow'?'✓ 你已允許':'✕ 你已拒絕'}</div>`}</div>`}
+ if(m.r==='perm'){const p=m.perm;return `<div class="perm ${p.danger?'danger':''} ${m.state}"><div class="perm-h">${IC[p.danger?'warn':'shield']}<b>${tx('needs')}</b></div><p><b>${p.text}</b></p><small>${p.detail}</small>${m.state==='ask'?`<div class="perm-b"><button class="chip" data-act="perm" data-ok="0">${tx('deny')}</button><button class="chip pri" data-act="perm" data-ok="1">${tx('allow')}</button></div>`:`<div class="perm-r">${m.state==='allow'?'✓ 你已允許':'✕ 你已拒絕'}</div>`}</div>`}
  return '';
 }
 
 function customView(){
- const tabs=[['skills','技能'],['connectors','連接器'],['plugins','外掛']];
+ const tabs=[['skills',tx('skills')],['connectors',tx('connectors')],['plugins',tx('plugins')]];
  let body='';
  if(S.ctab==='skills')body=`<p class="note" style="margin:0">Skill（技能）＝做事說明書：把你的做法寫下來，Claude 需要時照著做。</p><div class="list">${S.skills.map(s=>`<div class="item"><div class="ic">${IC.book}</div><div class="mid"><b>${esc(s.name)}</b> <span class="tag">${esc(s.src)}</span><small>${esc(s.desc)}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用 ${esc(s.name)}" data-act="skill-toggle" data-id="${s.id}"></button></div>`).join('')}</div><div><button class="chip pri" data-act="skill-new">${IC.plus}建立 Skill</button></div>`;
  if(S.ctab==='connectors')body=`<p class="note" style="margin:0">連接器＝接外部工具的「插頭」（技術上叫 MCP）。連接前會顯示它能做哪些事，請看清楚再允許。</p><div class="list">${CONNECTORS.map(c=>`<div class="item"><div class="ic">${IC[c.ic]}</div><div class="mid"><b>${c.name}</b><small>${c.desc}</small></div>${S.conn[c.id]?`<span class="tag ok">已連接</span><button class="chip" data-act="conn-off" data-id="${c.id}">中斷</button>`:`<button class="chip pri" data-act="conn-on" data-id="${c.id}">連接</button>`}</div>`).join('')}</div>`;
  if(S.ctab==='plugins')body=`<p class="note" style="margin:0">外掛＝一整包：技能、連接器、子代理打包，一次裝好（內容依外掛而異）。</p><div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
- return `<div class="cust"><h2>自訂</h2><div class="tabs">${tabs.map(t=>`<button class="${S.ctab===t[0]?'on':''}" data-act="ctab" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
+ return `<div class="cust"><h2>${tx('customize')}</h2><div class="tabs">${tabs.map(t=>`<button class="${S.ctab===t[0]?'on':''}" data-act="ctab" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
 }
 function projView(){
- return `<div class="sched"><h2>專案</h2><div class="note">專案＝把同一件事的說明和資料放在一起，有自己的說明、檔案、排程與記憶。之後在專案裡開的任務都共用，不用每次重講。</div>
+ return `<div class="sched"><h2>${tx('projects')}</h2><div class="note">專案＝把同一件事的說明和資料放在一起，有自己的說明、檔案、排程與記憶。之後在專案裡開的任務都共用，不用每次重講。</div>
  ${S.projects.length?`<div class="list">${S.projects.map((p,i)=>`<div class="item"><div class="ic">${IC.layers}</div><div class="mid"><b>${esc(p.name)}</b><small>說明：${esc(p.inst)}</small><span class="tag">${IC.folder.replace('<svg','<svg style="vertical-align:-2px"')} ${esc(FOLDERS[p.folder].name)}</span></div><button class="chip pri" data-act="proj-open" data-i="${i}">在此專案開新任務</button></div>`).join('')}</div>`:'<div class="empty">還沒有專案。</div>'}
  <div><button class="chip pri" data-act="proj-new">${IC.plus}新增專案</button></div></div>`;
 }
 function schedView(){
- return `<div class="sched"><h2>排程任務</h2><div class="note">排程任務多半在雲端執行：電腦關機、App 關掉也會跑；但要用到你電腦裡的檔案或程式時，電腦要開著。每次執行都是全新對話，指令要寫清楚。（以官方最新說明與你的版本為準）</div>
+ return `<div class="sched"><h2>${tx('scheduled')}</h2><div class="note">排程任務多半在雲端執行：電腦關機、App 關掉也會跑；但要用到你電腦裡的檔案或程式時，電腦要開著。每次執行都是全新對話，指令要寫清楚。（以官方最新說明與你的版本為準）</div>
  ${S.schedules.length?`<div class="list">${S.schedules.map((s,i)=>`<div class="item"><div class="ic">${IC.clock}</div><div class="mid"><b>${esc(s.name)}</b><small>${esc(s.freq)} ${esc(s.time)}・${esc(s.prompt.slice(0,40))}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用排程" data-act="sched-toggle" data-i="${i}"></button></div>`).join('')}</div>`:`<div class="empty">還沒有排程。<br>例如：每月 5 日 09:00，自動產出上月月結報表。</div>`}
  <div><button class="chip pri" data-act="sched-new">${IC.plus}新增排程</button></div></div>`;
 }
@@ -1359,6 +1407,8 @@ function finish(k){
 /* ========== 事件委派 ========== */
 const ACT={
  noop(){toast('教學模擬版：此選單不可用')},
+ lang(){S.lang=S.lang==='en'?'zh':'en';renderSim()},
+ 'rp-toggle'(el){S.rp[el.dataset.k]=!S.rp[el.dataset.k];renderSim()},
  attach(){toast('＋ 可附加檔案或圖片。在 Cowork 裡，改用「選擇資料夾」授權整個資料夾')},
  'model-menu'(){S.modal={type:'model'};renderSim()},
  'model-pick'(el){S.model=el.dataset.m;emit('model_pick');renderSim()},

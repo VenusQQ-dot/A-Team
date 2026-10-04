@@ -25,31 +25,19 @@ body[data-skin="candy"] .stage{background:none}
 body[data-skin="candy"] .layout{gap:0}
 body[data-skin="candy"] .coach{background:var(--paper);border:4px solid var(--ink);border-radius:26px;margin:14px 0 14px 14px;box-shadow:6px 6px 0 var(--ink)}
 body[data-skin="candy"] .sim{border:4px solid var(--ink);border-radius:28px;box-shadow:8px 8px 0 var(--ink)}
-body[data-skin="candy"] .sim-chrome{background:#B9A8FF;border-bottom:3px solid var(--ink)}
-body[data-skin="candy"] .sb{background:#E4DBFF;border-right:3px solid var(--ink)}
-body[data-skin="candy"] .rp{background:#FFD3EC;border-left:3px solid var(--ink)}
-body[data-skin="candy"] .modes{background:#fff;border:3px solid var(--ink)}
-body[data-skin="candy"] .modes button.on{background:var(--ink);color:#fff;box-shadow:none}
-body[data-skin="candy"] .sim-badge{background:#fff;border:2px solid var(--ink);color:var(--ink);font-weight:700}
-body[data-skin="candy"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.empty,.upill,.tip,.cards .kcard span,.menu-list button,.pcard,.sample){border:3px solid var(--ink)}
-body[data-skin="candy"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.pcard,.menu-list button){box-shadow:4px 4px 0 var(--ink)}
 body[data-skin="candy"] .sample{border-style:dashed}
-body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.upill,.vctl button){border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
-body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.sg,.bk,.fchip):active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
-body[data-skin="candy"] :is(.sg,.bk,.fchip,.item,.kcard):hover{transform:translate(-1px,-2px) rotate(-.4deg)}
+body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.upill,.vctl button):not(.sim *){border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
+body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.sg,.bk,.fchip):not(.sim *):active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+body[data-skin="candy"] :is(.sg,.bk,.fchip,.item,.kcard):not(.sim *):hover{transform:translate(-1px,-2px) rotate(-.4deg)}
 body[data-skin="candy"] .vsw{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
 body[data-skin="candy"] .vsw button.on{background:var(--ink);color:#fff}
 body[data-skin="candy"] .btn{background:var(--accent);color:#fff;font-weight:800}
 body[data-skin="candy"] .btn.ghost{background:var(--card);color:var(--ink)}
-body[data-skin="candy"] .chip.pri,body[data-skin="candy"] .send{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
-body[data-skin="candy"] .send{background:var(--accent)}
 body[data-skin="candy"] .opt.good{background:var(--green-soft)}
 body[data-skin="candy"] .step.ok,body[data-skin="candy"] .q.ok{border-color:var(--ink)}
 body[data-skin="candy"] .chk{border:3px solid var(--ink)}
 body[data-skin="candy"] .pbar{height:14px;border:3px solid var(--ink);background:#fff}
 body[data-skin="candy"] .pbar i{background:var(--green)}
-body[data-skin="candy"] .home{max-width:600px}
-body[data-skin="candy"] .composer{border-radius:18px}
 body[data-skin="candy"] .rd-h,body[data-skin="candy"] .hello h1,body[data-skin="candy"] .lyh{font-weight:900;letter-spacing:-.01em}
 body[data-skin="candy"] .toast{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);color:#fff}
 body[data-skin="candy"] .toast.ok{background:var(--green)}
@@ -91,27 +79,19 @@ body[data-skin="arcade"]{
  background:var(--bg) radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/20px 20px;
  font-family:ui-monospace,"Courier New","Noto Sans TC",monospace;
 }
-body[data-skin="arcade"] *{border-radius:0!important}
-body[data-skin="arcade"] :is(.skins button,.circ,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
+body[data-skin="arcade"] *:not(.sim *){border-radius:0!important}
+body[data-skin="arcade"] :is(.skins button,.circ,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i):not(.sim *){border-radius:50%!important}
 body[data-skin="arcade"] .topbar{background:#0A1238;border-bottom:3px solid var(--line)}
 body[data-skin="arcade"] .coach{background:var(--paper);border:3px solid var(--line);margin:12px 0 12px 12px;box-shadow:5px 5px 0 #000}
 body[data-skin="arcade"] .stage{background:none}
 body[data-skin="arcade"] .sim{border:3px solid var(--line);box-shadow:6px 6px 0 #000}
-body[data-skin="arcade"] .sim-chrome{background:#1A2A78}
-body[data-skin="arcade"] .sb{background:#0C1538}
-body[data-skin="arcade"] .rp{background:#0C1538}
-body[data-skin="arcade"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.empty,.upill,.tip,.kcard span,.menu-list button,.pcard,.mn-box){border:3px solid var(--line)!important;box-shadow:4px 4px 0 #000}
-body[data-skin="arcade"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.vctl button){border:3px solid var(--line);box-shadow:3px 3px 0 #000}
-body[data-skin="arcade"] :is(.btn,.chip,.circ,.opt,.sg,.bk):active{transform:translate(3px,3px);box-shadow:none}
-body[data-skin="arcade"] :is(.btn,.chip.pri,.send,.vplay,.circ.go,.upill.on .n,.num,.sn,.step.ok .chk){color:#0B1030!important}
+body[data-skin="arcade"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.vctl button):not(.sim *){border:3px solid var(--line);box-shadow:3px 3px 0 #000}
+body[data-skin="arcade"] :is(.btn,.chip,.circ,.opt,.sg,.bk):not(.sim *):active{transform:translate(3px,3px);box-shadow:none}
+body[data-skin="arcade"] :is(.btn,.chip.pri,.send,.vplay,.circ.go,.upill.on .n,.num,.sn,.step.ok .chk):not(.sim *){color:#0B1030!important}
 body[data-skin="arcade"] .step.ok .chk{background:var(--green)}
-body[data-skin="arcade"] .btn,body[data-skin="arcade"] .chip.pri,body[data-skin="arcade"] .send{background:var(--accent)}
 body[data-skin="arcade"] .pcard .ph{color:#0B1030;background:#FFD23F}
 body[data-skin="arcade"] .pcard.dg .ph{background:#FF8FA3}
 body[data-skin="arcade"] .vsw{background:#0C1538;border:3px solid var(--line)}
-body[data-skin="arcade"] .vsw button,body[data-skin="arcade"] .modes button{color:var(--muted)}
-body[data-skin="arcade"] .modes{background:#0C1538;border:3px solid var(--line)}
-body[data-skin="arcade"] .modes button.on{background:var(--accent);color:#0B1030}
 body[data-skin="arcade"] .vsw button.on{background:var(--accent);color:#0B1030}
 body[data-skin="arcade"] .pbar{border:3px solid var(--line);height:14px;background:#0C1538}
 body[data-skin="arcade"] .pbar i{background:var(--accent)}
@@ -130,15 +110,6 @@ body[data-skin="arcade"] .vcard.on{background:#2A3A00}
 body[data-skin="arcade"] .tip{background:var(--amber-soft)}
 body[data-skin="arcade"] .sample{background:var(--soft)}
 body[data-skin="arcade"] .sheet-bg{background:rgba(0,0,0,.7)}
-body[data-skin="arcade"] .m-u{color:var(--ink)}
-body[data-skin="arcade"] .perm{background:#2D2410}
-body[data-skin="arcade"] .perm.danger{background:#3A1220}
-body[data-skin="arcade"] .xl th{background:#1E2F7A;color:var(--ink);border-color:var(--line)}
-body[data-skin="arcade"] .xl td{border-color:#2A3C90;color:var(--ink)}
-body[data-skin="arcade"] .xl .bad td{background:var(--warn-soft);color:#FF8FA3}
-body[data-skin="arcade"] .xl .warn td{background:var(--amber-soft);color:#FFD23F}
-body[data-skin="arcade"] .md,body[data-skin="arcade"] .mail{background:var(--soft);border-color:var(--line);color:var(--ink)}
-body[data-skin="arcade"] .vcol,body[data-skin="arcade"] .vbox,body[data-skin="arcade"] .vf{color:var(--ink)}
 body[data-skin="arcade"] .vcol span,body[data-skin="arcade"] .vbox small{color:var(--muted)}
 
 /* ================= 深夜綠 ================= */
@@ -160,7 +131,6 @@ body[data-skin="forest"] .pbar{background:#21504E}
 body[data-skin="forest"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
 body[data-skin="forest"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
 body[data-skin="forest"] .sim{border:1px solid #2C6663;box-shadow:0 18px 50px rgba(0,0,0,.45)}
-body[data-skin="forest"] .btn,body[data-skin="forest"] .chip.pri,body[data-skin="forest"] .send,body[data-skin="forest"] .circ.go{background:var(--accent);color:#06241F}
 body[data-skin="forest"] .mmbar,body[data-skin="forest"] .mmlegend{background:#0A2323;border-color:#21504E;color:#B5D6CF}
 body[data-skin="forest"] .mmbar .mtab,body[data-skin="forest"] .mmtools button{background:#123B3B;color:#fff;border-color:#2C6663}
 body[data-skin="forest"] #mmv{background:var(--mmbg)}
@@ -176,8 +146,3 @@ body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3
 body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}
 body[data-skin="arcade"] mark{background:var(--accent)}
 
-body[data-skin="candy"] .mtoggle{background:#fff;border:2.5px solid var(--ink)}
-body[data-skin="candy"] .mtoggle button.on{background:var(--ink);color:#fff;box-shadow:none}
-body[data-skin="candy"] .plus{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
-body[data-skin="arcade"] .mtoggle{background:#0C1538;border:3px solid var(--line)}
-body[data-skin="arcade"] .mtoggle button.on{background:var(--accent);color:#0B1030}

@@ -182,7 +182,7 @@ const UNITS=[
   steps:[
    U('7-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:7')),
    U('7-2','完成「四個名詞」配對遊戲（4 題）','替每個情境選一個名詞','#match',()=>MATCH.ext.items.every(x=>has('match_ok:'+x.id))),
-   U('7-3','在模擬器依序點側邊欄的「專案」、「排程」、「自訂」','三個項目各點一次，看看裡面有什麼','[data-act="nav"][data-v="projects"]',()=>has('nav_projects')&&has('nav_scheduled')&&has('nav_customize'))],
+   U('7-3','在模擬器依序點側邊欄的「專案 Projects」、「排程 Scheduled」、「自訂 Customize」','三個項目各點一次，看看裡面有什麼（畫面右下角的 EN／中 可切換語言）','[data-act="nav"][data-v="projects"]',()=>has('nav_projects')&&has('nav_scheduled')&&has('nav_customize'))],
   quiz:[
    {q:'「Skill」最像下面哪一樣？',o:['公司作業手冊（SOP）','一台新電腦','一封電子郵件'],a:0,why:'Skill 是寫給 Claude 的做事說明書，寫一次、每次照做。'},
    {q:'MCP（連接器）是做什麼用的？',o:['讓 Claude 回答得更快','讓 Claude 連到 Gmail、雲端硬碟等外部工具','幫檔案備份'],a:1,why:'它像插頭，把 Claude 接到外部工具。'},
@@ -190,13 +190,13 @@ const UNITS=[
    {q:'排程任務每次執行，有什麼要特別注意？',o:['它會記得上次聊過什麼','每次都是全新對話，指令要自己就看得懂','一定要在電腦前面看著'],a:1,why:'每次排程都是新的對話，不會記得上次；「跟上次一樣」這種話沒用，指令要寫清楚。'},
    {q:'想讓 Claude 直接把催款信存進 Gmail 草稿匣，要先做什麼？',o:['建立排程','連接 Gmail（連接器）','建立 Skill'],a:1,why:'要連外部工具，先連接器。'}]},
  {id:2,tips:['看完動畫再動手，會更快找到位置。','點卡片翻面看比喻。','側邊欄每個項目都點點看，不會弄壞任何東西。','兩題就好，輕鬆過關。'],short:'介面導覽',title:'介面導覽：三個區塊看懂 Cowork',goal:'找到新任務、排程、自訂與資料夾選擇的位置。',
-  cards:[{f:'側邊欄',s:'功能入口',b:'像檔案櫃目錄：新任務、專案、排程、自訂都從這裡進出。'},{f:'輸入框＋資料夾',s:'下指令',b:'像請款單：寫清楚要做什麼（輸入框）、資料放哪（資料夾）。'},{f:'進度面板',s:'任務畫面右側',b:'像專案進度表：一眼看到做到第幾步、產出了什麼檔案。'}],
+  cards:[{f:'側邊欄',s:'功能入口',b:'像檔案櫃目錄：New task 新任務、Projects 專案、Scheduled 排程、Customize 自訂都從這裡進出。'},{f:'輸入框＋資料夾',s:'下指令',b:'像請款單：寫清楚要做什麼（輸入框）、資料放哪（資料夾）。'},{f:'進度面板 Progress',s:'任務畫面右側',b:'右側有 Progress、Working folder、Context 三塊：做到第幾步、動到哪個資料夾、用了哪些工具。'}],
   steps:[
    U('2-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:2')),
-   U('2-2','點側邊欄的「新任務」','左上角橘色按鈕','.sb-new',()=>has('nav_new')),
-   U('2-3','點側邊欄的「排程」','側邊欄第二個','[data-act="nav"][data-v="scheduled"]',()=>has('nav_scheduled')),
-   U('2-4','點側邊欄的「自訂」','側邊欄第三個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
-   U('2-5','回到新任務，點輸入框下方的資料夾按鈕','先回「新任務」，再點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_chip'))],
+   U('2-2','點側邊欄的「新任務（New task）」','側邊欄最上面','.sb-new',()=>has('nav_new')),
+   U('2-3','點側邊欄的「排程（Scheduled）」','側邊欄的第三個','[data-act="nav"][data-v="scheduled"]',()=>has('nav_scheduled')),
+   U('2-4','點側邊欄的「自訂（Customize）」','側邊欄的第四個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
+   U('2-5','回到新任務，點輸入框下方的資料夾按鈕（Choose folder）','先回「新任務」，再點「Choose folder」','[data-act="folder-open"]',()=>has('folder_chip'))],
   quiz:[
    {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 模式'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
    {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
@@ -204,7 +204,7 @@ const UNITS=[
   cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
   steps:[
    U('3-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:3')),
-   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_picker_open')),
+   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「Choose folder（選擇資料夾）」','[data-act="folder-open"]',()=>has('folder_picker_open')),
    U('3-3','點一下「個人文件」預覽內容，看看裡面有什麼','先看，不要按授權','[data-act="peek"][data-id="personal"]',()=>has('folder_peek:personal')),
    U('3-4','改為授權「發票_2026Q3」','點該資料夾，再按「授權此資料夾」','[data-act="peek"][data-id="invoices"]',()=>S.folder==='invoices')],
   quiz:[
@@ -218,7 +218,7 @@ const UNITS=[
    U('4-2','用下方「指令組裝器」產生指令並送到輸入框','按「送到 Cowork 輸入框」','#pb-send',()=>has('prompt_built')),
    U('4-3','確認已授權「發票_2026Q3」資料夾','不是這個資料夾的話，請重新選','[data-act="folder-open"]',()=>S.folder==='invoices'),
    U('4-4','在模擬器按送出（箭頭按鈕）','輸入框右下角','.send',()=>has('task_started:invoices')||has('task_started:bank')),
-   U('4-5','回應權限請求：看清楚後按「允許」或「拒絕」（請維持「手動核准」模式）','出現黃色權限卡時回應；若沒出現，點輸入框下方的盾牌鈕切回「手動核准」','.perm',()=>has('perm_allowed:rename')||has('perm_denied:rename')),
+   U('4-5','回應權限請求：看清楚後按「允許 Allow」或「拒絕 Deny」（請維持預設的「Manual 手動核准」模式）','出現黃色權限卡時回應；若沒出現，點輸入框下方的盾牌鈕切回「手動核准」','.perm',()=>has('perm_allowed:rename')||has('perm_denied:rename')),
    U('4-6','等任務完成後，點開產出的 Excel 檢查','點對話中的檔案按鈕','.fchip',()=>has('file_open:xlsx'))],
   quiz:[
    {q:'哪一個指令比較好？',o:['幫我處理一下發票','請把「發票_2026Q3」每張發票的日期、廠商、統編、金額整理成 Excel，缺統編標紅，不要改原始檔','整理檔案'],a:1,why:'有資料來源、輸出格式與限制，Claude 不用猜。'},
@@ -228,10 +228,10 @@ const UNITS=[
   cards:[{f:'連接器',s:'接外部服務',b:'像銀行的電子對帳介面：讓 Claude 連到 Gmail、雲端硬碟。'},{f:'Skill',s:'你的 SOP',b:'像公司作業手冊：寫一次，每次都照做。'},{f:'Plugin',s:'整包套件',b:'像會計部「新人套組」：SOP、工具、範本一次裝好。'}],
   steps:[
    U('5-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:5')),
-   U('5-2','到「自訂 → 連接器」，連接 Gmail','先點側邊欄「自訂」','[data-act="nav"][data-v="customize"]',()=>has('connector_on:gmail')),
-   U('5-3','到「外掛」分頁，安裝「財務會計」外掛','自訂頁面上方的分頁','[data-act="ctab"][data-t="plugins"]',()=>has('plugin_on:finance')),
-   U('5-4','在「技能」分頁建立一個 Skill，例如「月結報表格式」','按「建立 Skill」','[data-act="ctab"][data-t="skills"]',()=>has('skill_created')),
-   U('5-5','回新任務，點「寫催款信草稿」卡片並送出，讓 Claude 在 Gmail 建草稿','Gmail 要先連接','.sg',()=>has('task_done:dunning_gmail'))],
+   U('5-2','到「自訂 Customize → 連接器 Connectors」，連接 Gmail','先點側邊欄「Customize」','[data-act="nav"][data-v="customize"]',()=>has('connector_on:gmail')),
+   U('5-3','到「外掛 Plugins」分頁，安裝「財務會計」外掛','自訂頁面上方的分頁','[data-act="ctab"][data-t="plugins"]',()=>has('plugin_on:finance')),
+   U('5-4','在「技能 Skills」分頁建立一個 Skill，例如「月結報表格式」','按「建立 Skill」','[data-act="ctab"][data-t="skills"]',()=>has('skill_created')),
+   U('5-5','回新任務，點「寫催款信草稿」建議並送出，讓 Claude 在 Gmail 建草稿','Gmail 要先連接','.sg',()=>has('task_done:dunning_gmail'))],
   quiz:[
    {q:'連接器的用途是？',o:['讓 Claude 連到 Gmail、雲端硬碟等外部服務','加快 Claude 的速度','讓檔案自動備份'],a:0,why:'連接器就是 Claude 與外部工具之間的橋。'},
    {q:'想讓 Claude 每次都用公司的月結報表格式，應該？',o:['每次都重新貼格式','建立 Skill','換一個資料夾'],a:1,why:'Skill 是可重複使用的作業說明，寫一次就能一直用。'},
@@ -240,8 +240,8 @@ const UNITS=[
   cards:[{f:'排程',s:'定時任務',b:'像月結行事曆：時間到就自動提醒並執行。'},{f:'拒絕',s:'覆核權',b:'覆核有權退件：不確定就先不放行。'},{f:'人工覆核',s:'責任在人',b:'AI 做初稿，簽核的人是你，責任也在你。'}],
   steps:[
    U('6-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:6')),
-   U('6-2','到「排程」建立一個「每月 5 日 09:00 產出月結報表」','側邊欄「排程」→「新增排程」','[data-act="nav"][data-v="scheduled"]',()=>has('schedule_created')),
-   U('6-3','危險演練：授權「舊檔案_2023前」，送出「清理舊檔案」，並按「拒絕」','點「清理舊檔案」卡片，記得先選資料夾','.sg.dg',()=>has('perm_denied:delete'))],
+   U('6-2','到「排程 Scheduled」建立一個「每月 5 日 09:00 產出月結報表」','側邊欄「Scheduled」→「新增排程」','[data-act="nav"][data-v="scheduled"]',()=>has('schedule_created')),
+   U('6-3','危險演練：授權「舊檔案_2023前」，送出「清理舊檔案」，並按「拒絕」','點「清理舊檔案」建議，記得先選資料夾','.sg.dg',()=>has('perm_denied:delete'))],
   quiz:[
    {q:'Claude 要求永久刪除 47 個檔案，而你沒有備份。該怎麼辦？',o:['允許，Claude 不會出錯','拒絕，先備份再決定','關掉視窗當作沒看到'],a:1,why:'刪除無法復原。沒備份就拒絕，先確認清單與備份。'},
    {q:'排程任務要用到「你電腦裡的檔案」時，要注意什麼？',o:['不用注意，一定會跑','電腦和 Claude 桌面版要開著，否則可能延後或略過','要先把檔案刪掉'],a:1,why:'只用連接器的排程多半在雲端跑；要讀你電腦裡的檔案或程式，就需要電腦開著。實際以你的版本與官方說明為準。'},
