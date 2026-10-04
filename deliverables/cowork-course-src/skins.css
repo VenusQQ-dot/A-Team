@@ -173,3 +173,12 @@ body[data-skin="navy"] .view .lyh{color:#0F2447}
 body[data-skin="navy"] .mn-box{border-radius:2px}
 body[data-skin="navy"] .tip{background:#FFF3DB}
 body[data-skin="navy"] .vtag{background:#0A1832}
+
+/* 辭典 */
+body[data-skin="candy"] .gcard{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+body[data-skin="candy"] .gsearch input{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+body[data-skin="candy"] .ga{border:3px solid var(--ink);background:#FFF0B8}
+body[data-skin="candy"] .gcats button{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3px solid var(--line);box-shadow:4px 4px 0 #000}
+body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}
+body[data-skin="arcade"] mark{background:var(--accent)}

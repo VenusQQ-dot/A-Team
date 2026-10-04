@@ -2,7 +2,7 @@
 const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
  conn:{},plugins:{},plugOpen:{},
  skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
- schedules:[],
+ schedules:[],pmode:'manual',
  projects:[{id:'p1',name:'2026 月結專案',inst:'金額用千分位、科目依公司科目表排序、異常項目標紅。',folder:'invoices'}]};
 const LOG=new Set();
 let _uid=0;
@@ -55,7 +55,7 @@ function homeView(){
  const f=S.folder?FOLDERS[S.folder]:null;
  return `<div class="home"><div class="hello">${IC.spark}<h1>想請 Claude 幫你處理什麼？</h1></div>
  <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>
- <div class="comp-bar"><button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="noop">Claude ▾</button><span class="grow"></span><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
+ <div class="comp-bar"><button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="pmode" title="點一下切換權限模式">${IC.shield}<span>${{manual:'手動核准',auto:'自動',skip:'全部略過'}[S.pmode]}</span></button><button class="chip ghost" data-act="noop">Claude ▾</button><span class="grow"></span><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
  <div class="sugg-h">不知道從哪開始？點一張卡片，指令會自動填入輸入框：</div>
  <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}">${IC[s.ic]}<b>${s.t}</b><small>${s.s}</small></button>`).join('')}</div></div>`;
 }
@@ -83,16 +83,16 @@ function customView(){
  let body='';
  if(S.ctab==='skills')body=`<p class="note" style="margin:0">Skill（技能）＝做事說明書：把你的做法寫下來，Claude 需要時照著做。</p><div class="list">${S.skills.map(s=>`<div class="item"><div class="ic">${IC.book}</div><div class="mid"><b>${esc(s.name)}</b> <span class="tag">${esc(s.src)}</span><small>${esc(s.desc)}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用 ${esc(s.name)}" data-act="skill-toggle" data-id="${s.id}"></button></div>`).join('')}</div><div><button class="chip pri" data-act="skill-new">${IC.plus}建立 Skill</button></div>`;
  if(S.ctab==='connectors')body=`<p class="note" style="margin:0">連接器＝接外部工具的「插頭」（技術上叫 MCP）。連接前會顯示它能做哪些事，請看清楚再允許。</p><div class="list">${CONNECTORS.map(c=>`<div class="item"><div class="ic">${IC[c.ic]}</div><div class="mid"><b>${c.name}</b><small>${c.desc}</small></div>${S.conn[c.id]?`<span class="tag ok">已連接</span><button class="chip" data-act="conn-off" data-id="${c.id}">中斷</button>`:`<button class="chip pri" data-act="conn-on" data-id="${c.id}">連接</button>`}</div>`).join('')}</div>`;
- if(S.ctab==='plugins')body=`<p class="note" style="margin:0">外掛＝一整包：技能＋連接器＋常用指令，一次裝好。</p><div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
+ if(S.ctab==='plugins')body=`<p class="note" style="margin:0">外掛＝一整包：技能、連接器、子代理打包，一次裝好（內容依外掛而異）。</p><div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
  return `<div class="cust"><h2>自訂</h2><div class="tabs">${tabs.map(t=>`<button class="${S.ctab===t[0]?'on':''}" data-act="ctab" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
 }
 function projView(){
- return `<div class="sched"><h2>專案</h2><div class="note">專案＝把同一件事的說明和資料放在一起。之後在專案裡開的任務都共用，不用每次重講。</div>
+ return `<div class="sched"><h2>專案</h2><div class="note">專案＝把同一件事的說明和資料放在一起，有自己的說明、檔案、排程與記憶。之後在專案裡開的任務都共用，不用每次重講。</div>
  ${S.projects.length?`<div class="list">${S.projects.map((p,i)=>`<div class="item"><div class="ic">${IC.layers}</div><div class="mid"><b>${esc(p.name)}</b><small>說明：${esc(p.inst)}</small><span class="tag">${IC.folder.replace('<svg','<svg style="vertical-align:-2px"')} ${esc(FOLDERS[p.folder].name)}</span></div><button class="chip pri" data-act="proj-open" data-i="${i}">在此專案開新任務</button></div>`).join('')}</div>`:'<div class="empty">還沒有專案。</div>'}
  <div><button class="chip pri" data-act="proj-new">${IC.plus}新增專案</button></div></div>`;
 }
 function schedView(){
- return `<div class="sched"><h2>排程任務</h2><div class="note">排程任務在你的電腦上執行：電腦需開機、App 需開著才會跑（實際規則以你的版本說明為準）。</div>
+ return `<div class="sched"><h2>排程任務</h2><div class="note">排程任務多半在雲端執行：電腦關機、App 關掉也會跑；但要用到你電腦裡的檔案或程式時，電腦要開著。每次執行都是全新對話，指令要寫清楚。（以官方最新說明與你的版本為準）</div>
  ${S.schedules.length?`<div class="list">${S.schedules.map((s,i)=>`<div class="item"><div class="ic">${IC.clock}</div><div class="mid"><b>${esc(s.name)}</b><small>${esc(s.freq)} ${esc(s.time)}・${esc(s.prompt.slice(0,40))}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用排程" data-act="sched-toggle" data-i="${i}"></button></div>`).join('')}</div>`:`<div class="empty">還沒有排程。<br>例如：每月 5 日 09:00，自動產出上月月結報表。</div>`}
  <div><button class="chip pri" data-act="sched-new">${IC.plus}新增排程</button></div></div>`;
 }
@@ -172,6 +172,8 @@ function advance(k){
  const st=k.steps[k._i];st.st='run';renderSim();
  setTimeout(()=>{
   if(!S.tasks.includes(k))return;
+  if(st.perm&&S.pmode!=='manual'&&st.perm.kind!=='delete'){
+   k.msgs.push({r:'c',t:'<small style="color:var(--muted)">（'+(S.pmode==='auto'?'自動':'全部略過')+'模式：已自動批准「'+st.perm.text+'」）</small>'});st.st='done';k._i++;renderSim();emit('perm_auto:'+st.perm.kind);advance(k);return}
   if(st.perm){k.pending={i:k._i};k.msgs.push({r:'perm',perm:st.perm,state:'ask'});renderSim();emit('perm_asked:'+st.perm.kind);return}
   st.st='done';k._i++;renderSim();advance(k);
  },1000);
@@ -207,6 +209,11 @@ function finish(k){
 /* ========== 事件委派 ========== */
 const ACT={
  noop(){toast('教學模擬版：此選單不可用')},
+ pmode(){
+  S.pmode={manual:'auto',auto:'skip',skip:'manual'}[S.pmode];
+  toast(S.pmode==='manual'?'手動核准：每個重要動作都會問你（新手建議）':S.pmode==='auto'?'自動：Claude 先做安全檢查，再自動批准':'全部略過：不再詢問（最危險）。但永久刪除檔案仍然會問你','ok');
+  emit('pmode_'+S.pmode);renderSim();
+ },
  mode(el){S.mode=el.dataset.m;emit('mode_'+S.mode);renderSim()},
  nav(el){S.mode='cowork';S.view=el.dataset.v;emit('nav_'+(S.view==='home'?'new':S.view));renderSim()},
  'open-task'(el){S.mode='cowork';S.view='task';S.active=+el.dataset.id;renderSim()},

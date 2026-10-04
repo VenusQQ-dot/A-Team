@@ -60,10 +60,6 @@ function matchHtml(key){
  return g.items.map((it,i)=>{const ok=has('match_ok:'+it.id),bad=mwrong[it.id]||[];
   return `<div class="mq ${ok?'ok':''}"><p><span class="mn2">${i+1}</span>${it.q}</p><div class="mopts">${g.opts.map(o=>`<button class="opt ${ok&&o===it.a?'good':''} ${bad.includes(o)?'bad':''}" data-act="match" data-g="${key}" data-i="${it.id}" data-o="${esc(o)}" ${ok?'disabled':''}>${o}</button>`).join('')}</div>${ok?`<div class="why">✓ ${it.why}</div>`:bad.length?'<div class="why" style="color:var(--warn);background:var(--warn-soft)">再想想，換一個試試。</div>':''}</div>`}).join('');
 }
-function glossSheet(){
- $('#sheet').innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="名詞小辭典"><button class="x" data-act="sheet-close" aria-label="關閉">×</button><h3 class="serif" style="font-size:22px">名詞小辭典</h3><p class="sh-m">七個常聽到的詞，每個一句話。名稱與位置以你實際的版本為準。</p><div class="gloss">${GLOSS.map(g=>`<div class="gl"><b>${g.t}</b><span class="gs">${g.s}</span><p>${g.d}</p><em>${g.e}</em></div>`).join('')}</div></div>`;
- $('#sheet').hidden=false;
-}
 const LESSONS=['看動畫','懂重點','動手做','小測驗'];
 const LMETA=[['▶ 動畫',''],['▣ 重點卡','y'],['✎ 練習',''],['? 測驗','b']];
 const LMIN=[1,1,3,2];
@@ -179,7 +175,6 @@ function setSkin(s){
 function copyText(t){try{if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(()=>true).catch(()=>false)}}catch(e){}
  try{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();return Promise.resolve(ok)}catch(e){return Promise.resolve(false)}}
 const GA={
- gloss(){glossSheet()},
  match(el){
   const g=MATCH[el.dataset.g],it=g.items.find(x=>x.id===el.dataset.i),o=el.dataset.o;
   if(has('match_ok:'+it.id))return;

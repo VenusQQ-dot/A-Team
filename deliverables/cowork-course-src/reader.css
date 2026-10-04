@@ -94,3 +94,68 @@
 .gl p{margin:4px 0 2px;font-size:14.5px}.gl em{font-style:normal;font-size:13px;color:var(--muted)}
 .tag{background:var(--soft2);color:var(--ink)}
 .tag.ok{background:var(--green-soft);color:var(--ink)}.tag.warn{background:var(--warn-soft);color:var(--ink)}
+
+/* ===== 名詞辭典 ===== */
+body[data-view="gloss"] #view-gloss{display:block;overflow:auto}
+.vwrap2.wide{max-width:1040px}
+.gsearch{position:relative;margin:10px 0}
+.gsearch input{width:100%;padding:12px 70px 12px 44px;font-size:17px;border:var(--bw) solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font-family:inherit}
+.gsearch::before{content:"⌕";position:absolute;left:15px;top:50%;transform:translateY(-54%);font-size:22px;color:var(--muted)}
+.gcount{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted)}
+.gcats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.gcats button{border:var(--bw) solid var(--line);background:var(--card);border-radius:99px;padding:3px 14px;font-size:14px}
+.gcats button.on{background:var(--inv);color:var(--inv-fg)}
+.ggrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.gcard{display:flex;gap:12px;background:var(--card);border:var(--bw) solid var(--line);border-radius:16px;padding:12px}
+.gbody{min-width:0}
+.gh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.gh b{font-size:18px;font-family:var(--font-head)}
+.gs{background:var(--amber-soft);border-radius:99px;padding:0 10px;font-size:13px;font-weight:700}
+.gcard p{margin:4px 0;font-size:14.5px}
+.gcard em{font-style:normal;color:var(--muted);font-size:13px;display:block}
+.gbtn{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+mark{background:#FFE066;color:#171717;border-radius:3px;padding:0 1px}
+.gnote{margin-top:18px;font-size:13px;color:var(--muted)}
+.gnote a{color:var(--blue)}
+@media (max-width:700px){.ggrid{grid-template-columns:1fr}.gcard{flex-direction:column;align-items:flex-start}}
+
+/* 小動畫：每次 5 秒重播（JS 重置），減少動態時顯示最終畫面 */
+.ga{width:116px;height:86px;flex:none;border:var(--bw) solid var(--line);border-radius:14px;background:var(--soft);display:grid;place-items:center;cursor:pointer}
+.ga svg{width:96px;height:72px;overflow:visible}
+.ga *{transform-box:fill-box;transform-origin:center}
+.ga .ln{stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ga .stk{stroke:var(--green);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.ga .fc{fill:var(--card)}.ga .fs{fill:var(--soft2)}.ga .fa{fill:var(--accent)}.ga .fg{fill:var(--green)}.ga .fb{fill:var(--blue)}.ga .fy{fill:#FFD35A}.ga .fi{fill:var(--ink);opacity:.7}
+.ga .none{fill:none;stroke:var(--muted);stroke-width:2}.ga .dashed{stroke-dasharray:4 4}
+.ga .ghost{opacity:.3}
+.ga .pop{animation:gpop .5s ease var(--dl,0s) both}
+.ga .slide{animation:gdrop .6s ease var(--dl,0s) both}
+.ga .slide2{animation:gright .6s ease var(--dl,0s) both}
+.ga .type{transform-origin:left center;animation:gtype .8s ease var(--dl,0s) both}
+.ga .blink{animation:gblink 1s steps(2) infinite}
+.ga .pulse{animation:gpulse 1.6s ease-in-out var(--dl,0s) infinite}
+.ga .plug{animation:gplug 1.3s ease both}
+.ga .spark{animation:gpop .4s ease 1.3s both}
+.ga .hand{transform-box:view-box;transform-origin:34px 36px;animation:gspin 4s linear both}
+.ga .lid{animation:glid 3.6s ease both}
+.ga .drop{animation:gfall .8s ease var(--dl,0s) both}
+.ga .chip{animation:gchip .5s ease var(--dl,0s) both}
+.ga .hl{animation:ghl 3.2s ease-in-out both}
+.ga .meter{transform-origin:left center;animation:gtype 3s linear both}
+.ga .paper{animation:gpaper .5s ease var(--dl,0s) both}
+.ga .paper.out{animation:gpaperout 4s ease both}
+@keyframes gpop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes gdrop{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes gright{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+@keyframes gtype{from{transform:scaleX(0);opacity:.2}to{transform:scaleX(1);opacity:.7}}
+@keyframes gblink{50%{opacity:0}}
+@keyframes gpulse{50%{transform:scale(1.07)}}
+@keyframes gplug{from{transform:translateX(-22px)}to{transform:none}}
+@keyframes gspin{to{transform:rotate(360deg)}}
+@keyframes glid{0%{transform:none}12%,70%{transform:translateY(-7px) rotate(-3deg)}100%{transform:none}}
+@keyframes gfall{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(24px)}}
+@keyframes gchip{from{opacity:0;transform:translateX(-12px) scale(.8)}to{opacity:1;transform:none}}
+@keyframes ghl{0%{transform:translateX(0)}35%{transform:translateX(29px)}70%{transform:translateX(58px)}100%{transform:translateX(0)}}
+@keyframes gpaper{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes gpaperout{0%{opacity:0;transform:translateY(-14px)}12%,62%{opacity:1;transform:none}100%{opacity:0;transform:translateX(-26px)}}
+@media (prefers-reduced-motion:reduce){.ga *{animation:none!important}}

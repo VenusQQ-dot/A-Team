@@ -53,7 +53,7 @@ const MAPS=[
   {id:'project',t:'專案 Project',ic:'layers_',d:'把同一件事的說明和資料放在一起，之後做事都共用。',box:'像一個專案檔案夾：不用每次重講',go:{u:7},kids:[
    {t:'放什麼',ic:'file',d:'專案說明、常用資料、格式要求'},
    {t:'好處',ic:'star',d:'同一件事反覆做，不用重新交代'}]},
-  {id:'plug',t:'外掛 Plugin',ic:'box',d:'把技能、連接器、常用指令打包成一整套。',box:'像會計部的「新人套組」',go:{u:5},kids:[
+  {id:'plug',t:'外掛 Plugin',ic:'box',d:'把技能、連接器、子代理打包成一整套。',box:'像會計部的「新人套組」',go:{u:5},kids:[
    {t:'財務會計（示意）',ic:'sheet',d:'月結檢查、銀行對帳、差異分析'},
    {t:'依職務挑選',ic:'user',d:'法務、業務…各有各的套件'}]},
   {id:'you',t:'你（覆核者）',ic:'user',d:'重要動作要你點頭；產出要你抽查。',box:'AI 做初稿，簽核的是你',red:'沒覆核就直接使用，是最常出事的地方',go:{u:6},kids:[
@@ -76,13 +76,15 @@ const MAPS=[
    {t:'移出敏感檔案',ic:'lock',d:'薪資、身分證、存摺',red:'與任務無關的資料，不該在範圍內'}]},
   {t:'執行中',ic:'terminal',d:'Claude 動手的當下',kids:[
    {t:'看清楚權限請求',ic:'shield',d:'範圍？影響？可還原嗎？',box:'三個問題都答得出來再按允許'},
+   {t:'權限模式',ic:'shield',d:'手動核准：每步問你；自動：先做安全檢查再批准；全部略過：不問（最危險）',box:'新手先用「手動核准」',red:'永久刪除檔案，不管哪種模式都會問你'},
    {t:'刪除與覆蓋先拒絕',ic:'trash',d:'沒有備份就不要放行',red:'永久刪除無法復原'}]},
   {t:'完成後',ic:'eye',d:'成果交付前的把關',kids:[
    {t:'抽查數字',ic:'sheet',d:'隨機挑幾列重算'},
    {t:'對照原始單據',ic:'file',d:'金額、日期、統編逐項核'},
    {t:'留存紀錄',ic:'book',d:'誰下的指令、何時、產出什麼',box:'可稽核：事後找得到來龍去脈'}]},
   {t:'排程任務',ic:'clock',d:'讓 Claude 定時自動工作',kids:[
-   {t:'電腦要開著',ic:'monitor_',d:'App 要在執行中（以你的版本說明為準）',red:'關機或沒開 App，排程就不會跑'},
+   {t:'要用本機檔案時',ic:'monitor_',d:'電腦與 App 要開著（只用連接器的排程多半在雲端跑）',red:'沒開的話，任務可能延後或略過'},
+   {t:'指令要寫清楚',ic:'chat',d:'每次排程都是全新對話',red:'「跟上次一樣」沒有用'},
    {t:'排程也要覆核',ic:'eye',d:'自動產出的報表，一樣要抽查'}]},
   {t:'連接器',ic:'plug',d:'連到外部服務時',kids:[
    {t:'只連需要的服務',ic:'plug',d:'用不到的就不要連'},
@@ -124,7 +126,7 @@ const MAPS=[
   {t:'月結排程',ic:'clock',d:'每月 5 日自動出報表',go:{u:6},kids:[
    {t:'路徑',ic:'route',d:'建立排程 → 時間到自動執行 → 你覆核'},
    {t:'分工',ic:'people',d:'Claude：產出報表。你：簽核'},
-   {t:'存哪裡',ic:'box',d:'報表放授權資料夾；排程設定在 App 裡',red:'電腦與 App 要開著'}]},
+   {t:'存哪裡',ic:'box',d:'報表放授權資料夾；排程設定在 App 裡',red:'用到本機檔案時，電腦與 App 要開著'}]},
   {t:'舊檔清理',ic:'trash',d:'要求刪除舊檔案',go:{u:6},kids:[
    {t:'路徑',ic:'route',d:'授權舊檔資料夾 → 要求刪除 → 出現權限請求 → 拒絕'},
    {t:'分工',ic:'people',d:'Claude：列清單。刪不刪由你決定',red:'沒有備份就不要允許'},
@@ -137,7 +139,7 @@ const EXTRA=[
  {id:'p_acct',t:'會計同仁',ic:'user',d:'下指令、檢查結果的人。',box:'交辦任務，也負責把關',go:{u:4}},
  {id:'p_boss',t:'主管與稽核',ic:'eye',d:'簽核成果、查看紀錄的人。',box:'看的是「誰做的、怎麼做的」',more:'AI 產出需要可追溯：指令、資料夾、產出檔案都要留下紀錄。'},
  {id:'p_ext',t:'客戶與廠商',ic:'mail',d:'收到信件與報表的對象。',box:'他們看到的是你簽核後的成果',red:'寄出前一定要人工確認'},
- {id:'sched',t:'排程',ic:'clock',d:'讓任務在固定時間自動執行。',box:'像月結行事曆',go:{u:6},red:'電腦與 App 要開著才會跑'},
+ {id:'sched',t:'排程',ic:'clock',d:'讓任務在固定時間自動執行。',box:'像月結行事曆',go:{u:6},red:'用到本機檔案時，電腦與 App 要開著'},
  {id:'slack',t:'Slack',ic:'chat',d:'搜尋對話、草擬訊息（示意）。'},
  {id:'notion',t:'Notion',ic:'book',d:'搜尋與整理頁面（示意）。'}
 ];
@@ -325,7 +327,7 @@ function openSheet(id){
 const closeSheet=()=>{$('#sheet').hidden=true};
 
 /* ========== 檢視切換 ========== */
-const VIEWS=['map','layers','overview','learn'];
+const VIEWS=['map','layers','overview','gloss','learn'];
 function setView(v,skipMap){
  if(!VIEWS.includes(v))v='map';
  document.body.dataset.view=v;
@@ -334,6 +336,7 @@ function setView(v,skipMap){
  if(v==='map'){if(!$('#mmv').dataset.ready){$('#mmv').dataset.ready=1;mmInitEvents()}if(!skipMap)requestAnimationFrame(()=>mmShow())}
  if(v==='layers')renderLayers();
  if(v==='overview')renderOverview();
+ if(v==='gloss')renderGloss();
  store.set('cowork-view',v);
 }
 function gotoUnit(u){
