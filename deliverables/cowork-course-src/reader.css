@@ -46,39 +46,38 @@
 .menu-list small{color:var(--muted);display:block}
 .menu-list .lock{opacity:.5}
 
-/* ===== 簡報式影片 ===== */
-.vtag{position:absolute;left:1.2em;top:1.1em;z-index:2;background:#14284b;color:#fff;border-radius:.5em;padding:.25em .9em;font-size:1.45em;font-weight:700;box-shadow:0 .2em .6em rgba(0,0,0,.25)}
-.vtag:empty{display:none}
-.vs-t{background:linear-gradient(135deg,#0E2146,#183868);color:#fff;align-items:flex-start;justify-content:center;padding:3em 4em 5em;gap:.7em}
-.vstage .vs-t{inset:0}
-.vs-t .vh{color:#fff;font-family:var(--font-head);font-size:3.3em;font-weight:800;text-align:left}
-.vs-t .vsub{color:#B9C8E6;text-align:left;font-size:1.7em}
-.vpill{border:.1em solid rgba(255,255,255,.5);border-radius:99em;padding:.2em 1.1em;font-size:1.2em;letter-spacing:.14em;color:#DDE6F7;margin-bottom:.4em}
-.vnote2{position:absolute;right:1.4em;top:1.1em;font-size:1em;color:#9DB0D6}
-.vchips{display:flex;align-items:center;gap:.5em;flex-wrap:wrap;margin-top:1.2em}
-.vchips b{background:rgba(255,255,255,.1);border:.1em solid rgba(255,255,255,.22);border-radius:.5em;padding:.3em 1em;font-size:1.5em;color:#fff}
-.vchips span{color:#F5A623;font-size:2em;font-weight:700}
-.vcol.hot,.vout,.vcomp{outline:.22em solid #F5A623;outline-offset:.35em}
-.vs-r{flex-direction:column;align-items:stretch;justify-content:center;gap:.7em;padding:3em 5em 5em;flex-wrap:nowrap}
-.vs-r .vlt{font-size:2.9em;margin-bottom:.1em}
-.vcard{display:flex;align-items:center;gap:1em;background:var(--card);border:.12em solid var(--line);border-radius:.8em;padding:.55em 1em;transition:all .4s}
-.vcard .vn{width:2em;height:2em;border-radius:50%;background:#DDE5F3;display:grid;place-items:center;font-size:1.5em;font-weight:800;color:#14284b;flex:none}
-.vcard b{font-size:1.9em;display:block;line-height:1.3}
-.vcard small{font-size:1.4em;color:var(--muted)}
-.vcard.on{outline:.2em solid #F5A623;outline-offset:.2em;background:#FFFBEF}
-.vcard.on .vn{background:#14284b;color:#fff}
+/* ===== 影片（海報貼紙風）===== */
+.vdots{position:absolute;right:1.2em;top:1.1em;z-index:2;display:flex;gap:.45em;align-items:center}
+.vdots i{width:.9em;height:.9em;border-radius:50%;border:.14em solid var(--ink);background:var(--card)}
+.vdots i.on{background:var(--accent)}
+.vs-t{background:var(--accent-soft);color:var(--ink);align-items:flex-start;justify-content:center;padding:2.4em 4em 6.2em;gap:.55em;overflow:hidden}
+.vblob{position:absolute;border-radius:50%;border:.2em solid var(--ink);pointer-events:none}
+.vblob.b1{width:15em;height:15em;right:-3em;top:-2.5em;background:#FFE08A}
+.vblob.b2{width:9em;height:9em;right:6em;bottom:2.4em;background:#B9A8FF}
+.vblob.b3{width:4em;height:4em;right:15em;top:3em;background:var(--card)}
+.vs-t .vk{color:var(--ink);font-weight:800;font-size:1.5em;letter-spacing:.08em;display:flex;align-items:center;gap:.6em}
+.vs-t .vk::before{content:"";width:2.2em;height:.2em;background:var(--ink);display:block}
+.vs-t .vh{color:var(--ink);font-family:var(--font-head);font-size:3.3em;font-weight:900;text-align:left;max-width:75%;position:relative}
+.vs-t .vsub{color:var(--ink);opacity:.8;text-align:left;font-size:1.65em;position:relative;max-width:75%}
+.vtags{display:flex;gap:.7em;flex-wrap:wrap;margin-top:1em;position:relative}
+.vtags b{background:var(--card);border:.15em solid var(--ink);border-radius:.5em;padding:.25em .9em;font-size:1.45em;box-shadow:.2em .2em 0 var(--ink)}
+.vtags b:nth-child(odd){transform:rotate(-2deg)}.vtags b:nth-child(even){transform:rotate(1.5deg)}
+.vcol.hot,.vout,.vcomp{box-shadow:.35em .35em 0 var(--accent)}
+.vs-r{flex-direction:row!important;flex-wrap:wrap!important;align-content:center;justify-content:center;gap:1.1em!important;padding:4.2em 4em 5.4em!important}
+.vs-r .vlt{width:100%;text-align:center;font-size:2.5em;font-family:var(--font-head);font-weight:900;margin:0 0 .1em}
+.vcard{width:20em;min-height:5.6em;display:block;background:var(--amber-soft);border:.14em solid var(--ink);border-radius:.4em .4em .4em 1.4em;padding:.7em 1em;box-shadow:.25em .25em 0 var(--ink);transition:transform .35s,background .35s}
+.vcard:nth-of-type(odd){transform:rotate(-1.4deg)}.vcard:nth-of-type(even){transform:rotate(1.2deg)}
+.vcard .vn{display:inline-block;font-size:1.25em;font-weight:900;margin-right:.4em;color:var(--accent-d)}
+.vcard .vct{display:inline}
+.vcard b{font-size:1.75em;display:inline;line-height:1.3;background:linear-gradient(transparent 62%,transparent 62%);transition:background .4s}
+.vcard small{display:block;font-size:1.3em;color:var(--muted);margin-top:.15em}
+.vcard.on{transform:rotate(0) scale(1.05)!important;background:var(--card)}
+.vcard.on b{background:linear-gradient(transparent 62%,var(--accent) 62%)}
 .vcap{background:none!important;padding:.8em 1.4em!important;justify-content:center!important;align-items:flex-end!important}
-.vcap span{background:#14284b;color:#fff;padding:.35em .9em;border-radius:.3em;font-weight:700;font-size:1em;line-height:1.5;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.vcap span{background:var(--card);color:var(--ink);padding:.3em .9em;border:.14em solid var(--ink);border-radius:.6em;box-shadow:.25em .25em 0 var(--ink);font-weight:700;line-height:1.5}
 .vcap:empty,.vcap span:empty{display:none}
-
 .vplay{left:auto!important;right:7%;top:50%!important;transform:translateY(-50%)!important}
 .vplay:active{transform:translateY(-50%) scale(.96)!important}
-.vs-r{padding:4.6em 5em 5.4em!important;gap:.45em!important}
-.vs-r .vlt{font-size:2.4em!important;margin-bottom:0!important}
-.vcard{padding:.4em .9em!important}
-.vcard .vn{width:1.7em!important;height:1.7em!important;font-size:1.35em!important}
-.vcard b{font-size:1.65em!important}
-.vcard small{font-size:1.25em!important}
 @media (max-width:700px){.brand{display:none}}
 
 .mq{background:var(--card);border:var(--bw) solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
@@ -92,8 +91,6 @@
 .gl b{font-size:17px;font-family:var(--font-head)}
 .gl .gs{margin-left:8px;background:var(--amber-soft);border-radius:99px;padding:0 10px;font-size:13px;font-weight:700}
 .gl p{margin:4px 0 2px;font-size:14.5px}.gl em{font-style:normal;font-size:13px;color:var(--muted)}
-.tag{background:var(--soft2);color:var(--ink)}
-.tag.ok{background:var(--green-soft);color:var(--ink)}.tag.warn{background:var(--warn-soft);color:var(--ink)}
 
 /* ===== 名詞辭典 ===== */
 body[data-view="gloss"] #view-gloss{display:block;overflow:auto}

@@ -5,7 +5,7 @@
 - 重新建置：`python3 deliverables/cowork-course-src/build.py`
 
 ## 四套皮膚（右上角四顆圓點）
-糖果粗框（預設）／米色手札／像素夜／簡報藍。網址參數 `?skin=candy|paper|arcade|navy`。
+糖果粗框（預設，薄荷底）／米色手札／像素夜／深夜綠。網址參數 `?skin=candy|paper|arcade|forest`。
 
 ## 給新手的設計
 - 單元 1：Chat／Cowork／Code 用「問答／動手做／寫程式」一句話分，附配對小遊戲。
@@ -17,7 +17,7 @@
 - 事實依官方說明查證（2026-10-04）：[Cowork 入門](https://support.claude.com/en/articles/13345190-getting-started-with-cowork)、[排程任務](https://support.claude.com/en/articles/13854387)、[專案](https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-cowork)。
 - 重點更正：排程任務多半在雲端執行（電腦關機也會跑），用到本機檔案時電腦要開著；每次排程都是全新對話。官方另註明 2026-10-06 起新的 Cowork 任務改在雲端執行。
 - 權限模式為「手動核准／自動／全部略過」，永久刪除一律詢問；專案有自己的指示、檔案、排程與記憶。
-- 觀念架構（Model／MCP／Skill／Plugin 四層積木、Token、排程×Skill）參考「Cowork 闖關學院」。
+- 觀念範圍（Model／MCP／Skill／Plugin、Token、上下文視窗、排程）參考「Cowork 闖關學院」，但比喻、文字、版面與動畫皆為本教材原創，刻意不與參考檔相似。
 
 ## 五種檢視（右上角切換）
 | 檢視 | 內容 |

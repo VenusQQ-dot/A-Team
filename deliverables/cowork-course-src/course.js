@@ -3,9 +3,9 @@ class Player{
  constructor(host,scenes,key){
   Object.assign(this,{h:host,sc:scenes,key,t:0,playing:false,idx:-1,speed:1,cap:true,tts:false,done:false,started:false,raf:0,last:0});
   this.total=scenes.reduce((a,s)=>a+s.dur,0);this.starts=[];let c=0;scenes.forEach(s=>{this.starts.push(c);c+=s.dur});
-  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vtag"></div><div class="vcap"><span></span></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
+  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vdots"></div><div class="vcap"><span></span></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
   <div class="vctl"><button class="pp" data-v="toggle" aria-label="播放或暫停">▶</button><input class="vseek" type="range" min="0" max="1000" value="0" aria-label="影片進度"><span class="vtime">0:00 / ${fmt(this.total)}</span><button data-v="speed" aria-label="播放速度">1x</button><button data-v="cap" class="on">字幕</button><button data-v="tts" title="用瀏覽器朗讀字幕">旁白</button><button data-v="full">全螢幕</button></div></div>`;
-  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);this.capSpan=$('.vcap span',host);this.tagEl=$('.vtag',host);
+  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);this.capSpan=$('.vcap span',host);this.tagEl=$('.vdots',host);
   this.seek=$('.vseek',host);this.timeEl=$('.vtime',host);this.pp=$('.pp',host);this.playBtn=$('.vplay',host);
   host.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;const a=b.dataset.v;
    if(a==='play'||a==='toggle'){this.playing?this.pause():this.play()}
@@ -38,7 +38,7 @@ class Player{
  draw(t){
   let i=0;for(let k=0;k<this.sc.length;k++)if(t>=this.starts[k])i=k;
   const local=t-this.starts[i];
-  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capSpan.textContent=this.sc[i].cap;this.tagEl.textContent=this.sc[i].tag||'';
+  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capSpan.textContent=this.sc[i].cap;this.tagEl.innerHTML=this.sc.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('');this.tagEl.title=this.sc[i].tag||'';
    if(this.playing&&this.idx!==-1)this.say(this.sc[i].cap);this.idx=i}
   $$('[data-at]',this.scene).forEach(e=>e.classList.toggle('in',local>=+e.dataset.at));
   $$('[data-win]',this.scene).forEach(e=>{const [a,b]=e.dataset.win.split(',').map(Number);e.classList.toggle('on',local>=a&&local<b)});
@@ -168,7 +168,7 @@ function buildPrompt(){
 
 /* ========== 全域事件 ========== */
 function setSkin(s){
- if(!['candy','paper','arcade','navy'].includes(s))s='candy';
+ if(!['candy','paper','arcade','forest'].includes(s))s='candy';
  document.body.dataset.skin=s;$$('.skins button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));store.set('cowork-skin',s);
  if(document.body.dataset.view==='map'&&typeof mmShow==='function')requestAnimationFrame(()=>mmShow());
 }

@@ -11,10 +11,10 @@
 
 /* ================= 糖果粗框 ================= */
 body[data-skin="candy"]{
- --bg:#F7C948;--paper:#FFF7E3;--card:#FFFDF6;--ink:#171717;--muted:#5A5446;--line:#171717;
- --accent:#FF6B3D;--accent-d:#E0501F;--accent-soft:#FFD8C8;--green:#1E9E5A;--green-soft:#CBF09B;
+ --bg:#BFE3D6;--paper:#FFFCF4;--card:#FFFEF9;--ink:#171717;--muted:#5A5446;--line:#171717;
+ --accent:#FF6A55;--accent-d:#DE4A36;--accent-soft:#FFD9D1;--green:#1E9E5A;--green-soft:#CBF09B;
  --blue:#3B5CFF;--blue-soft:#CFE0FF;--warn:#E5322D;--warn-soft:#FFC7C0;--amber:#8A5A00;--amber-soft:#FFE79A;
- --soft:#FFEFC2;--soft2:#FFD966;--bubble:#FFD966;--mmbg:#FFF3D1;--dot:#E5A81C;--bw:3px;--r:14px;
+ --soft:#E6F4EE;--soft2:#CFE9DF;--bubble:#FFE08A;--mmbg:#EAF6F0;--dot:#8CC7B4;--bw:3px;--r:14px;
  --inv:#171717;--inv-fg:#fff;--sh:4px 4px 0 #171717;
  --font-head:"Avenir Next","Nunito","Arial Rounded MT Bold","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
  background:var(--bg) radial-gradient(circle at 2px 2px,var(--dot) 2px,transparent 0) 0 0/24px 24px;
@@ -53,15 +53,13 @@ body[data-skin="candy"] .composer{border-radius:18px}
 body[data-skin="candy"] .rd-h,body[data-skin="candy"] .hello h1,body[data-skin="candy"] .lyh{font-weight:900;letter-spacing:-.01em}
 body[data-skin="candy"] .toast{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);color:#fff}
 body[data-skin="candy"] .toast.ok{background:var(--green)}
-body[data-skin="candy"] .sticker{display:block;position:absolute;right:44px;bottom:0;z-index:6;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:3px 12px;transform:rotate(3deg);font-size:11px;letter-spacing:.12em;line-height:1.3;border-radius:6px;text-align:center;pointer-events:none}
-body[data-skin="candy"] .sticker b{display:block;font-size:14px;letter-spacing:0}
+body[data-skin="candy"] .sticker{display:block;position:absolute;right:44px;bottom:2px;z-index:6;background:#FFE08A;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:2px 16px;transform:rotate(-2.5deg);font-size:13px;font-weight:800;border-radius:99px;pointer-events:none}
 body[data-skin="candy"] .deco{display:block;position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-body[data-skin="candy"] .deco svg{position:absolute;stroke:var(--ink);stroke-width:3}
-body[data-skin="candy"] .deco .d1{right:-6px;top:90px;width:70px;fill:#FF8A6B}
-body[data-skin="candy"] .deco .d2{right:8px;bottom:90px;width:52px;fill:#B9A8FF}
-body[data-skin="candy"] .deco .d3{left:-10px;bottom:30px;width:56px;fill:#9BE564}
-body[data-skin="candy"] .deco .d4{left:6px;top:10px;width:40px;fill:#fff}
-body[data-skin="candy"] .vtag{border:2px solid #fff}
+body[data-skin="candy"] .deco svg{position:absolute;stroke:var(--ink);stroke-width:3;fill:none}
+body[data-skin="candy"] .deco .d1{right:-12px;top:96px;width:64px;fill:#FFE08A}
+body[data-skin="candy"] .deco .d2{right:10px;bottom:84px;width:64px}
+body[data-skin="candy"] .deco .d3{left:-8px;bottom:26px;width:60px;fill:#B9A8FF}
+body[data-skin="candy"] .deco .d4{left:8px;top:6px;width:54px;fill:var(--accent)}
 /* 心智圖 / 分層卡片 / 全景 */
 body[data-skin="candy"] .mmbar,body[data-skin="candy"] .mmlegend{background:var(--paper);border-bottom:3px solid var(--ink)}
 body[data-skin="candy"] #mmv{background:var(--mmbg)}
@@ -143,41 +141,36 @@ body[data-skin="arcade"] .md,body[data-skin="arcade"] .mail{background:var(--sof
 body[data-skin="arcade"] .vcol,body[data-skin="arcade"] .vbox,body[data-skin="arcade"] .vf{color:var(--ink)}
 body[data-skin="arcade"] .vcol span,body[data-skin="arcade"] .vbox small{color:var(--muted)}
 
-/* ================= 簡報藍 ================= */
-body[data-skin="navy"]{
- --bg:#0E2246;--paper:#F4F7FC;--card:#FFFFFF;--ink:#0F2447;--muted:#5A6C8F;--line:#CBD6E8;
- --accent:#F5A623;--accent-d:#D98A0B;--accent-soft:#FFEBCB;--green:#1F8A5B;--green-soft:#D6EFE2;
- --blue:#2E5CB8;--blue-soft:#DBE6FA;--soft:#EDF2FA;--soft2:#DCE5F4;--bubble:#DCE5F4;--mmbg:#EEF3FB;--dot:#2A4170;
- --inv:#0F2447;--inv-fg:#fff;--r:10px;--font-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
- background:linear-gradient(160deg,#0B1C3C,#12305E 60%,#0E2246);
+/* ================= 深夜綠 ================= */
+body[data-skin="forest"]{
+ --bg:#0E2F2F;--paper:#F1F8F5;--card:#FFFFFF;--ink:#0F2B2B;--muted:#557270;--line:#C5DDD6;
+ --accent:#2FBF92;--accent-d:#1F9A74;--accent-soft:#D3F3E6;--green:#1F8A5B;--green-soft:#D6EFE2;
+ --blue:#2E6FB8;--blue-soft:#DBE8FA;--soft:#E7F2EE;--soft2:#D3E6DF;--bubble:#D3E6DF;--mmbg:#EAF4F0;--dot:#1F4F4D;
+ --inv:#0F2B2B;--inv-fg:#fff;--r:10px;--font-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+ background:linear-gradient(160deg,#0B2525,#123B3B 60%,#0E2F2F);
 }
-body[data-skin="navy"] .topbar{background:#0A1832;border-bottom:1px solid #22406F;color:#fff}
-body[data-skin="navy"] .topbar .brand small,body[data-skin="navy"] .score{color:#9DB0D6}
-body[data-skin="navy"] .score b{color:#fff}
-body[data-skin="navy"] .topbar .tbtn{background:#14284b;color:#fff;border-color:#2C4A7D}
-body[data-skin="navy"] .vsw{background:#14284b}
-body[data-skin="navy"] .vsw button{color:#B9C8E6}
-body[data-skin="navy"] .vsw button.on{background:var(--accent);color:#0F2447}
-body[data-skin="navy"] .pbar{background:#22406F}
-body[data-skin="navy"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
-body[data-skin="navy"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
-body[data-skin="navy"] .sim{border:1px solid #2C4A7D;box-shadow:0 18px 50px rgba(0,0,0,.45)}
-body[data-skin="navy"] .btn,body[data-skin="navy"] .chip.pri,body[data-skin="navy"] .send,body[data-skin="navy"] .circ.go{background:var(--accent);color:#0F2447}
-body[data-skin="navy"] .seg.cur{background:var(--accent)}
-body[data-skin="navy"] .mmbar,body[data-skin="navy"] .mmlegend{background:#0A1832;border-color:#22406F;color:#B9C8E6}
-body[data-skin="navy"] .mmbar .mtab{background:#14284b;color:#fff;border-color:#2C4A7D}
-body[data-skin="navy"] .mmtools button{background:#14284b;color:#fff;border-color:#2C4A7D}
-body[data-skin="navy"] #mmv{background:var(--mmbg)}
-body[data-skin="navy"] .vwrap2{background:var(--paper);border-radius:16px;margin:16px auto 80px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
-body[data-skin="navy"] .view .lyh{color:#0F2447}
-body[data-skin="navy"] .mn-box{border-radius:2px}
-body[data-skin="navy"] .tip{background:#FFF3DB}
-body[data-skin="navy"] .vtag{background:#0A1832}
+body[data-skin="forest"] .topbar{background:#0A2323;border-bottom:1px solid #21504E;color:#fff}
+body[data-skin="forest"] .topbar .brand small,body[data-skin="forest"] .score{color:#9CC4BD}
+body[data-skin="forest"] .score b{color:#fff}
+body[data-skin="forest"] .topbar .tbtn{background:#123B3B;color:#fff;border-color:#2C6663}
+body[data-skin="forest"] .vsw{background:#123B3B}
+body[data-skin="forest"] .vsw button{color:#B5D6CF}
+body[data-skin="forest"] .vsw button.on{background:var(--accent);color:#06241F}
+body[data-skin="forest"] .pbar{background:#21504E}
+body[data-skin="forest"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
+body[data-skin="forest"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
+body[data-skin="forest"] .sim{border:1px solid #2C6663;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+body[data-skin="forest"] .btn,body[data-skin="forest"] .chip.pri,body[data-skin="forest"] .send,body[data-skin="forest"] .circ.go{background:var(--accent);color:#06241F}
+body[data-skin="forest"] .mmbar,body[data-skin="forest"] .mmlegend{background:#0A2323;border-color:#21504E;color:#B5D6CF}
+body[data-skin="forest"] .mmbar .mtab,body[data-skin="forest"] .mmtools button{background:#123B3B;color:#fff;border-color:#2C6663}
+body[data-skin="forest"] #mmv{background:var(--mmbg)}
+body[data-skin="forest"] .vwrap2{background:var(--paper);border-radius:16px;margin:16px auto 80px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+body[data-skin="forest"] .tip{background:#FFF6DC}
 
 /* 辭典 */
 body[data-skin="candy"] .gcard{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
 body[data-skin="candy"] .gsearch input{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
-body[data-skin="candy"] .ga{border:3px solid var(--ink);background:#FFF0B8}
+body[data-skin="candy"] .ga{border:3px solid var(--ink);background:var(--soft)}
 body[data-skin="candy"] .gcats button{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
 body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3px solid var(--line);box-shadow:4px 4px 0 #000}
 body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}

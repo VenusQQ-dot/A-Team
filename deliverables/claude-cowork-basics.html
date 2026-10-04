@@ -500,39 +500,38 @@ body:not([data-view="learn"]) .pbar,body:not([data-view="learn"]) .score,body:no
 .menu-list small{color:var(--muted);display:block}
 .menu-list .lock{opacity:.5}
 
-/* ===== 簡報式影片 ===== */
-.vtag{position:absolute;left:1.2em;top:1.1em;z-index:2;background:#14284b;color:#fff;border-radius:.5em;padding:.25em .9em;font-size:1.45em;font-weight:700;box-shadow:0 .2em .6em rgba(0,0,0,.25)}
-.vtag:empty{display:none}
-.vs-t{background:linear-gradient(135deg,#0E2146,#183868);color:#fff;align-items:flex-start;justify-content:center;padding:3em 4em 5em;gap:.7em}
-.vstage .vs-t{inset:0}
-.vs-t .vh{color:#fff;font-family:var(--font-head);font-size:3.3em;font-weight:800;text-align:left}
-.vs-t .vsub{color:#B9C8E6;text-align:left;font-size:1.7em}
-.vpill{border:.1em solid rgba(255,255,255,.5);border-radius:99em;padding:.2em 1.1em;font-size:1.2em;letter-spacing:.14em;color:#DDE6F7;margin-bottom:.4em}
-.vnote2{position:absolute;right:1.4em;top:1.1em;font-size:1em;color:#9DB0D6}
-.vchips{display:flex;align-items:center;gap:.5em;flex-wrap:wrap;margin-top:1.2em}
-.vchips b{background:rgba(255,255,255,.1);border:.1em solid rgba(255,255,255,.22);border-radius:.5em;padding:.3em 1em;font-size:1.5em;color:#fff}
-.vchips span{color:#F5A623;font-size:2em;font-weight:700}
-.vcol.hot,.vout,.vcomp{outline:.22em solid #F5A623;outline-offset:.35em}
-.vs-r{flex-direction:column;align-items:stretch;justify-content:center;gap:.7em;padding:3em 5em 5em;flex-wrap:nowrap}
-.vs-r .vlt{font-size:2.9em;margin-bottom:.1em}
-.vcard{display:flex;align-items:center;gap:1em;background:var(--card);border:.12em solid var(--line);border-radius:.8em;padding:.55em 1em;transition:all .4s}
-.vcard .vn{width:2em;height:2em;border-radius:50%;background:#DDE5F3;display:grid;place-items:center;font-size:1.5em;font-weight:800;color:#14284b;flex:none}
-.vcard b{font-size:1.9em;display:block;line-height:1.3}
-.vcard small{font-size:1.4em;color:var(--muted)}
-.vcard.on{outline:.2em solid #F5A623;outline-offset:.2em;background:#FFFBEF}
-.vcard.on .vn{background:#14284b;color:#fff}
+/* ===== 影片（海報貼紙風）===== */
+.vdots{position:absolute;right:1.2em;top:1.1em;z-index:2;display:flex;gap:.45em;align-items:center}
+.vdots i{width:.9em;height:.9em;border-radius:50%;border:.14em solid var(--ink);background:var(--card)}
+.vdots i.on{background:var(--accent)}
+.vs-t{background:var(--accent-soft);color:var(--ink);align-items:flex-start;justify-content:center;padding:2.4em 4em 6.2em;gap:.55em;overflow:hidden}
+.vblob{position:absolute;border-radius:50%;border:.2em solid var(--ink);pointer-events:none}
+.vblob.b1{width:15em;height:15em;right:-3em;top:-2.5em;background:#FFE08A}
+.vblob.b2{width:9em;height:9em;right:6em;bottom:2.4em;background:#B9A8FF}
+.vblob.b3{width:4em;height:4em;right:15em;top:3em;background:var(--card)}
+.vs-t .vk{color:var(--ink);font-weight:800;font-size:1.5em;letter-spacing:.08em;display:flex;align-items:center;gap:.6em}
+.vs-t .vk::before{content:"";width:2.2em;height:.2em;background:var(--ink);display:block}
+.vs-t .vh{color:var(--ink);font-family:var(--font-head);font-size:3.3em;font-weight:900;text-align:left;max-width:75%;position:relative}
+.vs-t .vsub{color:var(--ink);opacity:.8;text-align:left;font-size:1.65em;position:relative;max-width:75%}
+.vtags{display:flex;gap:.7em;flex-wrap:wrap;margin-top:1em;position:relative}
+.vtags b{background:var(--card);border:.15em solid var(--ink);border-radius:.5em;padding:.25em .9em;font-size:1.45em;box-shadow:.2em .2em 0 var(--ink)}
+.vtags b:nth-child(odd){transform:rotate(-2deg)}.vtags b:nth-child(even){transform:rotate(1.5deg)}
+.vcol.hot,.vout,.vcomp{box-shadow:.35em .35em 0 var(--accent)}
+.vs-r{flex-direction:row!important;flex-wrap:wrap!important;align-content:center;justify-content:center;gap:1.1em!important;padding:4.2em 4em 5.4em!important}
+.vs-r .vlt{width:100%;text-align:center;font-size:2.5em;font-family:var(--font-head);font-weight:900;margin:0 0 .1em}
+.vcard{width:20em;min-height:5.6em;display:block;background:var(--amber-soft);border:.14em solid var(--ink);border-radius:.4em .4em .4em 1.4em;padding:.7em 1em;box-shadow:.25em .25em 0 var(--ink);transition:transform .35s,background .35s}
+.vcard:nth-of-type(odd){transform:rotate(-1.4deg)}.vcard:nth-of-type(even){transform:rotate(1.2deg)}
+.vcard .vn{display:inline-block;font-size:1.25em;font-weight:900;margin-right:.4em;color:var(--accent-d)}
+.vcard .vct{display:inline}
+.vcard b{font-size:1.75em;display:inline;line-height:1.3;background:linear-gradient(transparent 62%,transparent 62%);transition:background .4s}
+.vcard small{display:block;font-size:1.3em;color:var(--muted);margin-top:.15em}
+.vcard.on{transform:rotate(0) scale(1.05)!important;background:var(--card)}
+.vcard.on b{background:linear-gradient(transparent 62%,var(--accent) 62%)}
 .vcap{background:none!important;padding:.8em 1.4em!important;justify-content:center!important;align-items:flex-end!important}
-.vcap span{background:#14284b;color:#fff;padding:.35em .9em;border-radius:.3em;font-weight:700;font-size:1em;line-height:1.5;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.vcap span{background:var(--card);color:var(--ink);padding:.3em .9em;border:.14em solid var(--ink);border-radius:.6em;box-shadow:.25em .25em 0 var(--ink);font-weight:700;line-height:1.5}
 .vcap:empty,.vcap span:empty{display:none}
-
 .vplay{left:auto!important;right:7%;top:50%!important;transform:translateY(-50%)!important}
 .vplay:active{transform:translateY(-50%) scale(.96)!important}
-.vs-r{padding:4.6em 5em 5.4em!important;gap:.45em!important}
-.vs-r .vlt{font-size:2.4em!important;margin-bottom:0!important}
-.vcard{padding:.4em .9em!important}
-.vcard .vn{width:1.7em!important;height:1.7em!important;font-size:1.35em!important}
-.vcard b{font-size:1.65em!important}
-.vcard small{font-size:1.25em!important}
 @media (max-width:700px){.brand{display:none}}
 
 .mq{background:var(--card);border:var(--bw) solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
@@ -546,8 +545,6 @@ body:not([data-view="learn"]) .pbar,body:not([data-view="learn"]) .score,body:no
 .gl b{font-size:17px;font-family:var(--font-head)}
 .gl .gs{margin-left:8px;background:var(--amber-soft);border-radius:99px;padding:0 10px;font-size:13px;font-weight:700}
 .gl p{margin:4px 0 2px;font-size:14.5px}.gl em{font-style:normal;font-size:13px;color:var(--muted)}
-.tag{background:var(--soft2);color:var(--ink)}
-.tag.ok{background:var(--green-soft);color:var(--ink)}.tag.warn{background:var(--warn-soft);color:var(--ink)}
 
 /* ===== 名詞辭典 ===== */
 body[data-view="gloss"] #view-gloss{display:block;overflow:auto}
@@ -626,10 +623,10 @@ mark{background:#FFE066;color:#171717;border-radius:3px;padding:0 1px}
 
 /* ================= 糖果粗框 ================= */
 body[data-skin="candy"]{
- --bg:#F7C948;--paper:#FFF7E3;--card:#FFFDF6;--ink:#171717;--muted:#5A5446;--line:#171717;
- --accent:#FF6B3D;--accent-d:#E0501F;--accent-soft:#FFD8C8;--green:#1E9E5A;--green-soft:#CBF09B;
+ --bg:#BFE3D6;--paper:#FFFCF4;--card:#FFFEF9;--ink:#171717;--muted:#5A5446;--line:#171717;
+ --accent:#FF6A55;--accent-d:#DE4A36;--accent-soft:#FFD9D1;--green:#1E9E5A;--green-soft:#CBF09B;
  --blue:#3B5CFF;--blue-soft:#CFE0FF;--warn:#E5322D;--warn-soft:#FFC7C0;--amber:#8A5A00;--amber-soft:#FFE79A;
- --soft:#FFEFC2;--soft2:#FFD966;--bubble:#FFD966;--mmbg:#FFF3D1;--dot:#E5A81C;--bw:3px;--r:14px;
+ --soft:#E6F4EE;--soft2:#CFE9DF;--bubble:#FFE08A;--mmbg:#EAF6F0;--dot:#8CC7B4;--bw:3px;--r:14px;
  --inv:#171717;--inv-fg:#fff;--sh:4px 4px 0 #171717;
  --font-head:"Avenir Next","Nunito","Arial Rounded MT Bold","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
  background:var(--bg) radial-gradient(circle at 2px 2px,var(--dot) 2px,transparent 0) 0 0/24px 24px;
@@ -668,15 +665,13 @@ body[data-skin="candy"] .composer{border-radius:18px}
 body[data-skin="candy"] .rd-h,body[data-skin="candy"] .hello h1,body[data-skin="candy"] .lyh{font-weight:900;letter-spacing:-.01em}
 body[data-skin="candy"] .toast{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);color:#fff}
 body[data-skin="candy"] .toast.ok{background:var(--green)}
-body[data-skin="candy"] .sticker{display:block;position:absolute;right:44px;bottom:0;z-index:6;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:3px 12px;transform:rotate(3deg);font-size:11px;letter-spacing:.12em;line-height:1.3;border-radius:6px;text-align:center;pointer-events:none}
-body[data-skin="candy"] .sticker b{display:block;font-size:14px;letter-spacing:0}
+body[data-skin="candy"] .sticker{display:block;position:absolute;right:44px;bottom:2px;z-index:6;background:#FFE08A;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:2px 16px;transform:rotate(-2.5deg);font-size:13px;font-weight:800;border-radius:99px;pointer-events:none}
 body[data-skin="candy"] .deco{display:block;position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-body[data-skin="candy"] .deco svg{position:absolute;stroke:var(--ink);stroke-width:3}
-body[data-skin="candy"] .deco .d1{right:-6px;top:90px;width:70px;fill:#FF8A6B}
-body[data-skin="candy"] .deco .d2{right:8px;bottom:90px;width:52px;fill:#B9A8FF}
-body[data-skin="candy"] .deco .d3{left:-10px;bottom:30px;width:56px;fill:#9BE564}
-body[data-skin="candy"] .deco .d4{left:6px;top:10px;width:40px;fill:#fff}
-body[data-skin="candy"] .vtag{border:2px solid #fff}
+body[data-skin="candy"] .deco svg{position:absolute;stroke:var(--ink);stroke-width:3;fill:none}
+body[data-skin="candy"] .deco .d1{right:-12px;top:96px;width:64px;fill:#FFE08A}
+body[data-skin="candy"] .deco .d2{right:10px;bottom:84px;width:64px}
+body[data-skin="candy"] .deco .d3{left:-8px;bottom:26px;width:60px;fill:#B9A8FF}
+body[data-skin="candy"] .deco .d4{left:8px;top:6px;width:54px;fill:var(--accent)}
 /* 心智圖 / 分層卡片 / 全景 */
 body[data-skin="candy"] .mmbar,body[data-skin="candy"] .mmlegend{background:var(--paper);border-bottom:3px solid var(--ink)}
 body[data-skin="candy"] #mmv{background:var(--mmbg)}
@@ -758,41 +753,36 @@ body[data-skin="arcade"] .md,body[data-skin="arcade"] .mail{background:var(--sof
 body[data-skin="arcade"] .vcol,body[data-skin="arcade"] .vbox,body[data-skin="arcade"] .vf{color:var(--ink)}
 body[data-skin="arcade"] .vcol span,body[data-skin="arcade"] .vbox small{color:var(--muted)}
 
-/* ================= 簡報藍 ================= */
-body[data-skin="navy"]{
- --bg:#0E2246;--paper:#F4F7FC;--card:#FFFFFF;--ink:#0F2447;--muted:#5A6C8F;--line:#CBD6E8;
- --accent:#F5A623;--accent-d:#D98A0B;--accent-soft:#FFEBCB;--green:#1F8A5B;--green-soft:#D6EFE2;
- --blue:#2E5CB8;--blue-soft:#DBE6FA;--soft:#EDF2FA;--soft2:#DCE5F4;--bubble:#DCE5F4;--mmbg:#EEF3FB;--dot:#2A4170;
- --inv:#0F2447;--inv-fg:#fff;--r:10px;--font-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
- background:linear-gradient(160deg,#0B1C3C,#12305E 60%,#0E2246);
+/* ================= 深夜綠 ================= */
+body[data-skin="forest"]{
+ --bg:#0E2F2F;--paper:#F1F8F5;--card:#FFFFFF;--ink:#0F2B2B;--muted:#557270;--line:#C5DDD6;
+ --accent:#2FBF92;--accent-d:#1F9A74;--accent-soft:#D3F3E6;--green:#1F8A5B;--green-soft:#D6EFE2;
+ --blue:#2E6FB8;--blue-soft:#DBE8FA;--soft:#E7F2EE;--soft2:#D3E6DF;--bubble:#D3E6DF;--mmbg:#EAF4F0;--dot:#1F4F4D;
+ --inv:#0F2B2B;--inv-fg:#fff;--r:10px;--font-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+ background:linear-gradient(160deg,#0B2525,#123B3B 60%,#0E2F2F);
 }
-body[data-skin="navy"] .topbar{background:#0A1832;border-bottom:1px solid #22406F;color:#fff}
-body[data-skin="navy"] .topbar .brand small,body[data-skin="navy"] .score{color:#9DB0D6}
-body[data-skin="navy"] .score b{color:#fff}
-body[data-skin="navy"] .topbar .tbtn{background:#14284b;color:#fff;border-color:#2C4A7D}
-body[data-skin="navy"] .vsw{background:#14284b}
-body[data-skin="navy"] .vsw button{color:#B9C8E6}
-body[data-skin="navy"] .vsw button.on{background:var(--accent);color:#0F2447}
-body[data-skin="navy"] .pbar{background:#22406F}
-body[data-skin="navy"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
-body[data-skin="navy"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
-body[data-skin="navy"] .sim{border:1px solid #2C4A7D;box-shadow:0 18px 50px rgba(0,0,0,.45)}
-body[data-skin="navy"] .btn,body[data-skin="navy"] .chip.pri,body[data-skin="navy"] .send,body[data-skin="navy"] .circ.go{background:var(--accent);color:#0F2447}
-body[data-skin="navy"] .seg.cur{background:var(--accent)}
-body[data-skin="navy"] .mmbar,body[data-skin="navy"] .mmlegend{background:#0A1832;border-color:#22406F;color:#B9C8E6}
-body[data-skin="navy"] .mmbar .mtab{background:#14284b;color:#fff;border-color:#2C4A7D}
-body[data-skin="navy"] .mmtools button{background:#14284b;color:#fff;border-color:#2C4A7D}
-body[data-skin="navy"] #mmv{background:var(--mmbg)}
-body[data-skin="navy"] .vwrap2{background:var(--paper);border-radius:16px;margin:16px auto 80px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
-body[data-skin="navy"] .view .lyh{color:#0F2447}
-body[data-skin="navy"] .mn-box{border-radius:2px}
-body[data-skin="navy"] .tip{background:#FFF3DB}
-body[data-skin="navy"] .vtag{background:#0A1832}
+body[data-skin="forest"] .topbar{background:#0A2323;border-bottom:1px solid #21504E;color:#fff}
+body[data-skin="forest"] .topbar .brand small,body[data-skin="forest"] .score{color:#9CC4BD}
+body[data-skin="forest"] .score b{color:#fff}
+body[data-skin="forest"] .topbar .tbtn{background:#123B3B;color:#fff;border-color:#2C6663}
+body[data-skin="forest"] .vsw{background:#123B3B}
+body[data-skin="forest"] .vsw button{color:#B5D6CF}
+body[data-skin="forest"] .vsw button.on{background:var(--accent);color:#06241F}
+body[data-skin="forest"] .pbar{background:#21504E}
+body[data-skin="forest"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
+body[data-skin="forest"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
+body[data-skin="forest"] .sim{border:1px solid #2C6663;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+body[data-skin="forest"] .btn,body[data-skin="forest"] .chip.pri,body[data-skin="forest"] .send,body[data-skin="forest"] .circ.go{background:var(--accent);color:#06241F}
+body[data-skin="forest"] .mmbar,body[data-skin="forest"] .mmlegend{background:#0A2323;border-color:#21504E;color:#B5D6CF}
+body[data-skin="forest"] .mmbar .mtab,body[data-skin="forest"] .mmtools button{background:#123B3B;color:#fff;border-color:#2C6663}
+body[data-skin="forest"] #mmv{background:var(--mmbg)}
+body[data-skin="forest"] .vwrap2{background:var(--paper);border-radius:16px;margin:16px auto 80px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+body[data-skin="forest"] .tip{background:#FFF6DC}
 
 /* 辭典 */
 body[data-skin="candy"] .gcard{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
 body[data-skin="candy"] .gsearch input{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
-body[data-skin="candy"] .ga{border:3px solid var(--ink);background:#FFF0B8}
+body[data-skin="candy"] .ga{border:3px solid var(--ink);background:var(--soft)}
 body[data-skin="candy"] .gcats button{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
 body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3px solid var(--line);box-shadow:4px 4px 0 #000}
 body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}
@@ -808,7 +798,7 @@ body[data-skin="arcade"] mark{background:var(--accent)}
   <div class="pbar" role="progressbar" aria-label="學習進度"><i id="pbar"></i></div>
   <div class="score" id="score"></div>
   <div class="tspacer"></div>
-  <div class="skins" role="group" aria-label="換膚"><button data-act="skin" data-s="candy" title="糖果粗框" style="--c:#F7C948"></button><button data-act="skin" data-s="paper" title="米色手札" style="--c:#E8E0D0"></button><button data-act="skin" data-s="arcade" title="像素夜" style="--c:#0F1A45"></button><button data-act="skin" data-s="navy" title="簡報藍" style="--c:#183868"></button></div>
+  <div class="skins" role="group" aria-label="換膚"><button data-act="skin" data-s="candy" title="糖果粗框" style="--c:#F7C948"></button><button data-act="skin" data-s="paper" title="米色手札" style="--c:#E8E0D0"></button><button data-act="skin" data-s="arcade" title="像素夜" style="--c:#0F1A45"></button><button data-act="skin" data-s="forest" title="深夜綠" style="--c:#12403F"></button></div>
   <div class="panes"><button class="tbtn on" data-act="pane" data-p="coach">課程</button><button class="tbtn" data-act="pane" data-p="sim">模擬器</button></div>
   <button class="tbtn" id="teacher" data-act="teacher" aria-pressed="false" title="解鎖全部單元、顯示答案提示">老師模式</button>
   <button class="tbtn" data-act="reset">重置進度</button>
@@ -829,12 +819,12 @@ body[data-skin="arcade"] mark{background:var(--accent)}
   </section>
   <section class="stage" aria-label="Cowork 模擬器">
    <div class="deco" aria-hidden="true">
-    <svg class="d1" viewBox="0 0 50 50"><path d="M25 3 47 45H3z"/></svg>
-    <svg class="d2" viewBox="0 0 50 50"><path d="M3 47V3a44 44 0 0 1 44 44z"/></svg>
-    <svg class="d3" viewBox="0 0 50 50"><path d="M25 2 31 19 48 25 31 31 25 48 19 31 2 25 19 19z"/></svg>
-    <svg class="d4" viewBox="0 0 50 50"><path d="M20 4h10v16h16v10H30v16H20V30H4V20h16z"/></svg>
+    <svg class="d1" viewBox="0 0 50 50"><circle cx="25" cy="25" r="18"/></svg>
+    <svg class="d2" viewBox="0 0 60 30"><path d="M3 20q8-16 16 0t16 0t16 0"/></svg>
+    <svg class="d3" viewBox="0 0 50 30"><path d="M4 28a21 21 0 0 1 42 0z"/></svg>
+    <svg class="d4" viewBox="0 0 50 20"><circle cx="8" cy="10" r="5"/><circle cx="25" cy="10" r="5"/><circle cx="42" cy="10" r="5"/></svg>
    </div>
-   <div class="sticker" aria-hidden="true">TAP ANYTHING<b>每個都能按，真的</b></div>
+   <div class="sticker" aria-hidden="true">試試看・點點看</div>
    <div class="sim" id="sim"></div>
   </section>
  </div>
@@ -965,38 +955,38 @@ const MATCH={
 };
 
 /* ========== 影片場景產生器 ========== */
-const T=(k,h,s,chips)=>`<div class="vs vs-t"><div class="vnote2 vi" data-at="0.1">教學示範資料皆為虛構，數字僅供練習</div><div class="vpill vi" data-at="0.2">${k}</div><div class="vh vi" data-at="0.7">${h}</div><div class="vsub vi" data-at="1.5">${s}</div>${chips?`<div class="vchips">${chips.map((c,i)=>`${i?`<span class="vi" data-at="${(2+i*0.4).toFixed(1)}">→</span>`:''}<b class="vi" data-at="${(2.15+i*0.4).toFixed(1)}">${c}</b>`).join('')}</div>`:''}</div>`;
+const T=(k,h,s,chips)=>`<div class="vs vs-t"><i class="vblob b1"></i><i class="vblob b2"></i><i class="vblob b3"></i><div class="vk vi" data-at="0.2">${k}</div><div class="vh vi" data-at="0.7">${h}</div><div class="vsub vi" data-at="1.5">${s}</div>${chips?`<div class="vtags">${chips.map((c,i)=>`<b class="vi" data-at="${(2+i*0.35).toFixed(2)}">${c}</b>`).join('')}</div>`:''}</div>`;
 const COMPARE=cols=>`<div class="vs">${cols.map((c,i)=>`<div class="vcol vi ${c.cls||''}" data-at="${0.3+i*0.9}"><div class="vcic">${IC[c.ic]}</div><b>${c.h}</b>${c.lines.map((l,j)=>`<span class="vi" data-at="${0.8+i*0.9+j*0.45}">${l}</span>`).join('')}</div>`).join('')}</div>`;
 const FLOW=(items,note)=>`<div class="vs">${items.map((x,i)=>(i?`<div class="varr vi" data-at="${0.15+i*0.8}">→</div>`:'')+`<div class="vbox vi" data-at="${0.4+i*0.8}">${IC[x.ic]}<b>${x.l}</b><small>${x.s||''}</small></div>`).join('')}${note?`<div class="vnote vi" data-at="${0.8+items.length*0.8}">${note}</div>`:''}</div>`;
 const TYPE=(label,text,btn)=>`<div class="vs vs-y"><div class="vcomp vi" data-at="0.2"><div class="vlab">${label}</div><div class="vtxt" data-type="${esc(text)}" data-prog="0.9,${(text.length/13).toFixed(1)}"></div><div class="vbtn vi" data-at="${(1.3+text.length/13).toFixed(1)}">${btn||'送出'}</div></div></div>`;
-const LIST=(title,items)=>`<div class="vs vs-r"><div class="vlt vi" data-at="0.2">${title}</div>${items.map((x,i)=>{const p=x.split('：'),at=0.9+i*1.5,end=i===items.length-1?999:at+1.5;return `<div class="vcard vi" data-at="${at}" data-win="${at},${end}"><span class="vn">${i+1}</span><span class="vct"><b>${p[0]}</b>${p[1]?`<small>${p[1]}</small>`:''}</span></div>`}).join('')}</div>`;
+const LIST=(title,items)=>`<div class="vs vs-r"><div class="vlt vi" data-at="0.2">${title}</div>${items.map((x,i)=>{const p=x.split('：'),at=0.9+i*1.5,end=i===items.length-1?999:at+1.5;return `<div class="vcard vi" data-at="${at}" data-win="${at},${end}"><span class="vn">${i+1}.</span><span class="vct"><b>${p[0]}</b>${p[1]?`<small>${p[1]}</small>`:''}</span></div>`}).join('')}</div>`;
 const FILES=(from,to,note)=>`<div class="vs vs-d"><div class="vfiles">${from.map((f,i)=>`<div class="vf vi" data-at="${0.3+i*0.3}">${IC.file}${f}</div>`).join('')}</div><div class="vproc"><div class="vbar"><i data-prog="${(0.6+from.length*0.3).toFixed(1)},2.4"></i></div><small class="vi" data-at="1">Claude 處理中…</small></div><div class="vout vi" data-at="${(0.6+from.length*0.3+2.4).toFixed(1)}">${IC.sheet}<b>${to}</b><small>${note||''}</small></div></div>`;
 
-const VTAGS={1:['三種模式','Cowork 在做什麼','記住三句話'],2:['四個區塊','三個入口'],3:['選對資料夾','授權前三件事'],4:['看範例','四要素'],5:['三種擴充','Gmail 範例'],6:['排程','該不該允許','安全清單']};
+const VTAGS={1:['三種模式','Cowork 在做什麼','三句話帶走'],2:['四個區塊','三個入口'],3:['選對資料夾','授權前三件事'],4:['看範例','四要素'],5:['三種擴充','Gmail 範例'],6:['排程','該不該允許','安全清單']};
 const VIDEOS={
  1:[
-  {dur:5,cap:'先搞懂：Claude 有三種用法——Chat 聊天、Cowork 幫你做事、Code 寫程式。',html:T('ACCT 內部教學 ・ 第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚三個模式，就不會用錯地方',['Chat 問答','Cowork 動手做','Code 寫程式'])},
+  {dur:5,cap:'先搞懂：Claude 有三種用法——Chat 聊天、Cowork 幫你做事、Code 寫程式。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚三個模式，就不會用錯地方',['Chat 問答','Cowork 動手做','Code 寫程式'])},
   {dur:9,cap:'Chat 負責問答；Cowork 像同事，能讀你授權的資料夾、產出檔案；Code 給工程師寫程式。',html:COMPARE([{ic:'chat',h:'Chat',lines:['問答、寫作','解釋會計準則','不碰你的檔案']},{ic:'layers',h:'Cowork',cls:'hot',lines:['讀你授權的資料夾','做完整件任務','產出 Excel、簡報']},{ic:'code',h:'Code',lines:['寫程式、改專案','給工程師用','今天先不用管']}])},
   {dur:9,cap:'例如把 12 張發票丟給 Cowork：它會讀檔、辨識、整理成 Excel，就像新來的助理。',html:FILES(['發票_001.pdf','發票_002.jpg','發票_003.pdf','發票_004.jpg'],'發票彙整.xlsx','自動整理完成')},
-  {dur:7,cap:'記住：問問題用 Chat，交代任務用 Cowork。接著到右邊模擬器實際點點看。',html:LIST('記住這三句',['Chat：問問題','Cowork：交付任務，要給資料夾','Code：寫程式，給工程師'])}],
+  {dur:7,cap:'帶走這三句：問問題用 Chat，交代任務用 Cowork。接著到右邊模擬器實際點點看。',html:LIST('三句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾','Code：寫程式，給工程師'])}],
  2:[
-  {dur:5,cap:'打開 Cowork，你會看到三個區塊：側邊欄、輸入框、進度面板。',html:T('ACCT 內部教學 ・ 第 3 單元','三個區塊，看懂就會用','像認識一間新辦公室的格局',['側邊欄','輸入框','資料夾','進度面板'])},
+  {dur:5,cap:'打開 Cowork，你會看到三個區塊：側邊欄、輸入框、進度面板。',html:T('第 3 單元','三個區塊，看懂就會用','像認識一間新辦公室的格局',['側邊欄','輸入框','資料夾','進度面板'])},
   {dur:9,cap:'從左到右：側邊欄找功能、輸入框下指令、選資料夾給資料、右側看進度。',html:FLOW([{ic:'book',l:'側邊欄',s:'新任務・排程・自訂'},{ic:'chat',l:'輸入框',s:'寫下要做什麼'},{ic:'folder',l:'資料夾',s:'給它資料'},{ic:'check',l:'進度面板',s:'看做到哪一步'}])},
   {dur:7,cap:'三個最常用的入口：新任務、排程、自訂。自訂裡有技能、連接器和外掛。',html:LIST('三個常用入口',['新任務：交辦一件事','排程：固定時間自動做','自訂：技能・連接器・外掛'])}],
  3:[
-  {dur:5,cap:'Cowork 只能碰你「授權」的資料夾，這是最重要的安全觀念。',html:T('ACCT 內部教學 ・ 第 4 單元','只借一個抽屜，不給整間檔案室','授權資料夾 = 最小權限',['選資料夾','最小權限','先放副本'])},
+  {dur:5,cap:'Cowork 只能碰你「授權」的資料夾，這是最重要的安全觀念。',html:T('第 4 單元','只借一個抽屜，不給整間檔案室','授權資料夾 = 最小權限',['選資料夾','最小權限','先放副本'])},
   {dur:9,cap:'只授權任務需要的資料夾；整個「文件」資料夾可能混有薪資和身分證，風險大。',html:COMPARE([{ic:'folder',h:'發票_2026Q3',cls:'good',lines:['只含發票','範圍小','建議授權']},{ic:'lock',h:'整個「文件」',cls:'bad',lines:['含薪資、身分證','範圍太大','不要授權']}])},
   {dur:8,cap:'授權前三件事：選最小範圍、先複製副本、敏感資料不要放進去。',html:LIST('授權前三件事',['選最小範圍的資料夾','先複製一份副本當練習','敏感資料不要放進去'])}],
  4:[
-  {dur:5,cap:'同樣的任務，指令寫得好不好，結果差很多。',html:T('ACCT 內部教學 ・ 第 5 單元','好指令 = 好結果','用「四要素」寫出可直接執行的任務',['寫指令','送出','核准','抽查'])},
+  {dur:5,cap:'同樣的任務，指令寫得好不好，結果差很多。',html:T('第 5 單元','好指令 = 好結果','用「四要素」寫出可直接執行的任務',['寫指令','送出','核准','抽查'])},
   {dur:10,cap:'看這個例子：有目標、有資料來源、有輸出格式、也有限制。',html:TYPE('任務指令','請讀取「發票_2026Q3」，把每張發票的日期、廠商、統編、金額整理成 Excel，缺統編的標紅，不要修改原始檔案。','送出')},
   {dur:8,cap:'四要素：目標、資料、格式、限制。就像開傳票要填的四個欄位。',html:LIST('好指令四要素',['目標：要做什麼','資料：從哪裡讀','格式：輸出長怎樣','限制：哪些事不能做'])}],
  5:[
-  {dur:5,cap:'Cowork 可以擴充：連接器、技能、外掛。',html:T('ACCT 內部教學 ・ 第 6 單元','讓 Claude 接上你的工具與做法','連接器・技能・外掛',['連接器','技能','外掛'])},
+  {dur:5,cap:'Cowork 可以擴充：連接器、技能、外掛。',html:T('第 6 單元','讓 Claude 接上你的工具與做法','連接器・技能・外掛',['連接器','技能','外掛'])},
   {dur:9,cap:'連接器負責連外部服務；技能是你的標準作業程序；外掛是一整包角色套件。',html:COMPARE([{ic:'plug',h:'連接器',lines:['連 Gmail、雲端硬碟','像電子對帳介面']},{ic:'book',h:'Skill 技能',cls:'hot',lines:['你的 SOP','寫一次，每次照做']},{ic:'layers',h:'Plugin 外掛',lines:['財務會計套件','技能＋工具一次裝好']}])},
   {dur:7,cap:'例如連上 Gmail，Claude 就能幫你把催款信存成草稿，由你確認後再寄。',html:FLOW([{ic:'sheet',l:'逾期應收',s:'找出 3 家客戶'},{ic:'mail',l:'Gmail 草稿',s:'不會自動寄出'},{ic:'user',l:'你覆核',s:'確認後才寄'}])}],
  6:[
-  {dur:5,cap:'最後一課：讓 Claude 定時工作，並且守住安全底線。',html:T('ACCT 內部教學 ・ 第 7 單元','自動化，但責任仍在你','排程與安全檢查',['排程','拒絕','覆核'])},
+  {dur:5,cap:'最後一課：讓 Claude 定時工作，並且守住安全底線。',html:T('第 7 單元','自動化，但責任仍在你','排程與安全檢查',['排程','拒絕','覆核'])},
   {dur:8,cap:'排程可以固定時間自動執行，例如每月 5 號產出月結報表，再由你覆核。',html:FLOW([{ic:'clock',l:'每月 5 號 09:00',s:'排程觸發'},{ic:'spark',l:'Claude 自動執行',s:'讀資料、出報表'},{ic:'user',l:'你覆核',s:'簽核後使用'}])},
   {dur:9,cap:'遇到刪除或覆蓋檔案的請求，沒有備份就拒絕；內容單純又有備份，才允許。',html:COMPARE([{ic:'check',h:'可以允許',cls:'good',lines:['有備份','範圍清楚','影響可還原']},{ic:'warn',h:'應該拒絕',cls:'bad',lines:['要永久刪除','沒有備份','範圍看不懂']}])},
   {dur:9,cap:'安全清單：看清楚再允許、抽查數字、敏感資料不授權，排程指令要寫清楚。',html:LIST('安全檢查清單',['刪除與覆蓋，看清楚再按','輸出結果要抽查數字','敏感資料不授權','排程每次都是新對話：指令寫清楚'])}]
@@ -1055,7 +1045,7 @@ const UNITS=[
    {q:'要整理 7～9 月的發票，應該授權哪個資料夾？',o:['整個「文件」資料夾','桌面','發票_2026Q3'],a:2,why:'只給任務需要的最小範圍，其他檔案就不會被讀到或改到。'},
    {q:'第一次使用，最安全的做法是？',o:['直接用正式資料夾','複製一份副本當練習資料夾','全部授權比較省事'],a:1,why:'Cowork 可能改檔名或寫入新檔。用副本，出錯也不影響原始憑證。'},
    {q:'資料夾裡混有薪資單，但任務只是整理發票，怎麼辦？',o:['移出敏感檔案，或改授權較小的資料夾','沒關係，Claude 不會看','全部壓縮成 zip 再授權'],a:0,why:'敏感資料與任務無關，就不該放進授權範圍。'}]},
- {id:4,tips:['先看範例指令長什麼樣子。','四要素缺一，結果就會亂猜。','產出後請自己開檔檢查一次，這是你的工作，不是 Cowork 的。','權限請求是你的覆核關卡，不是裝飾。'],prompts:[{t:'交給 Cowork 的指示',text:SUGG[0].p}],sample:{t:'原始資料（練習用）',rows:['2026-07-03、大同文具、12345678、1,250','2026-07-05、台灣大哥大、（缺統編）、1,099','2026-07-09、全聯福利中心、23456789、3,480']},short:'好指令',title:'下第一個任務：好指令四要素',goal:'用「目標、資料、格式、限制」下指令，並看懂權限請求。',builder:true,
+ {id:4,tips:['先看範例指令長什麼樣子。','四要素缺一，結果就會亂猜。','成果交出去之前，先自己抽查幾筆：Claude 做的是初稿，簽核的人是你。','權限請求是你的覆核關卡，不是裝飾。'],prompts:[{t:'可直接貼上的指令',text:SUGG[0].p}],sample:{t:'練習用資料',rows:['2026-07-03、大同文具、12345678、1,250','2026-07-05、台灣大哥大、（缺統編）、1,099','2026-07-09、全聯福利中心、23456789、3,480']},short:'好指令',title:'下第一個任務：好指令四要素',goal:'用「目標、資料、格式、限制」下指令，並看懂權限請求。',builder:true,
   cards:[{f:'四要素',s:'目標資料格式限制',b:'像開傳票要填的四個欄位，缺一不可。'},{f:'權限請求',s:'要你點頭',b:'像覆核流程：重要動作要主管（你）簽核才放行。'},{f:'抽查結果',s:'人工覆核',b:'像審計抽樣：不用全看，但一定要看。'}],
   steps:[
    U('4-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:4')),
@@ -1068,7 +1058,7 @@ const UNITS=[
    {q:'哪一個指令比較好？',o:['幫我處理一下發票','請把「發票_2026Q3」每張發票的日期、廠商、統編、金額整理成 Excel，缺統編標紅，不要改原始檔','整理檔案'],a:1,why:'有資料來源、輸出格式與限制，Claude 不用猜。'},
    {q:'「請整理這些發票」少了哪些要素？',o:['都有了','只缺目標','輸出格式與限制'],a:2,why:'沒說輸出長怎樣，也沒說哪些事不能做（例如不要改原檔）。'},
    {q:'Claude 要求「重新命名 12 個檔案」，你該怎麼做？',o:['看清楚範圍與影響，確認有備份再允許','不看直接允許','一律拒絕'],a:0,why:'權限請求是你的覆核關卡：看範圍、看影響、確認備份。'}]},
- {id:5,tips:['連接器、技能、外掛，三種擴充各管一件事。','連接器像電子對帳介面；技能像 SOP。','連接器只連需要的；草稿請自己確認再寄。','三題，分清楚三種擴充。'],prompts:[{t:'交給 Cowork 的指示（先連接 Gmail）',text:SUGG[2].p}],short:'擴充能力',title:'連接器、技能、外掛：讓 Claude 更懂你的工作',goal:'連上 Gmail、安裝財務外掛、建立自己的 Skill。',
+ {id:5,tips:['連接器、技能、外掛，三種擴充各管一件事。','連接器像電子對帳介面；技能像 SOP。','連接器只連需要的；草稿請自己確認再寄。','三題，分清楚三種擴充。'],prompts:[{t:'可直接貼上的指令（先連接 Gmail）',text:SUGG[2].p}],short:'擴充能力',title:'連接器、技能、外掛：讓 Claude 更懂你的工作',goal:'連上 Gmail、安裝財務外掛、建立自己的 Skill。',
   cards:[{f:'連接器',s:'接外部服務',b:'像銀行的電子對帳介面：讓 Claude 連到 Gmail、雲端硬碟。'},{f:'Skill',s:'你的 SOP',b:'像公司作業手冊：寫一次，每次都照做。'},{f:'Plugin',s:'整包套件',b:'像會計部「新人套組」：SOP、工具、範本一次裝好。'}],
   steps:[
    U('5-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:5')),
@@ -1096,10 +1086,10 @@ const UNITS=[
 
 
 VIDEOS[7]=[
- {dur:6,cap:'這一課只講四個詞：Skill、MCP、Project、排程。每個都用生活比喻。',html:T('ACCT 內部教學 ・ 第 2 單元','四個名詞<br>一次講白','把 Claude 想成一位「聰明的新員工」',['Skill','MCP 連接器','Project 專案','排程'])},
+ {dur:6,cap:'這一課只講四個詞：Skill、MCP、Project、排程。每個都用生活比喻。',html:T('第 2 單元','四個名詞<br>一次講白','把 Claude 想成一位「聰明的新員工」',['Skill','MCP 連接器','Project 專案','排程'])},
  {dur:10,cap:'Skill 像作業手冊，寫一次就照做；MCP 像插頭，讓 Claude 連到 Gmail 這類外部工具。',html:COMPARE([{ic:'book',h:'Skill 技能',cls:'hot',lines:['做事說明書（SOP）','寫一次，每次照做','例：月結報表格式']},{ic:'plug',h:'MCP 連接器',lines:['接外部工具的插頭','連 Gmail、雲端硬碟','草稿由你確認再寄']}])},
  {dur:10,cap:'Project 像專案檔案夾，說明和資料放一起；排程像鬧鐘，時間到就自動做。',html:COMPARE([{ic:'folder',h:'Project 專案',cls:'hot',lines:['專案資料夾','說明與資料放一起','之後不用重講']},{ic:'clock',h:'排程',lines:['鬧鐘＋交辦單','時間到自動執行','每次都是新對話']}])},
- {dur:10,cap:'記住：Skill 教做法、MCP 接工具、專案放一起、排程定時做。',html:LIST('記住四句話',['Skill：教它怎麼做','MCP：接上外部工具','專案：說明與資料放一起','排程：時間到自動做'])}
+ {dur:10,cap:'帶走這四句：Skill 教做法、MCP 接工具、專案放一起、排程定時做。',html:LIST('四句話帶走',['Skill：教它怎麼做','MCP：接上外部工具','專案：說明與資料放一起','排程：時間到自動做'])}
 ];
 VTAGS[7]=['Skill 與 MCP','專案與排程','記住四句話'];
 Object.keys(VIDEOS).forEach(u=>VIDEOS[u].forEach((s,i)=>{if(i>0)s.tag='②③④⑤'[i-1]+' '+VTAGS[u][i-1]}));
@@ -1379,9 +1369,9 @@ class Player{
  constructor(host,scenes,key){
   Object.assign(this,{h:host,sc:scenes,key,t:0,playing:false,idx:-1,speed:1,cap:true,tts:false,done:false,started:false,raf:0,last:0});
   this.total=scenes.reduce((a,s)=>a+s.dur,0);this.starts=[];let c=0;scenes.forEach(s=>{this.starts.push(c);c+=s.dur});
-  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vtag"></div><div class="vcap"><span></span></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
+  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vdots"></div><div class="vcap"><span></span></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
   <div class="vctl"><button class="pp" data-v="toggle" aria-label="播放或暫停">▶</button><input class="vseek" type="range" min="0" max="1000" value="0" aria-label="影片進度"><span class="vtime">0:00 / ${fmt(this.total)}</span><button data-v="speed" aria-label="播放速度">1x</button><button data-v="cap" class="on">字幕</button><button data-v="tts" title="用瀏覽器朗讀字幕">旁白</button><button data-v="full">全螢幕</button></div></div>`;
-  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);this.capSpan=$('.vcap span',host);this.tagEl=$('.vtag',host);
+  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);this.capSpan=$('.vcap span',host);this.tagEl=$('.vdots',host);
   this.seek=$('.vseek',host);this.timeEl=$('.vtime',host);this.pp=$('.pp',host);this.playBtn=$('.vplay',host);
   host.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;const a=b.dataset.v;
    if(a==='play'||a==='toggle'){this.playing?this.pause():this.play()}
@@ -1414,7 +1404,7 @@ class Player{
  draw(t){
   let i=0;for(let k=0;k<this.sc.length;k++)if(t>=this.starts[k])i=k;
   const local=t-this.starts[i];
-  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capSpan.textContent=this.sc[i].cap;this.tagEl.textContent=this.sc[i].tag||'';
+  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capSpan.textContent=this.sc[i].cap;this.tagEl.innerHTML=this.sc.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('');this.tagEl.title=this.sc[i].tag||'';
    if(this.playing&&this.idx!==-1)this.say(this.sc[i].cap);this.idx=i}
   $$('[data-at]',this.scene).forEach(e=>e.classList.toggle('in',local>=+e.dataset.at));
   $$('[data-win]',this.scene).forEach(e=>{const [a,b]=e.dataset.win.split(',').map(Number);e.classList.toggle('on',local>=a&&local<b)});
@@ -1544,7 +1534,7 @@ function buildPrompt(){
 
 /* ========== 全域事件 ========== */
 function setSkin(s){
- if(!['candy','paper','arcade','navy'].includes(s))s='candy';
+ if(!['candy','paper','arcade','forest'].includes(s))s='candy';
  document.body.dataset.skin=s;$$('.skins button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));store.set('cowork-skin',s);
  if(document.body.dataset.view==='map'&&typeof mmShow==='function')requestAnimationFrame(()=>mmShow());
 }
@@ -2025,16 +2015,16 @@ const GLOSS=[
  {id:'cowork',cat:'模式',t:'Cowork',s:'請它動手做',d:'你交代任務、給資料夾，它自己拆步驟、讀檔、整理、做出檔案，你在旁邊看進度。像坐在你旁邊、能碰你電腦的助理。',e:'例：把 200 張發票整理成 Excel',k:'派工 助理 agent 自主 多步驟',go:1},
  {id:'code',cat:'模式',t:'Code',s:'寫程式',d:'給工程師用，在終端機裡寫與改程式。Cowork 用的是同一套「自己動手」的技術，但不需要終端機。',e:'例：修改公司報表系統的程式',k:'claude code 程式 工程師 終端機 terminal',go:1},
  {id:'model',cat:'用量與模型',t:'模型（Model）',s:'大腦',d:'真正在「想」的部分。有小、中、大三種：小的快又省（Haiku），中的日常首選（Sonnet），大的最會想（Opus）。',e:'例：先用 Sonnet，量大改 Haiku，卡關才升 Opus',k:'haiku sonnet opus 大腦 claude 選擇',map:'model'},
- {id:'mcp',cat:'擴充',t:'MCP（連接器）',s:'接外部工具的插頭',d:'讓 Claude 連到 Gmail、雲端硬碟等外部工具。MCP 是插頭規格的名字，畫面上通常叫「連接器」。口訣：MCP 給「手」，Skill 給「方法」。',e:'例：連上 Gmail，讓它把催款信存成草稿',k:'connector 連接器 插頭 插座 gmail drive notion model context protocol',go:5,map:'conn'},
+ {id:'mcp',cat:'擴充',t:'MCP（連接器）',s:'通往外部工具的專線',d:'讓 Claude 連到 Gmail、雲端硬碟等外部工具。MCP 是這類專線的規格名稱，畫面上通常叫「連接器」。簡單分：連接器決定「碰得到什麼」，Skill 決定「照什麼做」。',e:'例：連上 Gmail，讓它把催款信存成草稿',k:'connector 連接器 插頭 插座 gmail drive notion model context protocol',go:5,map:'conn'},
  {id:'skill',cat:'擴充',t:'Skill（技能）',s:'做事說明書',d:'把你的做法寫下來（放在一個資料夾裡的 SKILL.md），Claude 需要時就照著做。像公司的作業手冊（SOP）。',e:'例：月結報表要千分位、末列加總',k:'sop 手冊 說明書 技能 skill.md 做法',go:5,map:'skill'},
- {id:'plugin',cat:'擴充',t:'Plugin（外掛）',s:'部門工具箱',d:'把技能、連接器、子代理打包成一整套，一次裝好，也能分享給同事。內容依外掛而異。',e:'例：財務會計外掛（示意）',k:'外掛 套件 工具箱 plugin 打包 sub-agent 子代理',go:5,map:'plug'},
+ {id:'plugin',cat:'擴充',t:'Plugin（外掛）',s:'到職大禮包',d:'把技能、連接器、子代理打包成一整套，一次裝好，也能分享給同事。像新人報到時一次發下來的資料夾、帳號與手冊。內容依外掛而異。',e:'例：財務會計外掛（示意）',k:'外掛 套件 工具箱 plugin 打包 sub-agent 子代理',go:5,map:'plug'},
  {id:'project',cat:'擴充',t:'Project（專案）',s:'專案資料夾',d:'把同一件事的說明、檔案放在一起。專案有自己的指示、排程和記憶，之後在裡面做事都共用。可從零開始、匯入 Claude 專案，或用現有資料夾建立。',e:'例：「2026 月結專案」',k:'專案 project 工作區 記憶 instructions',go:7,map:'project'},
- {id:'schedule',cat:'擴充',t:'排程（Schedule）',s:'鬧鐘＋交辦單',d:'選頻率（每小時／每天／平日／每週／手動），時間到 Claude 自己開工。每次都是全新對話，指令要寫得自己看得懂。多半在雲端跑；用到你電腦裡的檔案時，電腦要開著。',e:'例：每月 5 日 09:00 出月結報表',k:'schedule 定時 自動 鬧鐘 排程任務 scheduled',go:6},
+ {id:'schedule',cat:'擴充',t:'排程（Schedule）',s:'自動開工的行事曆',d:'選頻率（每小時／每天／平日／每週／手動），時間一到 Claude 自己開工。每次都是一個全新的對話，不記得上次，所以指令要寫得自己看得懂。多半在雲端跑；用到你電腦裡的檔案時，電腦要開著。',e:'例：每月 5 日 09:00 出月結報表',k:'schedule 定時 自動 鬧鐘 排程任務 scheduled',go:6},
  {id:'folder',cat:'安全與流程',t:'授權資料夾',s:'唯一的檔案範圍',d:'你指定的資料夾，是 Claude 能讀寫的範圍。像只借出一個抽屜的鑰匙，不是整間檔案室。',e:'例：只授權「發票_2026Q3」',k:'資料夾 權限 最小權限 folder 工作資料夾',go:3,map:'folder'},
  {id:'perm',cat:'安全與流程',t:'權限模式',s:'要不要先問你',d:'三種：手動核准（每步問你，新手用這個）、自動（先做安全檢查再批准）、全部略過（不問，最危險）。永久刪除檔案，不管哪種模式都會問你。',e:'例：新手先選「手動核准」',k:'manual auto skip 核准 允許 拒絕 審核 permission',go:4,map:'perm'},
  {id:'prompt',cat:'安全與流程',t:'指令（Prompt）',s:'你交代的那句話',d:'寫清楚「目標、輸入、做法、輸出、檢查」，結果就不會亂猜。',e:'例：把「發票_2026Q3」整理成 Excel，缺統編標紅，不要改原檔',k:'prompt 提示詞 指令 任務 要素',go:4,map:'s1'},
- {id:'token',cat:'用量與模型',t:'Token',s:'計程車跳錶',d:'模型「讀和寫」的計量單位。你的指令、讀進去的檔案、對話歷史、工具回傳的資料、Claude 的回答，全都會跳錶。',e:'例：換主題就開新對話、指定檔案別丟整個資料夾，可以省',k:'用量 額度 費用 省 省錢 花費 token 計價',},
- {id:'context',cat:'用量與模型',t:'上下文視窗',s:'書桌大小',d:'模型一次能「放在桌上」的內容量。東西放太多，舊資料會被擠開、判斷也變差。',e:'例：對話聊太長，就開一個新對話',k:'context window 上下文 記憶 對話歷史 視窗 省錢 開新對話'}
+ {id:'token',cat:'用量與模型',t:'Token',s:'用量度數',d:'模型「讀」和「寫」的字量，像電表度數：你的指令、讀進去的檔案、對話歷史、工具回傳的資料、Claude 的回答，全部都會計入。',e:'例：換主題就開新對話、指定檔案別丟整個資料夾，可以省',k:'用量 額度 費用 省 省錢 花費 token 計價',},
+ {id:'context',cat:'用量與模型',t:'上下文視窗',s:'白板大小',d:'模型一次能「寫在白板上」的內容量。白板寫滿了，最舊的會被擦掉，判斷也會變差。',e:'例：話題換了就開新對話，等於換一塊乾淨的白板',k:'context window 上下文 記憶 對話歷史 視窗 省錢 開新對話'}
 ];
 
 /* ---- 小動畫（SVG + CSS，3–4 秒循環；減少動態時顯示最終畫面） ---- */
@@ -2054,7 +2044,7 @@ const GANIM={
  perm:()=>GA_SVG(`${GR(6,22,26,22,'fc ln','',11)}${GR(35,22,26,22,'fc ln','',11)}${GR(64,22,26,22,'fc ln','',11)}${GR(6,22,26,22,'fa ln hl','',11)}${GR(10,52,76,10,'fb ln pop','--dl:2.4s',5)}<path class="ln" d="M14 33h10M43 33h10M72 33h10" fill="none"/><path class="stk pop" style="--dl:2.6s" d="M30 57h36" fill="none"/>`),
  prompt:()=>GA_SVG(`${GR(6,10,84,52,'fc ln','',5)}${GR(12,16,24,10,'fa ln chip','--dl:0s',5)}${GR(40,16,24,10,'fg ln chip','--dl:.7s',5)}${GR(12,31,24,10,'fb ln chip','--dl:1.4s',5)}${GR(40,31,24,10,'fy ln chip','--dl:2.1s',5)}${GR(12,48,70,3,'fi pop','--dl:2.7s',1)}`),
  token:()=>GA_SVG(`${GR(6,10,84,30,'fc ln','',5)}${GR(12,16,72,18,'fs','',3)}${GR(12,16,72,18,'fa meter','',3)}${GR(8,48,10,10,'fy ln pop','--dl:.2s',5)}${GR(22,48,10,10,'fy ln pop','--dl:.7s',5)}${GR(36,48,10,10,'fy ln pop','--dl:1.2s',5)}${GR(50,48,10,10,'fy ln pop','--dl:1.7s',5)}${GR(64,48,10,10,'fy ln pop','--dl:2.2s',5)}${GR(78,48,10,10,'fy ln pop','--dl:2.7s',5)}`),
- context:()=>GA_SVG(`${GR(6,44,84,10,'fs ln','',3)}${GR(10,14,22,32,'fc ln paper out','',2)}${GR(30,10,22,36,'fy ln paper','--dl:.4s',2)}${GR(50,14,22,32,'fc ln paper','--dl:.8s',2)}${GR(68,10,22,36,'fg ln paper','--dl:1.2s',2)}`)
+ context:()=>GA_SVG(`${GR(4,4,88,64,'fc ln','',4)}${GR(10,14,22,32,'fs ln paper out','',2)}${GR(30,12,22,36,'fy ln paper','--dl:.4s',2)}${GR(50,14,22,32,'fa ln paper','--dl:.8s',2)}${GR(68,12,22,36,'fg ln paper','--dl:1.2s',2)}${GR(8,54,80,4,'fi','',2)}`)
 };
 GLOSS.forEach(g=>{g.anim=GANIM[g.id]});
 
