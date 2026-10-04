@@ -157,10 +157,10 @@ const FILES=(from,to,note)=>`<div class="vs vs-d"><div class="vfiles">${from.map
 const VTAGS={1:['三種模式','Cowork 在做什麼','三句話帶走'],2:['四個區塊','三個入口'],3:['選對資料夾','授權前三件事'],4:['看範例','四要素'],5:['三種擴充','Gmail 範例'],6:['排程','該不該允許','安全清單']};
 const VIDEOS={
  1:[
-  {dur:5,cap:'先搞懂：Claude 有兩種常用的用法——Chat 聊天、Cowork 幫你做事。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚這兩個，就不會用錯地方',['Chat 問答','Cowork 動手做'])},
+  {dur:5,cap:'公司提供的是 Claude Cowork。先搞懂兩種用法：Chat 聊天、Cowork 幫你做事。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚這兩個，就不會用錯地方',['Chat 問答','Cowork 動手做'])},
   {dur:9,cap:'Chat 負責問答，不碰你的檔案；Cowork 像同事，能讀你授權的資料夾、做出檔案。',html:COMPARE([{ic:'chat',h:'Chat',lines:['問答、寫作','解釋會計準則','不碰你的檔案']},{ic:'layers',h:'Cowork',cls:'hot',lines:['讀你授權的資料夾','做完整件任務','產出 Excel、簡報']}])},
   {dur:9,cap:'例如把 12 張發票丟給 Cowork：它會讀檔、辨識、整理成 Excel，就像新來的助理。',html:FILES(['發票_001.pdf','發票_002.jpg','發票_003.pdf','發票_004.jpg'],'發票彙整.xlsx','自動整理完成')},
-  {dur:8,cap:'帶走這兩句：問問題用 Chat，交代任務用 Cowork。畫面上看到的 Code 不用管，這門課不教。',html:LIST('兩句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾'])}],
+  {dur:8,cap:'帶走這兩句：問問題用 Chat，交代任務用 Cowork。接著到右邊模擬器實際點點看。',html:LIST('兩句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾'])}],
  2:[
   {dur:5,cap:'打開 Cowork，你會看到三個區塊：側邊欄、輸入框、進度面板。',html:T('第 3 單元','三個區塊，看懂就會用','像認識一間新辦公室的格局',['側邊欄','輸入框','資料夾','進度面板'])},
   {dur:9,cap:'從左到右：側邊欄找功能、輸入框下指令、選資料夾給資料、右側看進度。',html:FLOW([{ic:'book',l:'側邊欄',s:'新任務・排程・自訂'},{ic:'chat',l:'輸入框',s:'寫下要做什麼'},{ic:'folder',l:'資料夾',s:'給它資料'},{ic:'check',l:'進度面板',s:'看做到哪一步'}])},
@@ -188,7 +188,7 @@ const VIDEOS={
 const has=e=>LOG.has(e);
 const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
 const UNITS=[
- {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat 和 Cowork，知道什麼任務該交給誰。（畫面上另有 Code，是給工程師用的，這門課不教。）',
+ {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'公司提供的是 Claude Cowork，這門課就用它。先分清楚 Chat 和 Cowork，知道什麼任務該交給誰。',
   cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'}],
   match:'modes',
   steps:[

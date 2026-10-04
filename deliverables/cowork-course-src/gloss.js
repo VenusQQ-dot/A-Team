@@ -3,7 +3,7 @@ const GCATS=['全部','模式','擴充','產出文件','安全與流程','用量
 /* 內容依官方說明（support.claude.com，2026-10-04 查證）與你提供的「Cowork 闖關學院」整理；版本更新後以官方為準 */
 const GLOSS=[
  {id:'chat',cat:'模式',t:'Chat',s:'問答',d:'你問，它答。像到櫃台問業務。檔案要你自己貼上去，它不會替你動手做。',e:'例：「應付票據是什麼？」',k:'聊天 對話 問答 單輪',go:1},
- {id:'cowork',cat:'模式',t:'Cowork',s:'請它動手做',d:'你交代任務、給資料夾，它自己拆步驟、讀檔、整理、做出檔案，你在旁邊看進度。像坐在你旁邊、能碰你電腦的助理。（畫面上另有 Code 分頁，是給工程師用的，這門課不教。）',e:'例：把 200 張發票整理成 Excel',k:'派工 助理 agent 自主 多步驟',go:1},
+ {id:'cowork',cat:'模式',t:'Cowork',s:'請它動手做',d:'你交代任務、給資料夾，它自己拆步驟、讀檔、整理、做出檔案，你在旁邊看進度。像坐在你旁邊、能碰你電腦的助理。公司提供的就是 Claude Cowork。',e:'例：把 200 張發票整理成 Excel',k:'派工 助理 agent 自主 多步驟',go:1},
  {id:'model',cat:'用量與模型',t:'模型（Model）',s:'大腦',d:'真正在「想」的部分。有小、中、大三種：小的快又省（Haiku），中的日常首選（Sonnet），大的最會想（Opus）。',e:'例：先用 Sonnet，量大改 Haiku，卡關才升 Opus',k:'haiku sonnet opus 大腦 claude 選擇',map:'model'},
  {id:'mcp',cat:'擴充',t:'MCP（連接器）',s:'通往外部工具的專線',d:'讓 Claude 連到 Gmail、雲端硬碟等外部工具。MCP 是這類專線的規格名稱，畫面上通常叫「連接器」。簡單分：連接器決定「碰得到什麼」，Skill 決定「照什麼做」。',e:'例：連上 Gmail，讓它把催款信存成草稿',k:'connector 連接器 插頭 插座 gmail drive notion model context protocol',go:5,map:'conn'},
  {id:'skill',cat:'擴充',t:'Skill（技能）',s:'做事說明書',d:'把你的做法寫下來（放在一個資料夾裡的 SKILL.md），Claude 需要時就照著做。像公司的作業手冊（SOP）。',e:'例：月結報表要千分位、末列加總',k:'sop 手冊 說明書 技能 skill.md 做法',go:5,map:'skill'},

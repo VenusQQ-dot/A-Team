@@ -21,7 +21,7 @@
 輸入框左下「＋」與 Chat｜Cowork 切換、右下模型與強度（可點開選擇）、橘色送出鈕；Code 放在側邊欄。截圖中沒出現的部分（例如 Code 的位置）為推測，請對照你的版本。
 
 ## 範圍
-教材重點是 Cowork。Claude Code 不教：單元 1 只教 Chat 與 Cowork，畫面上的 Code 分頁只留一句「給工程師用，這門課不教」。
+教材重點是 Cowork，開頭說明「公司提供的是 Claude Cowork」。Claude Code 不教：單元 1 只教 Chat 與 Cowork；模擬器側邊欄保留與真實畫面一致的 Cowork｜Code 分頁，點 Code 只會提示回到 Cowork。
 
 ## 查證與參考
 - Excel／簡報：官方說明寫明 Cowork 可產出帶可用公式的 Excel（含 VLOOKUP、條件式格式、多分頁）與 PowerPoint 簡報、並能把雜亂筆記整理成報告。**Word（.docx）官方頁面沒有明確列出**，教材已標「以你的版本為準」。

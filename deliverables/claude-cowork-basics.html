@@ -1102,10 +1102,10 @@ const FILES=(from,to,note)=>`<div class="vs vs-d"><div class="vfiles">${from.map
 const VTAGS={1:['三種模式','Cowork 在做什麼','三句話帶走'],2:['四個區塊','三個入口'],3:['選對資料夾','授權前三件事'],4:['看範例','四要素'],5:['三種擴充','Gmail 範例'],6:['排程','該不該允許','安全清單']};
 const VIDEOS={
  1:[
-  {dur:5,cap:'先搞懂：Claude 有兩種常用的用法——Chat 聊天、Cowork 幫你做事。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚這兩個，就不會用錯地方',['Chat 問答','Cowork 動手做'])},
+  {dur:5,cap:'公司提供的是 Claude Cowork。先搞懂兩種用法：Chat 聊天、Cowork 幫你做事。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚這兩個，就不會用錯地方',['Chat 問答','Cowork 動手做'])},
   {dur:9,cap:'Chat 負責問答，不碰你的檔案；Cowork 像同事，能讀你授權的資料夾、做出檔案。',html:COMPARE([{ic:'chat',h:'Chat',lines:['問答、寫作','解釋會計準則','不碰你的檔案']},{ic:'layers',h:'Cowork',cls:'hot',lines:['讀你授權的資料夾','做完整件任務','產出 Excel、簡報']}])},
   {dur:9,cap:'例如把 12 張發票丟給 Cowork：它會讀檔、辨識、整理成 Excel，就像新來的助理。',html:FILES(['發票_001.pdf','發票_002.jpg','發票_003.pdf','發票_004.jpg'],'發票彙整.xlsx','自動整理完成')},
-  {dur:8,cap:'帶走這兩句：問問題用 Chat，交代任務用 Cowork。畫面上看到的 Code 不用管，這門課不教。',html:LIST('兩句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾'])}],
+  {dur:8,cap:'帶走這兩句：問問題用 Chat，交代任務用 Cowork。接著到右邊模擬器實際點點看。',html:LIST('兩句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾'])}],
  2:[
   {dur:5,cap:'打開 Cowork，你會看到三個區塊：側邊欄、輸入框、進度面板。',html:T('第 3 單元','三個區塊，看懂就會用','像認識一間新辦公室的格局',['側邊欄','輸入框','資料夾','進度面板'])},
   {dur:9,cap:'從左到右：側邊欄找功能、輸入框下指令、選資料夾給資料、右側看進度。',html:FLOW([{ic:'book',l:'側邊欄',s:'新任務・排程・自訂'},{ic:'chat',l:'輸入框',s:'寫下要做什麼'},{ic:'folder',l:'資料夾',s:'給它資料'},{ic:'check',l:'進度面板',s:'看做到哪一步'}])},
@@ -1133,7 +1133,7 @@ const VIDEOS={
 const has=e=>LOG.has(e);
 const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
 const UNITS=[
- {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat 和 Cowork，知道什麼任務該交給誰。（畫面上另有 Code，是給工程師用的，這門課不教。）',
+ {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'公司提供的是 Claude Cowork，這門課就用它。先分清楚 Chat 和 Cowork，知道什麼任務該交給誰。',
   cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'}],
   match:'modes',
   steps:[
@@ -1303,7 +1303,7 @@ const sidebar=()=>`<aside class="sb">
 
 function main(){
  if(S.mode==='chat')return chatView();
- if(S.mode==='code')return modeNote('code','Code（這門課不教）','Code 是給工程師寫程式用的。這門課的重點是 Cowork，不需要用到這裡。','回到 Cowork，繼續練習');
+ if(S.mode==='code')return modeNote('spark','公司提供的是 Claude Cowork','這門課只用 Cowork，請回到 Cowork 繼續練習。','點下面的按鈕回到 Cowork');
  if(S.view==='projects')return projView();
  if(S.view==='artifacts')return artView();
  if(S.view==='scheduled')return schedView();
@@ -2246,7 +2246,7 @@ const GCATS=['全部','模式','擴充','產出文件','安全與流程','用量
 /* 內容依官方說明（support.claude.com，2026-10-04 查證）與你提供的「Cowork 闖關學院」整理；版本更新後以官方為準 */
 const GLOSS=[
  {id:'chat',cat:'模式',t:'Chat',s:'問答',d:'你問，它答。像到櫃台問業務。檔案要你自己貼上去，它不會替你動手做。',e:'例：「應付票據是什麼？」',k:'聊天 對話 問答 單輪',go:1},
- {id:'cowork',cat:'模式',t:'Cowork',s:'請它動手做',d:'你交代任務、給資料夾，它自己拆步驟、讀檔、整理、做出檔案，你在旁邊看進度。像坐在你旁邊、能碰你電腦的助理。（畫面上另有 Code 分頁，是給工程師用的，這門課不教。）',e:'例：把 200 張發票整理成 Excel',k:'派工 助理 agent 自主 多步驟',go:1},
+ {id:'cowork',cat:'模式',t:'Cowork',s:'請它動手做',d:'你交代任務、給資料夾，它自己拆步驟、讀檔、整理、做出檔案，你在旁邊看進度。像坐在你旁邊、能碰你電腦的助理。公司提供的就是 Claude Cowork。',e:'例：把 200 張發票整理成 Excel',k:'派工 助理 agent 自主 多步驟',go:1},
  {id:'model',cat:'用量與模型',t:'模型（Model）',s:'大腦',d:'真正在「想」的部分。有小、中、大三種：小的快又省（Haiku），中的日常首選（Sonnet），大的最會想（Opus）。',e:'例：先用 Sonnet，量大改 Haiku，卡關才升 Opus',k:'haiku sonnet opus 大腦 claude 選擇',map:'model'},
  {id:'mcp',cat:'擴充',t:'MCP（連接器）',s:'通往外部工具的專線',d:'讓 Claude 連到 Gmail、雲端硬碟等外部工具。MCP 是這類專線的規格名稱，畫面上通常叫「連接器」。簡單分：連接器決定「碰得到什麼」，Skill 決定「照什麼做」。',e:'例：連上 Gmail，讓它把催款信存成草稿',k:'connector 連接器 插頭 插座 gmail drive notion model context protocol',go:5,map:'conn'},
  {id:'skill',cat:'擴充',t:'Skill（技能）',s:'做事說明書',d:'把你的做法寫下來（放在一個資料夾裡的 SKILL.md），Claude 需要時就照著做。像公司的作業手冊（SOP）。',e:'例：月結報表要千分位、末列加總',k:'sop 手冊 說明書 技能 skill.md 做法',go:5,map:'skill'},

@@ -47,17 +47,17 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
  });
  await check('內容文字檢查：無過時說法、無英文 Prompt 標籤、無 undefined/NaN',async()=>{
   const h=fs.readFileSync(path.join(ROOT,'claude-cowork-basics.html'),'utf8');
-  for(const bad of ['Opus 5.5','Sonnet 5.5','Haiku 4.5','電腦需開機、App 需開著才會跑','電腦要開著、App 要在執行','Prompt 組裝器','ACCT 內部教學','計程車跳錶','書桌大小','TAP ANYTHING'])ok(!h.includes(bad),'含有不該出現的字：'+bad);
+  for(const bad of ['這門課不教','Opus 5.5','Sonnet 5.5','Haiku 4.5','電腦需開機、App 需開著才會跑','電腦要開著、App 要在執行','Prompt 組裝器','ACCT 內部教學','計程車跳錶','書桌大小','TAP ANYTHING'])ok(!h.includes(bad),'含有不該出現的字：'+bad);
   const p=await open('?view=learn');
   for(const v of ['map','layers','overview','gloss','learn']){await p.evaluate(v=>setView(v),v);await p.waitForTimeout(150);const t=await p.evaluate(()=>document.body.innerText);for(const b of ['undefined','NaN','[object'])ok(!t.includes(b),`${v} 檢視出現 ${b}`)}
   noErr(p);await p.close2();
  });
 
- await check('Claude Code 不教：單元 1 只教 Chat 與 Cowork，辭典沒有 Code 條目，只留一句說明',async()=>{
+ await check('Claude Code 不教：單元 1 只教 Chat 與 Cowork，辭典沒有 Code 條目，開頭說明公司提供的是 Cowork',async()=>{
   const p=await open('?view=learn');
   const r=await p.evaluate(()=>({cards:JSON.stringify(UNITS[0].cards),opts:MATCH.modes.opts,steps:UNITS[0].steps.length,gloss:GLOSS.some(g=>g.id==='code'),quiz:JSON.stringify(UNITS[0].quiz),vid:VIDEOS[1].map(s=>s.html).join('')}));
-  ok(!r.cards.includes('Code'),'卡片還有 Code');eq(r.opts,['Chat','Cowork']);eq(r.steps,4,'單元 1 步驟數');ok(!r.gloss,'辭典還有 Code 條目');ok(!r.quiz.includes('Code'),'測驗還有 Code');ok(!r.vid.includes('Code'),'影片畫面還有 Code');
-  await p.evaluate(()=>{S.mode='code';renderSim()});ok((await txt(p,'.modeNote h2')).includes('不教'),'Code 畫面沒有說明不教');
+  ok(!r.cards.includes('Code'),'卡片還有 Code');eq(r.opts,['Chat','Cowork']);eq(r.steps,4,'單元 1 步驟數');ok(!r.gloss,'辭典還有 Code 條目');ok(!r.quiz.includes('Code'),'測驗還有 Code');ok(!r.vid.includes('Code'),'影片畫面還有 Code');ok((await p.evaluate(()=>UNITS[0].goal)).includes('公司提供的是 Claude Cowork'),'開頭沒有說明公司提供的是 Cowork');
+  await p.evaluate(()=>{S.mode='code';renderSim()});ok((await txt(p,'.modeNote h2')).includes('公司提供'),'Code 分頁沒有導回說明');
   noErr(p);await p.close2();
  });
 
@@ -233,7 +233,7 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
  await check('Chat 模式：問答、要讀檔時引導切換；Code 模式說明；切回 Cowork',()=>sim(async p=>{
   await click(p,'.mtoggle [data-m="chat"]');await click(p,'.sg');await p.waitForFunction(()=>document.querySelector('.chatlog')&&document.querySelector('.chatlog').innerText.includes('應付票據'),null,{timeout:5000});
   await send(p,INV);await p.waitForFunction(()=>document.querySelector('.chatlog').innerText.includes('Cowork'),null,{timeout:5000});await click(p,'.chatlog [data-m="cowork"]');eq(await p.evaluate(()=>S.mode),'cowork');
-  await click(p,'.sb [data-m="code"]');ok((await txt(p,'.modeNote h2')).includes('Code'));await click(p,'.modeNote [data-m="cowork"]');eq(await p.evaluate(()=>S.mode),'cowork');
+  await click(p,'.sb [data-m="code"]');ok((await txt(p,'.modeNote h2')).includes('公司提供'));await click(p,'.modeNote [data-m="cowork"]');eq(await p.evaluate(()=>S.mode),'cowork');
  }));
  await check('模型與強度選擇、EN／中文切換',()=>sim(async p=>{
   ok((await txt(p,'.sb-new')).startsWith('New task'),'英文標籤');await click(p,'[data-act="lang"]');ok((await txt(p,'.sb-new')).startsWith('新任務'),'中文標籤');await click(p,'[data-act="lang"]');
@@ -260,7 +260,7 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
   await click(p,'[data-act="nav"][data-v="artifacts"]');eq(await cnt(p,'.item'),3,'Artifacts 數量');await p.locator('.item [data-act="file-open"]').first().click();ok(await cnt(p,'.modal')>0,'Artifacts 打不開檔案');
  }));
  await check('新版首頁：側邊欄 Cowork｜Code、Output 選單、強度切換、安全提示、外掛連結',()=>sim(async p=>{
-  eq(await cnt(p,'.sb-seg button'),2);await click(p,'.sb-seg [data-m="code"]');ok((await txt(p,'.modeNote h2')).includes('Code'));await click(p,'.sb-seg [data-m="cowork"]');
+  eq(await cnt(p,'.sb-seg button'),2);await click(p,'.sb-seg [data-m="code"]');ok((await txt(p,'.modeNote h2')).includes('公司提供'));await click(p,'.sb-seg [data-m="cowork"]');
   const e0=await txt(p,'.eff');await click(p,'.eff');ok((await txt(p,'.eff'))!==e0,'強度沒切換');
   await click(p,'[data-act="safe-tip"]');ok((await txt(p,'.modal')).includes('初稿'));await click(p,'[data-act="modal-close"]');
   await click(p,'[data-act="goto-plugins"]');eq(await p.evaluate(()=>[S.view,S.ctab]),['customize','plugins']);
