@@ -53,6 +53,17 @@ class Player{
 const STORE_KEY='cowork-course-v1';
 const POINTS={step:10,quiz1:5,quiz2:2};
 const hintOpen={};const wrong={};
+
+const mwrong={};
+function matchHtml(key){
+ const g=MATCH[key];
+ return g.items.map((it,i)=>{const ok=has('match_ok:'+it.id),bad=mwrong[it.id]||[];
+  return `<div class="mq ${ok?'ok':''}"><p><span class="mn2">${i+1}</span>${it.q}</p><div class="mopts">${g.opts.map(o=>`<button class="opt ${ok&&o===it.a?'good':''} ${bad.includes(o)?'bad':''}" data-act="match" data-g="${key}" data-i="${it.id}" data-o="${esc(o)}" ${ok?'disabled':''}>${o}</button>`).join('')}</div>${ok?`<div class="why">✓ ${it.why}</div>`:bad.length?'<div class="why" style="color:var(--warn);background:var(--warn-soft)">再想想，換一個試試。</div>':''}</div>`}).join('');
+}
+function glossSheet(){
+ $('#sheet').innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="名詞小辭典"><button class="x" data-act="sheet-close" aria-label="關閉">×</button><h3 class="serif" style="font-size:22px">名詞小辭典</h3><p class="sh-m">七個常聽到的詞，每個一句話。名稱與位置以你實際的版本為準。</p><div class="gloss">${GLOSS.map(g=>`<div class="gl"><b>${g.t}</b><span class="gs">${g.s}</span><p>${g.d}</p><em>${g.e}</em></div>`).join('')}</div></div>`;
+ $('#sheet').hidden=false;
+}
 const LESSONS=['看動畫','懂重點','動手做','小測驗'];
 const LMETA=[['▶ 動畫',''],['▣ 重點卡','y'],['✎ 練習',''],['? 測驗','b']];
 const LMIN=[1,1,3,2];
@@ -116,6 +127,7 @@ const Course={
   if(s===2){
    if(u.sample)h+=`<div class="sample"><b>${u.sample.t}</b>${u.sample.rows.map(esc).join('<br>')}</div>`;
    (u.prompts||[]).forEach((p,i)=>{h+=`<div class="pcard ${p.danger?'dg':''}"><div class="ph">${pix('chat','#2B2A27',16)}<span class="grow">${p.t}</span></div><div class="pb">${esc(p.text)}</div><div class="pa"><button class="mini" data-act="copy" data-i="${i}">複製</button><button class="mini solid" data-act="send-prompt" data-i="${i}">送到模擬器輸入框 →</button></div></div>`});
+   if(u.match)h+=`<h3 class="rd-sec">配對小遊戲 <em>選出最適合的名詞</em></h3><div id="match">${matchHtml(u.match)}</div>`;
    h+=`<h3 class="rd-sec">實作練習 <em>在右邊模擬器操作，會自動打勾</em></h3><ul class="steps" id="steps"></ul>${u.builder?builderHtml():''}`;
   }
   if(s===3)h+=`<div class="quiz" id="quiz"></div><div id="foot"></div>`;
@@ -147,7 +159,7 @@ const Course={
 };
 
 function builderHtml(){
- return `<div class="builder"><b>Prompt 組裝器</b><label>1) 目標<select id="pb-goal"><option value="把每張發票的日期、廠商、統編、金額整理成 Excel">整理發票成 Excel</option><option value="核對銀行對帳單與帳上明細，列出未達帳項目">銀行對帳</option></select></label>
+ return `<div class="builder"><b>指令組裝器</b><label>1) 目標<select id="pb-goal"><option value="把每張發票的日期、廠商、統編、金額整理成 Excel">整理發票成 Excel</option><option value="核對銀行對帳單與帳上明細，列出未達帳項目">銀行對帳</option></select></label>
  <fieldset><legend>2) 限制（可複選）</legend><label><input type="checkbox" class="pb-l" value="不要修改原始檔案" checked>不要修改原始檔案</label><label><input type="checkbox" class="pb-l" value="缺統編的標紅" checked>缺統編的標紅</label><label><input type="checkbox" class="pb-l" value="重大動作先問我">重大動作先問我</label></fieldset>
  <label>3) 預覽（資料來源＝你授權的資料夾；格式＝Excel）<textarea id="pb-out" rows="4" readonly></textarea></label><button class="btn" id="pb-send" data-act="pb-send">送到 Cowork 輸入框 →</button></div>`;
 }
@@ -167,6 +179,13 @@ function setSkin(s){
 function copyText(t){try{if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(()=>true).catch(()=>false)}}catch(e){}
  try{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();return Promise.resolve(ok)}catch(e){return Promise.resolve(false)}}
 const GA={
+ gloss(){glossSheet()},
+ match(el){
+  const g=MATCH[el.dataset.g],it=g.items.find(x=>x.id===el.dataset.i),o=el.dataset.o;
+  if(has('match_ok:'+it.id))return;
+  if(o===it.a){emit('match_ok:'+it.id)}else{(mwrong[it.id]=mwrong[it.id]||[]).push(o)}
+  const m=$('#match');if(m)m.innerHTML=matchHtml(el.dataset.g);
+ },
  skin(el){setSkin(el.dataset.s)},
  prev(){Course.step(-1)},next(){Course.step(1)},
  seg(el){const u=+el.dataset.u,s=+el.dataset.s;if($('#sheet'))closeSheet();if(!Course.unlocked(u)){toast('先完成前面的單元，這一課才會解鎖','warn');return}Course.go(u,true,s)},

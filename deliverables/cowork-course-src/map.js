@@ -43,13 +43,16 @@ const MAPS=[
    {t:'最小權限',ic:'shield',d:'只給任務需要的資料夾',box:'內控的精神：夠用就好'},
    {t:'先放副本',ic:'sheet',d:'第一次用，先複製一份練習資料夾',box:'會計師查帳也先影印底稿'},
    {t:'敏感資料別放',ic:'lock',d:'薪資、身分證、存摺與任務無關',red:'放進去，就等於交出去'}]},
-  {id:'conn',t:'連接器',ic:'plug',d:'讓 Claude 連到 Gmail、雲端硬碟等外部服務。',box:'像銀行的電子對帳介面',go:{u:5},more:'連接時會出現授權畫面，列出 Claude 能做的事。實際權限範圍以該畫面為準。',kids:[
+  {id:'conn',t:'連接器（MCP）',ic:'plug',d:'讓 Claude 連到 Gmail、雲端硬碟等外部服務。MCP 是這種「插頭」的通用規格名稱。',box:'像銀行的電子對帳介面',go:{u:5},more:'連接時會出現授權畫面，列出 Claude 能做的事。實際權限範圍以該畫面為準。',kids:[
    {id:'gmail',t:'Gmail',ic:'mail',d:'讀取郵件、建立草稿',red:'草稿不等於寄出，請自己確認再寄'},
    {id:'drive',t:'Google Drive',ic:'folder',d:'搜尋與讀取雲端檔案'},
    {id:'cal',t:'Google Calendar',ic:'clock',d:'查看行程、安排會議'}]},
   {id:'skill',t:'技能 Skill',ic:'book',d:'把你的做法寫成說明書，Claude 每次都照做。',box:'像公司作業手冊：寫一次，每次照做',go:{u:5},kids:[
    {t:'例：月結報表格式',ic:'sheet',d:'千分位、科目排序、末列加總'},
    {t:'例：發票命名規則',ic:'file',d:'日期_廠商_金額'}]},
+  {id:'project',t:'專案 Project',ic:'layers_',d:'把同一件事的說明和資料放在一起，之後做事都共用。',box:'像一個專案檔案夾：不用每次重講',go:{u:7},kids:[
+   {t:'放什麼',ic:'file',d:'專案說明、常用資料、格式要求'},
+   {t:'好處',ic:'star',d:'同一件事反覆做，不用重新交代'}]},
   {id:'plug',t:'外掛 Plugin',ic:'box',d:'把技能、連接器、常用指令打包成一整套。',box:'像會計部的「新人套組」',go:{u:5},kids:[
    {t:'財務會計（示意）',ic:'sheet',d:'月結檢查、銀行對帳、差異分析'},
    {t:'依職務挑選',ic:'user',d:'法務、業務…各有各的套件'}]},
@@ -85,7 +88,7 @@ const MAPS=[
    {t:'只連需要的服務',ic:'plug',d:'用不到的就不要連'},
    {t:'草稿不等於寄出',ic:'mail',d:'寄信前請自己再讀一次',red:'金額、對象、語氣都要確認'}]}]}},
  {id:'ext',tab:'擴充',root:{id:'root4',t:'怎麼讓 Claude 更懂你的工作',d:'連接器、技能、外掛三種擴充',ic:'plug',box:'這一枝看三種擴充怎麼分、怎麼選',go:{u:5},kids:[
-  {t:'連接器',ic:'plug',d:'連到外部服務',kids:[
+  {t:'連接器（MCP）',ic:'plug',d:'連到外部服務',kids:[
    {t:'像什麼',ic:'star',d:'銀行的電子對帳介面'},
    {t:'什麼時候用',ic:'bulb',d:'資料在 Gmail、雲端硬碟裡'},
    {t:'注意',ic:'warn',d:'只連需要的服務',red:'授權畫面列的權限要看清楚'}]},
@@ -97,6 +100,10 @@ const MAPS=[
    {t:'像什麼',ic:'star',d:'會計部的新人套組'},
    {t:'什麼時候用',ic:'bulb',d:'想一次裝好整套工具與做法'},
    {t:'注意',ic:'warn',d:'內容以你實際版本為準'}]},
+  {t:'專案 Project',ic:'layers_',d:'把說明與資料放一起',kids:[
+   {t:'像什麼',ic:'star',d:'專案檔案夾'},
+   {t:'什麼時候用',ic:'bulb',d:'同一件事反覆做、規則都一樣'},
+   {t:'好處',ic:'box',d:'之後做事都共用，不用重講'}]},
   {t:'怎麼選？',ic:'bulb',d:'三句話決定',box:'先問：我缺的是「連線」、「做法」還是「整套」？',kids:[
    {t:'缺連線 → 連接器',ic:'plug',d:'資料在外部服務'},
    {t:'缺做法 → 技能',ic:'book',d:'每次都要照同樣規則'},
@@ -277,7 +284,7 @@ function mmInitEvents(){
 /* ========== 分層卡片 ========== */
 const LAYERS=[
  {t:'1 誰在用、接了什麼',s:'先看最外面：誰會用 Cowork，Cowork 又去找誰幫忙。'},
- {t:'2 裡面有哪些零件',s:'再看裡面：七個零件各管什麼。'},
+ {t:'2 裡面有哪些零件',s:'再看裡面：八個零件各管什麼。'},
  {t:'3 一個任務怎麼走',s:'最後看流程：從下指令到交件，哪一站最容易出事。'}];
 const bk=(ref,cls,t,s)=>`<button class="bk ${cls}" data-act="bk" data-ref="${ref}"><b>${t}</b>${s?`<small>${s}</small>`:''}</button>`;
 const av=(a,b)=>`<div class="av"><span>⇅</span><small>${a}</small></div>`;
@@ -291,7 +298,7 @@ function layerHtml(i){
   ${bk('app','gr wide','Cowork App','裝在你的電腦上<br>真正動手讀寫檔案的程式')}
   ${av('呼叫服務')}
   <div class="dash"><div class="cap">外面接的服務</div><div class="g3">${bk('model','br','Claude 模型','雲端大腦<br>送字、收字')}${bk('gmail','br','Gmail','讀信、建草稿')}${bk('drive','br','Google Drive','雲端檔案')}${bk('cal','br','Calendar','行程')}${bk('slack','br','Slack','對話（示意）')}${bk('notion','br','Notion','頁面（示意）')}</div></div></div>`;
- if(i===1)return `<div class="ly"><div class="g2">${['model','app','folder','conn','skill','plug','you'].map(id=>{const n=NODES[id];return `<button class="bk big" style="border-color:${n.col}" data-act="bk" data-ref="${id}"><span class="bic">${pix(n.ic,n.col,30)}</span><b>${n.t}</b><small>${n.d}</small>${n.box?`<em>${n.box}</em>`:''}</button>`}).join('')}</div></div>`;
+ if(i===1)return `<div class="ly"><div class="g2">${['model','app','folder','conn','skill','project','plug','you'].map(id=>{const n=NODES[id];return `<button class="bk big" style="border-color:${n.col}" data-act="bk" data-ref="${id}"><span class="bic">${pix(n.ic,n.col,30)}</span><b>${n.t}</b><small>${n.d}</small>${n.box?`<em>${n.box}</em>`:''}</button>`}).join('')}</div></div>`;
  return `<div class="ly chain">${['s1','s2','s3','s4','perm','s6','s7'].map((id,k)=>{const n=NODES[id];return `${k?'<div class="dn">↓</div>':''}<button class="bk step" style="border-color:${n.col}" data-act="bk" data-ref="${id}"><span class="sn" style="background:${n.col}">${n.num}</span><span class="stx"><b>${n.t}</b><small>${n.d}</small></span>${n.red?`<span class="rd" title="${esc(n.red)}">${pix('warn','#B4382B',18)}<small>${n.red}</small></span>`:''}</button>`}).join('')}</div>`;
 }
 const LY={cur:0};
@@ -312,7 +319,7 @@ function openSheet(id){
  $('#sheet').innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(n.t)}"><button class="x" data-act="sheet-close" aria-label="關閉">×</button>
   <div class="sh-h">${pix(n.ic,n.col==='#7D776B'?'#3E7C59':n.col,34)}<h3>${n.t}</h3></div>
   <p class="sh-d">${n.d||''}</p>${n.box?`<div class="sh-box"><b>白話：</b>${n.box}</div>`:''}${n.red?`<div class="sh-red">${pix('warn','#B4382B',18)}<span>${n.red}</span></div>`:''}${n.more?`<p class="sh-m">${n.more}</p>`:''}${kids?`<ul class="sh-k">${kids}</ul>`:''}
-  <div class="sh-b">${n.go?`<button class="btn" data-act="go-unit" data-u="${n.go.u}">▶ 到模擬器練習（單元 ${n.go.u}）</button>`:''}${n.map!==undefined?`<button class="btn ghost" data-act="to-map" data-id="${id}">在心智圖中看</button>`:''}</div></div>`;
+  <div class="sh-b">${n.go?`<button class="btn" data-act="go-unit" data-u="${n.go.u}">▶ 到模擬器練習（單元 ${UNITS.findIndex(x=>x.id===n.go.u)+1}）</button>`:''}${n.map!==undefined?`<button class="btn ghost" data-act="to-map" data-id="${id}">在心智圖中看</button>`:''}</div></div>`;
  $('#sheet').hidden=false;$('#sheet .x').focus();
 }
 const closeSheet=()=>{$('#sheet').hidden=true};
@@ -332,7 +339,7 @@ function setView(v,skipMap){
 function gotoUnit(u){
  setView('learn');
  if(typeof Course!=='undefined'){
-  const lk=!Course.unlocked(u-1);Course.go(u-1,true,2);
+  const ix=Math.max(0,UNITS.findIndex(x=>x.id===u));const lk=!Course.unlocked(ix);Course.go(ix,true,2);
   if(lk)toast('這個單元通常排在前面單元之後；已先帶你過來看，積分照算','ok');
  }
 }
@@ -354,7 +361,7 @@ Object.assign(GA,{
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 let _lw=innerWidth;window.addEventListener('resize',()=>{if(innerWidth!==_lw){_lw=innerWidth;if(document.body.dataset.view==='map')mmFit(true)}});
-const UNITMAP={1:0,2:0,3:2,4:1,5:3,6:2};
+const UNITMAP={1:0,7:3,2:0,3:2,4:1,5:3,6:2};
 window.addEventListener('DOMContentLoaded',()=>{
  $('#mmtabs').innerHTML=MAPS.map((m,i)=>`<button class="mtab" data-act="mm-tab" data-i="${i}">${m.tab}</button>`).join('');
  const sv=new URLSearchParams(location.search).get('view')||store.get('cowork-view','map');

@@ -2,7 +2,8 @@
 const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
  conn:{},plugins:{},plugOpen:{},
  skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
- schedules:[]};
+ schedules:[],
+ projects:[{id:'p1',name:'2026 月結專案',inst:'金額用千分位、科目依公司科目表排序、異常項目標紅。',folder:'invoices'}]};
 const LOG=new Set();
 let _uid=0;
 function emit(e){LOG.add(e);if(typeof Course!=='undefined')Course.evaluate()}
@@ -32,6 +33,7 @@ function renderSim(){
 const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="modes" role="tablist">${[['chat','Chat'],['cowork','Cowork'],['code','Code']].map(m=>`<button role="tab" aria-selected="${S.mode===m[0]}" class="${S.mode===m[0]?'on':''}" data-act="mode" data-m="${m[0]}">${m[1]}</button>`).join('')}</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
 const sidebar=()=>`<aside class="sb">
  <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>新任務</span></button>
+ <button class="sb-i ${S.view==='projects'?'on':''}" data-act="nav" data-v="projects">${IC.layers}<span>專案</span></button>
  <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>排程</span></button>
  <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>自訂</span></button>
  <div class="sb-h">最近的任務</div>
@@ -41,6 +43,7 @@ const sidebar=()=>`<aside class="sb">
 function main(){
  if(S.mode==='chat')return modeNote('chat','Chat：一般對話','適合問答、寫作、解釋概念。它不會替你讀取電腦資料夾，也不會自動產出一整包檔案。','例：請用白話解釋「收入認列五步驟」');
  if(S.mode==='code')return modeNote('code','Code：寫程式','給工程師寫程式、改專案用。會計同仁日常整理資料，通常用不到這裡。','例：幫我修改這個 Python 腳本');
+ if(S.view==='projects')return projView();
  if(S.view==='scheduled')return schedView();
  if(S.view==='customize')return customView();
  if(S.view==='task')return taskView();
@@ -78,10 +81,15 @@ function msgHtml(m,k){
 function customView(){
  const tabs=[['skills','技能'],['connectors','連接器'],['plugins','外掛']];
  let body='';
- if(S.ctab==='skills')body=`<div class="list">${S.skills.map(s=>`<div class="item"><div class="ic">${IC.book}</div><div class="mid"><b>${esc(s.name)}</b> <span class="tag">${esc(s.src)}</span><small>${esc(s.desc)}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用 ${esc(s.name)}" data-act="skill-toggle" data-id="${s.id}"></button></div>`).join('')}</div><div><button class="chip pri" data-act="skill-new">${IC.plus}建立 Skill</button></div>`;
- if(S.ctab==='connectors')body=`<div class="list">${CONNECTORS.map(c=>`<div class="item"><div class="ic">${IC[c.ic]}</div><div class="mid"><b>${c.name}</b><small>${c.desc}</small></div>${S.conn[c.id]?`<span class="tag ok">已連接</span><button class="chip" data-act="conn-off" data-id="${c.id}">中斷</button>`:`<button class="chip pri" data-act="conn-on" data-id="${c.id}">連接</button>`}</div>`).join('')}</div>`;
- if(S.ctab==='plugins')body=`<div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
+ if(S.ctab==='skills')body=`<p class="note" style="margin:0">Skill（技能）＝做事說明書：把你的做法寫下來，Claude 需要時照著做。</p><div class="list">${S.skills.map(s=>`<div class="item"><div class="ic">${IC.book}</div><div class="mid"><b>${esc(s.name)}</b> <span class="tag">${esc(s.src)}</span><small>${esc(s.desc)}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用 ${esc(s.name)}" data-act="skill-toggle" data-id="${s.id}"></button></div>`).join('')}</div><div><button class="chip pri" data-act="skill-new">${IC.plus}建立 Skill</button></div>`;
+ if(S.ctab==='connectors')body=`<p class="note" style="margin:0">連接器＝接外部工具的「插頭」（技術上叫 MCP）。連接前會顯示它能做哪些事，請看清楚再允許。</p><div class="list">${CONNECTORS.map(c=>`<div class="item"><div class="ic">${IC[c.ic]}</div><div class="mid"><b>${c.name}</b><small>${c.desc}</small></div>${S.conn[c.id]?`<span class="tag ok">已連接</span><button class="chip" data-act="conn-off" data-id="${c.id}">中斷</button>`:`<button class="chip pri" data-act="conn-on" data-id="${c.id}">連接</button>`}</div>`).join('')}</div>`;
+ if(S.ctab==='plugins')body=`<p class="note" style="margin:0">外掛＝一整包：技能＋連接器＋常用指令，一次裝好。</p><div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
  return `<div class="cust"><h2>自訂</h2><div class="tabs">${tabs.map(t=>`<button class="${S.ctab===t[0]?'on':''}" data-act="ctab" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
+}
+function projView(){
+ return `<div class="sched"><h2>專案</h2><div class="note">專案＝把同一件事的說明和資料放在一起。之後在專案裡開的任務都共用，不用每次重講。</div>
+ ${S.projects.length?`<div class="list">${S.projects.map((p,i)=>`<div class="item"><div class="ic">${IC.layers}</div><div class="mid"><b>${esc(p.name)}</b><small>說明：${esc(p.inst)}</small><span class="tag">${IC.folder.replace('<svg','<svg style="vertical-align:-2px"')} ${esc(FOLDERS[p.folder].name)}</span></div><button class="chip pri" data-act="proj-open" data-i="${i}">在此專案開新任務</button></div>`).join('')}</div>`:'<div class="empty">還沒有專案。</div>'}
+ <div><button class="chip pri" data-act="proj-new">${IC.plus}新增專案</button></div></div>`;
 }
 function schedView(){
  return `<div class="sched"><h2>排程任務</h2><div class="note">排程任務在你的電腦上執行：電腦需開機、App 需開著才會跑（實際規則以你的版本說明為準）。</div>
@@ -109,6 +117,10 @@ function modalHtml(){
  if(m.type==='skill'){
   h=`<h3>建立 Skill</h3><label class="lbl">技能名稱<input class="fld" id="sk-name" placeholder="例如：月結報表格式" value="月結報表格式"></label><label class="lbl">做法說明（寫給 Claude 的 SOP）<textarea class="fld" id="sk-body" rows="4">產出月結報表時：1) 金額一律千分位、單位新台幣元 2) 科目依公司科目表排序 3) 最後一列加總並標示差異</textarea></label>`;
   foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="skill-save">儲存</button>`;
+ }
+ if(m.type==='project'){
+  h=`<h3>新增專案</h3><label class="lbl">專案名稱<input class="fld" id="pj-name" value="銀行對帳專案"></label><label class="lbl">專案說明（之後每個任務都共用）<textarea class="fld" id="pj-inst" rows="3">對帳時，差異超過 1,000 元要標記，並列出可能原因。</textarea></label><label class="lbl">資料夾<select class="fld" id="pj-folder">${Object.entries(FOLDERS).filter(([id,f])=>!f.sens).map(([id,f])=>`<option value="${id}">${f.name}</option>`).join('')}</select></label>`;
+  foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="proj-save">建立專案</button>`;
  }
  if(m.type==='sched'){
   h=`<h3>新增排程</h3><label class="lbl">名稱<input class="fld" id="sc-name" value="每月月結報表"></label><div class="row2"><label class="lbl">頻率<select class="fld" id="sc-freq"><option>每天</option><option>每週一</option><option selected>每月 5 日</option></select></label><label class="lbl">時間<select class="fld" id="sc-time"><option>08:00</option><option selected>09:00</option><option>18:00</option></select></label></div><label class="lbl">要做什麼<textarea class="fld" id="sc-prompt" rows="3">讀取「發票_2026Q3」資料夾，產出上月發票彙整表，異常項目標紅，完成後提醒我覆核。</textarea></label>`;
@@ -231,6 +243,13 @@ const ACT={
   S.skills.push({id:'u'+Date.now(),name:n,desc:b.slice(0,40)+'…',on:true,src:'我建立的'});S.modal=null;S.ctab='skills';
   emit('skill_created');toast('Skill 已建立：'+n,'ok');renderSim();
  },
+ 'proj-new'(){S.modal={type:'project'};renderSim()},
+ 'proj-save'(){
+  const n=$('#pj-name').value.trim(),b=$('#pj-inst').value.trim();
+  if(!n||!b){toast('名稱和說明都要填','warn');return}
+  S.projects.push({id:'p'+Date.now(),name:n,inst:b,folder:$('#pj-folder').value});S.modal=null;emit('project_created');toast('專案已建立：'+n,'ok');renderSim();
+ },
+ 'proj-open'(el){const p=S.projects[+el.dataset.i];S.folder=p.folder;S.mode='cowork';S.view='home';S.prompt='（套用專案「'+p.name+'」的說明：'+p.inst+'）請整理資料夾裡的發票成 Excel。';emit('project_open');toast('已帶入專案的資料夾與說明','ok');renderSim()},
  'sched-new'(){S.modal={type:'sched'};renderSim()},
  'sched-save'(){
   const n=$('#sc-name').value.trim(),p=$('#sc-prompt').value.trim();
