@@ -445,3 +445,21 @@ body:not([data-view="learn"]) .pbar,body:not([data-view="learn"]) .score,body:no
 @media (prefers-reduced-motion:reduce){.mn.born,.mn.flash,#mmsvg path.draw,.sheet,.sheet-bg{animation:none}#mmsvg path.draw{stroke-dashoffset:0}}
 .fup textarea,.composer textarea,.fld{background:transparent;color:inherit}
 .fld{background:var(--paper)}
+
+/* 輸入框工具列（依實際畫面：左下 + 與 Chat｜Cowork 切換，右下模型與送出） */
+.sim-title{margin:0 auto;font-family:var(--font-head);font-weight:700;color:var(--muted)}
+.comp-bar{flex-wrap:wrap}
+.plus{width:32px;height:32px;border-radius:50%;border:var(--bw) solid var(--line);display:grid;place-items:center;font-size:18px;background:var(--card)}
+.plus:hover{background:var(--accent-soft)}
+.mtoggle{display:inline-flex;background:var(--soft2);border-radius:99px;padding:3px}
+.mtoggle button{padding:2px 14px;border-radius:99px;font-size:13px;font-weight:700;color:var(--muted)}
+.mtoggle button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.mdl{font-size:13px;color:var(--muted);padding:3px 8px;border-radius:8px}
+.mdl b{color:var(--ink);font-weight:600}
+.mdl:hover{background:var(--soft2)}
+.send{border-radius:10px!important;background:#D9663F;width:36px;height:36px}
+.chatlog{display:grid;gap:12px;margin-top:6px}
+.comp-bar{gap:6px}
+.comp-bar .chip{padding:3px 10px;font-size:12.5px;white-space:nowrap}
+.mtoggle button{padding:2px 12px}
+.mdl{padding:3px 4px;white-space:nowrap}

@@ -36,7 +36,7 @@ const MAPS=[
    {t:'它擅長',ic:'star',d:'讀懂文件、整理資料、寫作、推理'},
    {t:'它自己做不到',ic:'lock',d:'自己翻你的硬碟、自己寄信',red:'所有「動手」都要經過 App 與你的授權'}]},
   {id:'app',t:'Cowork App',ic:'terminal',d:'裝在你電腦上的程式。模型說「我要讀這個檔」，是 App 真的去讀、去寫。',box:'我是大腦的手腳：大腦說要讀檔，是我真的去做',kids:[
-   {id:'input',t:'輸入框',ic:'chat',d:'交辦任務的地方，旁邊可選資料夾',go:{u:4}},
+   {id:'input',t:'輸入框',ic:'chat',d:'交辦任務的地方。左下角可切 Chat／Cowork，右下角選模型與強度',go:{u:4}},
    {id:'progress',t:'進度面板',ic:'list',d:'任務畫面右側：每一步的狀態與新產生的檔案',go:{u:2}},
    {id:'sidebar',t:'側邊欄',ic:'book',d:'新任務、排程、自訂都從這裡進出',go:{u:2}}]},
   {id:'folder',t:'授權資料夾',ic:'folder',d:'你指定的資料夾，是 Claude 唯一能讀寫的檔案範圍。',box:'像只借出一個抽屜的鑰匙，不是整間檔案室',go:{u:3},kids:[

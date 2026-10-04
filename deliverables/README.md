@@ -13,6 +13,9 @@
 - 每課頂端黃色提示框；課程上方「？」開啟名詞小辭典（7 個詞）。
 - 每單元有小測驗（共 28 題），答錯可重答。
 
+## 模擬器版面（依實際截圖）
+輸入框左下「＋」與 Chat｜Cowork 切換、右下模型與強度（可點開選擇）、橘色送出鈕；Code 放在側邊欄。截圖中沒出現的部分（例如 Code 的位置）為推測，請對照你的版本。
+
 ## 查證與參考
 - 事實依官方說明查證（2026-10-04）：[Cowork 入門](https://support.claude.com/en/articles/13345190-getting-started-with-cowork)、[排程任務](https://support.claude.com/en/articles/13854387)、[專案](https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-cowork)。
 - 重點更正：排程任務多半在雲端執行（電腦關機也會跑），用到本機檔案時電腦要開著；每次排程都是全新對話。官方另註明 2026-10-06 起新的 Cowork 任務改在雲端執行。

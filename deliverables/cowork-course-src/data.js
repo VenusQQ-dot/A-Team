@@ -162,14 +162,14 @@ const VIDEOS={
 const has=e=>LOG.has(e);
 const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
 const UNITS=[
- {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器上方點三個分頁；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
+ {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，並點側邊欄的 Code；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
   cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'},{f:'Code',s:'寫程式',b:'像請 IT 工程師蓋系統：專門寫與改程式。會計同仁通常用不到，知道有這個就好。'}],
   match:'modes',
   steps:[
    U('1-1','看完動畫（拖曳時間軸到最後也算）','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:1')),
-   U('1-2','在模擬器點上方的「Chat」分頁看看','模擬器最上方的三個分頁','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
-   U('1-3','再點「Code」分頁','同一排的最右邊','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
-   U('1-4','回到「Cowork」分頁（今天的主角）','點中間的 Cowork','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork'),
+   U('1-2','在模擬器輸入框左下角，切到「Chat」看看','輸入框左下角的 Chat｜Cowork 切換鈕','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
+   U('1-3','再點側邊欄的「Code」看看','側邊欄最下面的 Code','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
+   U('1-4','切回「Cowork」（今天的主角）','輸入框左下角的 Cowork；在 Code 畫面則按中間的按鈕','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork'),
    U('1-5','完成「三種模式」配對小遊戲（3 題）','在上方的配對遊戲，替每個情境選一個名詞','#match',()=>MATCH.modes.items.every(x=>has('match_ok:'+x.id)))],
   quiz:[
    {q:'「把 200 張發票整理成 Excel」最適合用哪個模式？',o:['Chat','Cowork','Code'],a:1,why:'需要讀檔、處理多個檔案並產出 Excel，這是 Cowork 的強項。'},
@@ -198,8 +198,8 @@ const UNITS=[
    U('2-4','點側邊欄的「自訂」','側邊欄第三個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
    U('2-5','回到新任務，點輸入框下方的資料夾按鈕','先回「新任務」，再點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_chip'))],
   quiz:[
-   {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 分頁'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
-   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 分頁'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
+   {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 模式'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
+   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
  {id:3,tips:['重點只有一個：只給需要的，其他不給。','「最小權限」是會計內控的老朋友。','先看「個人文件」裡有什麼，再決定授權哪個。','三題，全是授權資料夾的實戰判斷。'],short:'授權資料夾',title:'授權資料夾：只給需要的，其他不給',goal:'學會最小權限：選對資料夾，避開敏感資料。',
   cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
   steps:[

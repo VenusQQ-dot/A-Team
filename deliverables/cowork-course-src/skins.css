@@ -42,7 +42,7 @@ body[data-skin="candy"] .vsw button.on{background:var(--ink);color:#fff}
 body[data-skin="candy"] .btn{background:var(--accent);color:#fff;font-weight:800}
 body[data-skin="candy"] .btn.ghost{background:var(--card);color:var(--ink)}
 body[data-skin="candy"] .chip.pri,body[data-skin="candy"] .send{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
-body[data-skin="candy"] .send{border-radius:50%}
+body[data-skin="candy"] .send{background:var(--accent)}
 body[data-skin="candy"] .opt.good{background:var(--green-soft)}
 body[data-skin="candy"] .step.ok,body[data-skin="candy"] .q.ok{border-color:var(--ink)}
 body[data-skin="candy"] .chk{border:3px solid var(--ink)}
@@ -92,7 +92,7 @@ body[data-skin="arcade"]{
  font-family:ui-monospace,"Courier New","Noto Sans TC",monospace;
 }
 body[data-skin="arcade"] *{border-radius:0!important}
-body[data-skin="arcade"] :is(.skins button,.circ,.send,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
+body[data-skin="arcade"] :is(.skins button,.circ,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
 body[data-skin="arcade"] .topbar{background:#0A1238;border-bottom:3px solid var(--line)}
 body[data-skin="arcade"] .coach{background:var(--paper);border:3px solid var(--line);margin:12px 0 12px 12px;box-shadow:5px 5px 0 #000}
 body[data-skin="arcade"] .stage{background:none}
@@ -175,3 +175,9 @@ body[data-skin="candy"] .gcats button{border:2.5px solid var(--ink);box-shadow:2
 body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3px solid var(--line);box-shadow:4px 4px 0 #000}
 body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}
 body[data-skin="arcade"] mark{background:var(--accent)}
+
+body[data-skin="candy"] .mtoggle{background:#fff;border:2.5px solid var(--ink)}
+body[data-skin="candy"] .mtoggle button.on{background:var(--ink);color:#fff;box-shadow:none}
+body[data-skin="candy"] .plus{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+body[data-skin="arcade"] .mtoggle{background:#0C1538;border:3px solid var(--line)}
+body[data-skin="arcade"] .mtoggle button.on{background:var(--accent);color:#0B1030}

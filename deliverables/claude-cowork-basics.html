@@ -453,6 +453,24 @@ body:not([data-view="learn"]) .pbar,body:not([data-view="learn"]) .score,body:no
 .fup textarea,.composer textarea,.fld{background:transparent;color:inherit}
 .fld{background:var(--paper)}
 
+/* 輸入框工具列（依實際畫面：左下 + 與 Chat｜Cowork 切換，右下模型與送出） */
+.sim-title{margin:0 auto;font-family:var(--font-head);font-weight:700;color:var(--muted)}
+.comp-bar{flex-wrap:wrap}
+.plus{width:32px;height:32px;border-radius:50%;border:var(--bw) solid var(--line);display:grid;place-items:center;font-size:18px;background:var(--card)}
+.plus:hover{background:var(--accent-soft)}
+.mtoggle{display:inline-flex;background:var(--soft2);border-radius:99px;padding:3px}
+.mtoggle button{padding:2px 14px;border-radius:99px;font-size:13px;font-weight:700;color:var(--muted)}
+.mtoggle button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.mdl{font-size:13px;color:var(--muted);padding:3px 8px;border-radius:8px}
+.mdl b{color:var(--ink);font-weight:600}
+.mdl:hover{background:var(--soft2)}
+.send{border-radius:10px!important;background:#D9663F;width:36px;height:36px}
+.chatlog{display:grid;gap:12px;margin-top:6px}
+.comp-bar{gap:6px}
+.comp-bar .chip{padding:3px 10px;font-size:12.5px;white-space:nowrap}
+.mtoggle button{padding:2px 12px}
+.mdl{padding:3px 4px;white-space:nowrap}
+
 /* ===== 課程閱讀器 ===== */
 .coach{display:flex;flex-direction:column;overflow:hidden;padding:12px 16px 12px;scroll-behavior:auto}
 .rd-top{flex:none;display:flex;align-items:center;gap:10px;padding:2px 2px 10px;border-bottom:var(--bw) solid var(--line)}
@@ -654,7 +672,7 @@ body[data-skin="candy"] .vsw button.on{background:var(--ink);color:#fff}
 body[data-skin="candy"] .btn{background:var(--accent);color:#fff;font-weight:800}
 body[data-skin="candy"] .btn.ghost{background:var(--card);color:var(--ink)}
 body[data-skin="candy"] .chip.pri,body[data-skin="candy"] .send{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
-body[data-skin="candy"] .send{border-radius:50%}
+body[data-skin="candy"] .send{background:var(--accent)}
 body[data-skin="candy"] .opt.good{background:var(--green-soft)}
 body[data-skin="candy"] .step.ok,body[data-skin="candy"] .q.ok{border-color:var(--ink)}
 body[data-skin="candy"] .chk{border:3px solid var(--ink)}
@@ -704,7 +722,7 @@ body[data-skin="arcade"]{
  font-family:ui-monospace,"Courier New","Noto Sans TC",monospace;
 }
 body[data-skin="arcade"] *{border-radius:0!important}
-body[data-skin="arcade"] :is(.skins button,.circ,.send,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
+body[data-skin="arcade"] :is(.skins button,.circ,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
 body[data-skin="arcade"] .topbar{background:#0A1238;border-bottom:3px solid var(--line)}
 body[data-skin="arcade"] .coach{background:var(--paper);border:3px solid var(--line);margin:12px 0 12px 12px;box-shadow:5px 5px 0 #000}
 body[data-skin="arcade"] .stage{background:none}
@@ -787,6 +805,12 @@ body[data-skin="candy"] .gcats button{border:2.5px solid var(--ink);box-shadow:2
 body[data-skin="arcade"] .gcard,body[data-skin="arcade"] .gsearch input{border:3px solid var(--line);box-shadow:4px 4px 0 #000}
 body[data-skin="arcade"] .gcats button{border:3px solid var(--line)}
 body[data-skin="arcade"] mark{background:var(--accent)}
+
+body[data-skin="candy"] .mtoggle{background:#fff;border:2.5px solid var(--ink)}
+body[data-skin="candy"] .mtoggle button.on{background:var(--ink);color:#fff;box-shadow:none}
+body[data-skin="candy"] .plus{border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+body[data-skin="arcade"] .mtoggle{background:#0C1538;border:3px solid var(--line)}
+body[data-skin="arcade"] .mtoggle button.on{background:var(--accent);color:#0B1030}
 
 </style>
 </head>
@@ -996,14 +1020,14 @@ const VIDEOS={
 const has=e=>LOG.has(e);
 const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
 const UNITS=[
- {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器上方點三個分頁；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
+ {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，並點側邊欄的 Code；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
   cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'},{f:'Code',s:'寫程式',b:'像請 IT 工程師蓋系統：專門寫與改程式。會計同仁通常用不到，知道有這個就好。'}],
   match:'modes',
   steps:[
    U('1-1','看完動畫（拖曳時間軸到最後也算）','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:1')),
-   U('1-2','在模擬器點上方的「Chat」分頁看看','模擬器最上方的三個分頁','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
-   U('1-3','再點「Code」分頁','同一排的最右邊','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
-   U('1-4','回到「Cowork」分頁（今天的主角）','點中間的 Cowork','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork'),
+   U('1-2','在模擬器輸入框左下角，切到「Chat」看看','輸入框左下角的 Chat｜Cowork 切換鈕','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
+   U('1-3','再點側邊欄的「Code」看看','側邊欄最下面的 Code','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
+   U('1-4','切回「Cowork」（今天的主角）','輸入框左下角的 Cowork；在 Code 畫面則按中間的按鈕','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork'),
    U('1-5','完成「三種模式」配對小遊戲（3 題）','在上方的配對遊戲，替每個情境選一個名詞','#match',()=>MATCH.modes.items.every(x=>has('match_ok:'+x.id)))],
   quiz:[
    {q:'「把 200 張發票整理成 Excel」最適合用哪個模式？',o:['Chat','Cowork','Code'],a:1,why:'需要讀檔、處理多個檔案並產出 Excel，這是 Cowork 的強項。'},
@@ -1032,8 +1056,8 @@ const UNITS=[
    U('2-4','點側邊欄的「自訂」','側邊欄第三個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
    U('2-5','回到新任務，點輸入框下方的資料夾按鈕','先回「新任務」，再點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_chip'))],
   quiz:[
-   {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 分頁'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
-   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 分頁'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
+   {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 模式'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
+   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
  {id:3,tips:['重點只有一個：只給需要的，其他不給。','「最小權限」是會計內控的老朋友。','先看「個人文件」裡有什麼，再決定授權哪個。','三題，全是授權資料夾的實戰判斷。'],short:'授權資料夾',title:'授權資料夾：只給需要的，其他不給',goal:'學會最小權限：選對資料夾，避開敏感資料。',
   cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
   steps:[
@@ -1098,7 +1122,7 @@ Object.keys(VIDEOS).forEach(u=>VIDEOS[u].forEach((s,i)=>{if(i>0)s.tag='②③④
 const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
  conn:{},plugins:{},plugOpen:{},
  skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
- schedules:[],pmode:'manual',
+ schedules:[],pmode:'manual',chat:[],model:'Opus 5.5',effort:'High',
  projects:[{id:'p1',name:'2026 月結專案',inst:'金額用千分位、科目依公司科目表排序、異常項目標紅。',folder:'invoices'}]};
 const LOG=new Set();
 let _uid=0;
@@ -1126,18 +1150,19 @@ function renderSim(){
  const c=$('#chat');if(c&&wasBottom)c.scrollTop=c.scrollHeight;
  if(keep!==null){const n=$('#composer');if(n){n.focus();try{n.setSelectionRange(keep,keep)}catch(e){}}}
 }
-const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="modes" role="tablist">${[['chat','Chat'],['cowork','Cowork'],['code','Code']].map(m=>`<button role="tab" aria-selected="${S.mode===m[0]}" class="${S.mode===m[0]?'on':''}" data-act="mode" data-m="${m[0]}">${m[1]}</button>`).join('')}</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
+const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="sim-title">Claude</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
 const sidebar=()=>`<aside class="sb">
  <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>新任務</span></button>
  <button class="sb-i ${S.view==='projects'?'on':''}" data-act="nav" data-v="projects">${IC.layers}<span>專案</span></button>
  <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>排程</span></button>
  <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>自訂</span></button>
+ <button class="sb-i ${S.mode==='code'?'on':''}" data-act="mode" data-m="code">${IC.code}<span>Code</span></button>
  <div class="sb-h">最近的任務</div>
  ${S.tasks.length?S.tasks.map(k=>`<button class="sb-t ${S.view==='task'&&S.active===k.id?'on':''}" data-act="open-task" data-id="${k.id}"><i class="dot ${k.status}"></i><span>${esc(k.title)}</span></button>`).join(''):'<p class="sb-empty">還沒有任務</p>'}
  <div class="sb-foot"><b>學員</b>教學模擬環境<br>不會動到真實檔案</div></aside>`;
 
 function main(){
- if(S.mode==='chat')return modeNote('chat','Chat：一般對話','適合問答、寫作、解釋概念。它不會替你讀取電腦資料夾，也不會自動產出一整包檔案。','例：請用白話解釋「收入認列五步驟」');
+ if(S.mode==='chat')return chatView();
  if(S.mode==='code')return modeNote('code','Code：寫程式','給工程師寫程式、改專案用。會計同仁日常整理資料，通常用不到這裡。','例：幫我修改這個 Python 腳本');
  if(S.view==='projects')return projView();
  if(S.view==='scheduled')return schedView();
@@ -1147,13 +1172,37 @@ function main(){
 }
 const modeNote=(ic,h,p,ex)=>`<div class="modeNote">${IC[ic]}<h2>${h}</h2><p>${p}</p><div class="bubble">${ex}</div><button class="chip pri" data-act="mode" data-m="cowork">切到 Cowork 交辦任務</button></div>`;
 
-function homeView(){
+const MODELS=[{n:'Opus 5.5',d:'最會想，慢一點、較耗用量。難題、一次要做對的任務'},{n:'Sonnet 5.5',d:'日常首選。文件、報表、多步驟任務'},{n:'Haiku 4.5',d:'快又省。分類、改格式、大量重複的簡單工作'}];
+const EFFORTS=[['Low','快速回答'],['Medium','一般'],['High','多想一會兒']];
+function compBar(cowork){
  const f=S.folder?FOLDERS[S.folder]:null;
+ return `<div class="comp-bar"><button class="plus" data-act="attach" aria-label="附加">${IC.plus}</button>
+ <div class="mtoggle" role="tablist" aria-label="模式"><button role="tab" aria-selected="${!cowork}" class="${cowork?'':'on'}" data-act="mode" data-m="chat">Chat</button><button role="tab" aria-selected="${cowork}" class="${cowork?'on':''}" data-act="mode" data-m="cowork">Cowork</button></div>
+ ${cowork?`<button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="pmode" title="點一下切換權限模式">${IC.shield}<span>${{manual:'手動核准',auto:'自動',skip:'全部略過'}[S.pmode]}</span></button>`:''}
+ <span class="grow"></span><button class="mdl" data-act="model-menu" title="選擇模型與強度"><b>${S.model}</b> <span>${S.effort}</span></button><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div>`;
+}
+function homeView(){
  return `<div class="home"><div class="hello">${IC.spark}<h1>想請 Claude 幫你處理什麼？</h1></div>
- <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>
- <div class="comp-bar"><button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="pmode" title="點一下切換權限模式">${IC.shield}<span>${{manual:'手動核准',auto:'自動',skip:'全部略過'}[S.pmode]}</span></button><button class="chip ghost" data-act="noop">Claude ▾</button><span class="grow"></span><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
+ <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>${compBar(true)}</div>
  <div class="sugg-h">不知道從哪開始？點一張卡片，指令會自動填入輸入框：</div>
  <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}">${IC[s.ic]}<b>${s.t}</b><small>${s.s}</small></button>`).join('')}</div></div>`;
+}
+const CHATQ=['應付帳款和應付票據差在哪？','請用白話解釋收入認列五步驟','幫我把這封催款信改得更有禮貌'];
+function chatView(){
+ return `<div class="home"><div class="hello">${IC.chat}<h1>想問 Claude 什麼？</h1></div>
+ <div class="composer"><textarea id="composer" placeholder="問一個問題…（Chat 只回答，不會動你的檔案）">${esc(S.prompt)}</textarea>${compBar(false)}</div>
+ ${S.chat.length?`<div class="chatlog" id="chat">${S.chat.map(m=>m.r==='u'?`<div class="m-u">${esc(m.t)}</div>`:`<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns"><button class="chip pri" data-act="mode" data-m="cowork">切換到 Cowork</button></div>`:''}</div></div>`).join('')}</div>`
+ :`<div class="sugg-h">試試這些問題：</div><div class="sugg">${CHATQ.map(q=>`<button class="sg" data-act="chat-q" data-q="${esc(q)}">${IC.chat}<b>${esc(q)}</b></button>`).join('')}</div>`}</div>`;
+}
+function chatSend(p){
+ S.chat.push({r:'u',t:p});S.prompt='';renderSim();
+ let r,btn=false;
+ if(/發票|整理|excel|資料夾|檔案|對帳單|合併|刪除/i.test(p)){r='這需要讀你電腦裡的檔案、做出新檔案。<b>Chat 只能回答問題</b>，請切換到 Cowork，再選資料夾。';btn=true}
+ else if(/應付/.test(p))r='<b>應付帳款</b>是尚未付款的一般賒購款項；<b>應付票據</b>是已開出票據、約定到期日付款的負債。差別在有沒有開票。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
+ else if(/收入認列/.test(p))r='五步驟：①辨認合約 ②辨認履約義務 ③決定交易價格 ④分攤交易價格 ⑤履行時認列收入。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
+ else if(/催款|信/.test(p))r='敬啟者：想提醒您，編號 INV-0731 的款項已逾期，若已安排付款，請忽略此信並告知付款日。謝謝您的協助。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
+ else r='這裡是 Chat：我會直接回答你的問題，不會動你的檔案。<br><small style="color:var(--muted)">（教學模擬）</small>';
+ setTimeout(()=>{S.chat.push({r:'c',t:r,btn});renderSim();emit('chat_sent')},500);
 }
 
 function taskView(){
@@ -1214,6 +1263,10 @@ function modalHtml(){
   h=`<h3>建立 Skill</h3><label class="lbl">技能名稱<input class="fld" id="sk-name" placeholder="例如：月結報表格式" value="月結報表格式"></label><label class="lbl">做法說明（寫給 Claude 的 SOP）<textarea class="fld" id="sk-body" rows="4">產出月結報表時：1) 金額一律千分位、單位新台幣元 2) 科目依公司科目表排序 3) 最後一列加總並標示差異</textarea></label>`;
   foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="skill-save">儲存</button>`;
  }
+ if(m.type==='model'){
+  h=`<h3>選擇模型與強度</h3><div class="menu-list">${MODELS.map(x=>`<button class="${S.model===x.n?'on':''}" data-act="model-pick" data-m="${x.n}"><span class="n">${S.model===x.n?'✓':''}</span><span><b>${x.n}</b><small>${x.d}</small></span></button>`).join('')}</div><p class="sh-m" style="margin:6px 0 0">強度：越高，Claude 想得越久。</p><div class="mopts">${EFFORTS.map(e=>`<button class="opt ${S.effort===e[0]?'good':''}" data-act="effort-pick" data-e="${e[0]}">${e[0]}<small style="display:block;font-weight:400">${e[1]}</small></button>`).join('')}</div>`;
+  foot=`<button class="btn" data-act="modal-close">完成</button>`;
+ }
  if(m.type==='project'){
   h=`<h3>新增專案</h3><label class="lbl">專案名稱<input class="fld" id="pj-name" value="銀行對帳專案"></label><label class="lbl">專案說明（之後每個任務都共用）<textarea class="fld" id="pj-inst" rows="3">對帳時，差異超過 1,000 元要標記，並列出可能原因。</textarea></label><label class="lbl">資料夾<select class="fld" id="pj-folder">${Object.entries(FOLDERS).filter(([id,f])=>!f.sens).map(([id,f])=>`<option value="${id}">${f.name}</option>`).join('')}</select></label>`;
   foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="proj-save">建立專案</button>`;
@@ -1232,7 +1285,8 @@ function pickScenario(p){
 }
 function sendPrompt(){
  const p=S.prompt.trim();
- if(!p){toast('請先輸入任務內容，或點下方的建議卡片');return}
+ if(!p){toast('請先輸入內容，或點下方的建議卡片');return}
+ if(S.mode==='chat'){chatSend(p);return}
  if(S.view==='task'&&S.active){ // 追問
   const k=S.tasks.find(x=>x.id===S.active);
   if(k&&k.status==='done'){k.msgs.push({r:'u',t:p});S.prompt='';renderSim();emit('followup');
@@ -1305,6 +1359,11 @@ function finish(k){
 /* ========== 事件委派 ========== */
 const ACT={
  noop(){toast('教學模擬版：此選單不可用')},
+ attach(){toast('＋ 可附加檔案或圖片。在 Cowork 裡，改用「選擇資料夾」授權整個資料夾')},
+ 'model-menu'(){S.modal={type:'model'};renderSim()},
+ 'model-pick'(el){S.model=el.dataset.m;emit('model_pick');renderSim()},
+ 'effort-pick'(el){S.effort=el.dataset.e;emit('model_pick');renderSim()},
+ 'chat-q'(el){S.prompt=el.dataset.q;chatSend(S.prompt)},
  pmode(){
   S.pmode={manual:'auto',auto:'skip',skip:'manual'}[S.pmode];
   toast(S.pmode==='manual'?'手動核准：每個重要動作都會問你（新手建議）':S.pmode==='auto'?'自動：Claude 先做安全檢查，再自動批准':'全部略過：不再詢問（最危險）。但永久刪除檔案仍然會問你','ok');
@@ -1671,7 +1730,7 @@ const MAPS=[
    {t:'它擅長',ic:'star',d:'讀懂文件、整理資料、寫作、推理'},
    {t:'它自己做不到',ic:'lock',d:'自己翻你的硬碟、自己寄信',red:'所有「動手」都要經過 App 與你的授權'}]},
   {id:'app',t:'Cowork App',ic:'terminal',d:'裝在你電腦上的程式。模型說「我要讀這個檔」，是 App 真的去讀、去寫。',box:'我是大腦的手腳：大腦說要讀檔，是我真的去做',kids:[
-   {id:'input',t:'輸入框',ic:'chat',d:'交辦任務的地方，旁邊可選資料夾',go:{u:4}},
+   {id:'input',t:'輸入框',ic:'chat',d:'交辦任務的地方。左下角可切 Chat／Cowork，右下角選模型與強度',go:{u:4}},
    {id:'progress',t:'進度面板',ic:'list',d:'任務畫面右側：每一步的狀態與新產生的檔案',go:{u:2}},
    {id:'sidebar',t:'側邊欄',ic:'book',d:'新任務、排程、自訂都從這裡進出',go:{u:2}}]},
   {id:'folder',t:'授權資料夾',ic:'folder',d:'你指定的資料夾，是 Claude 唯一能讀寫的檔案範圍。',box:'像只借出一個抽屜的鑰匙，不是整間檔案室',go:{u:3},kids:[

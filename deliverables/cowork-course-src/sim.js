@@ -2,7 +2,7 @@
 const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
  conn:{},plugins:{},plugOpen:{},
  skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
- schedules:[],pmode:'manual',
+ schedules:[],pmode:'manual',chat:[],model:'Opus 5.5',effort:'High',
  projects:[{id:'p1',name:'2026 月結專案',inst:'金額用千分位、科目依公司科目表排序、異常項目標紅。',folder:'invoices'}]};
 const LOG=new Set();
 let _uid=0;
@@ -30,18 +30,19 @@ function renderSim(){
  const c=$('#chat');if(c&&wasBottom)c.scrollTop=c.scrollHeight;
  if(keep!==null){const n=$('#composer');if(n){n.focus();try{n.setSelectionRange(keep,keep)}catch(e){}}}
 }
-const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="modes" role="tablist">${[['chat','Chat'],['cowork','Cowork'],['code','Code']].map(m=>`<button role="tab" aria-selected="${S.mode===m[0]}" class="${S.mode===m[0]?'on':''}" data-act="mode" data-m="${m[0]}">${m[1]}</button>`).join('')}</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
+const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="sim-title">Claude</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
 const sidebar=()=>`<aside class="sb">
  <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>新任務</span></button>
  <button class="sb-i ${S.view==='projects'?'on':''}" data-act="nav" data-v="projects">${IC.layers}<span>專案</span></button>
  <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>排程</span></button>
  <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>自訂</span></button>
+ <button class="sb-i ${S.mode==='code'?'on':''}" data-act="mode" data-m="code">${IC.code}<span>Code</span></button>
  <div class="sb-h">最近的任務</div>
  ${S.tasks.length?S.tasks.map(k=>`<button class="sb-t ${S.view==='task'&&S.active===k.id?'on':''}" data-act="open-task" data-id="${k.id}"><i class="dot ${k.status}"></i><span>${esc(k.title)}</span></button>`).join(''):'<p class="sb-empty">還沒有任務</p>'}
  <div class="sb-foot"><b>學員</b>教學模擬環境<br>不會動到真實檔案</div></aside>`;
 
 function main(){
- if(S.mode==='chat')return modeNote('chat','Chat：一般對話','適合問答、寫作、解釋概念。它不會替你讀取電腦資料夾，也不會自動產出一整包檔案。','例：請用白話解釋「收入認列五步驟」');
+ if(S.mode==='chat')return chatView();
  if(S.mode==='code')return modeNote('code','Code：寫程式','給工程師寫程式、改專案用。會計同仁日常整理資料，通常用不到這裡。','例：幫我修改這個 Python 腳本');
  if(S.view==='projects')return projView();
  if(S.view==='scheduled')return schedView();
@@ -51,13 +52,37 @@ function main(){
 }
 const modeNote=(ic,h,p,ex)=>`<div class="modeNote">${IC[ic]}<h2>${h}</h2><p>${p}</p><div class="bubble">${ex}</div><button class="chip pri" data-act="mode" data-m="cowork">切到 Cowork 交辦任務</button></div>`;
 
-function homeView(){
+const MODELS=[{n:'Opus 5.5',d:'最會想，慢一點、較耗用量。難題、一次要做對的任務'},{n:'Sonnet 5.5',d:'日常首選。文件、報表、多步驟任務'},{n:'Haiku 4.5',d:'快又省。分類、改格式、大量重複的簡單工作'}];
+const EFFORTS=[['Low','快速回答'],['Medium','一般'],['High','多想一會兒']];
+function compBar(cowork){
  const f=S.folder?FOLDERS[S.folder]:null;
+ return `<div class="comp-bar"><button class="plus" data-act="attach" aria-label="附加">${IC.plus}</button>
+ <div class="mtoggle" role="tablist" aria-label="模式"><button role="tab" aria-selected="${!cowork}" class="${cowork?'':'on'}" data-act="mode" data-m="chat">Chat</button><button role="tab" aria-selected="${cowork}" class="${cowork?'on':''}" data-act="mode" data-m="cowork">Cowork</button></div>
+ ${cowork?`<button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="pmode" title="點一下切換權限模式">${IC.shield}<span>${{manual:'手動核准',auto:'自動',skip:'全部略過'}[S.pmode]}</span></button>`:''}
+ <span class="grow"></span><button class="mdl" data-act="model-menu" title="選擇模型與強度"><b>${S.model}</b> <span>${S.effort}</span></button><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div>`;
+}
+function homeView(){
  return `<div class="home"><div class="hello">${IC.spark}<h1>想請 Claude 幫你處理什麼？</h1></div>
- <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>
- <div class="comp-bar"><button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="pmode" title="點一下切換權限模式">${IC.shield}<span>${{manual:'手動核准',auto:'自動',skip:'全部略過'}[S.pmode]}</span></button><button class="chip ghost" data-act="noop">Claude ▾</button><span class="grow"></span><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
+ <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>${compBar(true)}</div>
  <div class="sugg-h">不知道從哪開始？點一張卡片，指令會自動填入輸入框：</div>
  <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}">${IC[s.ic]}<b>${s.t}</b><small>${s.s}</small></button>`).join('')}</div></div>`;
+}
+const CHATQ=['應付帳款和應付票據差在哪？','請用白話解釋收入認列五步驟','幫我把這封催款信改得更有禮貌'];
+function chatView(){
+ return `<div class="home"><div class="hello">${IC.chat}<h1>想問 Claude 什麼？</h1></div>
+ <div class="composer"><textarea id="composer" placeholder="問一個問題…（Chat 只回答，不會動你的檔案）">${esc(S.prompt)}</textarea>${compBar(false)}</div>
+ ${S.chat.length?`<div class="chatlog" id="chat">${S.chat.map(m=>m.r==='u'?`<div class="m-u">${esc(m.t)}</div>`:`<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns"><button class="chip pri" data-act="mode" data-m="cowork">切換到 Cowork</button></div>`:''}</div></div>`).join('')}</div>`
+ :`<div class="sugg-h">試試這些問題：</div><div class="sugg">${CHATQ.map(q=>`<button class="sg" data-act="chat-q" data-q="${esc(q)}">${IC.chat}<b>${esc(q)}</b></button>`).join('')}</div>`}</div>`;
+}
+function chatSend(p){
+ S.chat.push({r:'u',t:p});S.prompt='';renderSim();
+ let r,btn=false;
+ if(/發票|整理|excel|資料夾|檔案|對帳單|合併|刪除/i.test(p)){r='這需要讀你電腦裡的檔案、做出新檔案。<b>Chat 只能回答問題</b>，請切換到 Cowork，再選資料夾。';btn=true}
+ else if(/應付/.test(p))r='<b>應付帳款</b>是尚未付款的一般賒購款項；<b>應付票據</b>是已開出票據、約定到期日付款的負債。差別在有沒有開票。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
+ else if(/收入認列/.test(p))r='五步驟：①辨認合約 ②辨認履約義務 ③決定交易價格 ④分攤交易價格 ⑤履行時認列收入。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
+ else if(/催款|信/.test(p))r='敬啟者：想提醒您，編號 INV-0731 的款項已逾期，若已安排付款，請忽略此信並告知付款日。謝謝您的協助。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
+ else r='這裡是 Chat：我會直接回答你的問題，不會動你的檔案。<br><small style="color:var(--muted)">（教學模擬）</small>';
+ setTimeout(()=>{S.chat.push({r:'c',t:r,btn});renderSim();emit('chat_sent')},500);
 }
 
 function taskView(){
@@ -118,6 +143,10 @@ function modalHtml(){
   h=`<h3>建立 Skill</h3><label class="lbl">技能名稱<input class="fld" id="sk-name" placeholder="例如：月結報表格式" value="月結報表格式"></label><label class="lbl">做法說明（寫給 Claude 的 SOP）<textarea class="fld" id="sk-body" rows="4">產出月結報表時：1) 金額一律千分位、單位新台幣元 2) 科目依公司科目表排序 3) 最後一列加總並標示差異</textarea></label>`;
   foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="skill-save">儲存</button>`;
  }
+ if(m.type==='model'){
+  h=`<h3>選擇模型與強度</h3><div class="menu-list">${MODELS.map(x=>`<button class="${S.model===x.n?'on':''}" data-act="model-pick" data-m="${x.n}"><span class="n">${S.model===x.n?'✓':''}</span><span><b>${x.n}</b><small>${x.d}</small></span></button>`).join('')}</div><p class="sh-m" style="margin:6px 0 0">強度：越高，Claude 想得越久。</p><div class="mopts">${EFFORTS.map(e=>`<button class="opt ${S.effort===e[0]?'good':''}" data-act="effort-pick" data-e="${e[0]}">${e[0]}<small style="display:block;font-weight:400">${e[1]}</small></button>`).join('')}</div>`;
+  foot=`<button class="btn" data-act="modal-close">完成</button>`;
+ }
  if(m.type==='project'){
   h=`<h3>新增專案</h3><label class="lbl">專案名稱<input class="fld" id="pj-name" value="銀行對帳專案"></label><label class="lbl">專案說明（之後每個任務都共用）<textarea class="fld" id="pj-inst" rows="3">對帳時，差異超過 1,000 元要標記，並列出可能原因。</textarea></label><label class="lbl">資料夾<select class="fld" id="pj-folder">${Object.entries(FOLDERS).filter(([id,f])=>!f.sens).map(([id,f])=>`<option value="${id}">${f.name}</option>`).join('')}</select></label>`;
   foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="proj-save">建立專案</button>`;
@@ -136,7 +165,8 @@ function pickScenario(p){
 }
 function sendPrompt(){
  const p=S.prompt.trim();
- if(!p){toast('請先輸入任務內容，或點下方的建議卡片');return}
+ if(!p){toast('請先輸入內容，或點下方的建議卡片');return}
+ if(S.mode==='chat'){chatSend(p);return}
  if(S.view==='task'&&S.active){ // 追問
   const k=S.tasks.find(x=>x.id===S.active);
   if(k&&k.status==='done'){k.msgs.push({r:'u',t:p});S.prompt='';renderSim();emit('followup');
@@ -209,6 +239,11 @@ function finish(k){
 /* ========== 事件委派 ========== */
 const ACT={
  noop(){toast('教學模擬版：此選單不可用')},
+ attach(){toast('＋ 可附加檔案或圖片。在 Cowork 裡，改用「選擇資料夾」授權整個資料夾')},
+ 'model-menu'(){S.modal={type:'model'};renderSim()},
+ 'model-pick'(el){S.model=el.dataset.m;emit('model_pick');renderSim()},
+ 'effort-pick'(el){S.effort=el.dataset.e;emit('model_pick');renderSim()},
+ 'chat-q'(el){S.prompt=el.dataset.q;chatSend(S.prompt)},
  pmode(){
   S.pmode={manual:'auto',auto:'skip',skip:'manual'}[S.pmode];
   toast(S.pmode==='manual'?'手動核准：每個重要動作都會問你（新手建議）':S.pmode==='auto'?'自動：Claude 先做安全檢查，再自動批准':'全部略過：不再詢問（最危險）。但永久刪除檔案仍然會問你','ok');
