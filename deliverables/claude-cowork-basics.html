@@ -1720,7 +1720,9 @@ function drawCert(){
  const sc=Course.score(),mx=Course.max(),pct=sc/mx;
  g.fillText(`積分 ${sc} / ${mx}　稱號：${pct>=.9?'Cowork 達人':pct>=.7?'合格的 AI 同事':'見習生'}`,800,730);
  g.fillStyle='#6F6A5F';g.font=`30px ${serif}`;g.fillText(new Date().toLocaleDateString('zh-TW'),800,900);
- const a=document.createElement('a');a.download='Cowork結業證書_'+name+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+ const fname='Cowork結業證書_'+name.replace(/[\\/:*?"<>|]/g,'_')+'.png';
+ const save=url=>{const a=document.createElement('a');a.download=fname;a.href=url;document.body.appendChild(a);a.click();a.remove()};
+ if(c.toBlob)c.toBlob(b=>{const u=URL.createObjectURL(b);save(u);setTimeout(()=>URL.revokeObjectURL(u),4000)},'image/png');else save(c.toDataURL('image/png'));
 }
 function confetti(){
  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
