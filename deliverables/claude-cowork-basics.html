@@ -851,6 +851,54 @@ body[data-skin="arcade"] mark{background:var(--accent)}
 .comp-bar{flex-wrap:nowrap}
 .comp-bar .grow{min-width:0}
 
+/* ===== 新版側邊欄／首頁（依 Cowork 截圖）===== */
+.sb-top{gap:8px}
+.sb-top .dots{margin-right:auto}
+.sb-ic{color:var(--muted);font-size:15px;display:grid;place-items:center}
+.sb-seg{display:grid;grid-template-columns:1fr 1fr;background:var(--soft2);border-radius:9px;padding:2px;margin:0 2px 10px}
+.sb-seg button{justify-content:center;padding:4px 0;font-size:13px;font-weight:600;color:var(--muted);border-radius:7px}
+.sb-seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.sb-new{justify-content:flex-start}
+.sb-new kbd{margin-left:auto;font:11px/1 system-ui;color:var(--muted);background:transparent;border:0}
+.hello{margin-top:6px}
+.safe{margin:-12px 0 0;text-align:center}
+.lnk{font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.lnk:hover{color:var(--ink)}.lnk.center{display:block;margin:12px auto 0}
+.mset{display:inline-flex;gap:2px;align-items:center}
+.mset button{font-size:13px;color:var(--muted);padding:3px 7px;border-radius:7px}
+.mset button:hover{background:var(--soft2)}
+.mset .mdl b{color:var(--ink);font-weight:600}
+.under{display:flex;gap:8px;flex-wrap:wrap;margin:-8px 4px 0}
+.fbar{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;border-radius:12px;padding:7px 14px;font-size:13.5px;color:var(--muted);text-align:left}
+.fbar:first-child{flex:1;min-width:200px}
+.fbar:hover{background:var(--soft)}
+.fbar.on{color:var(--ink);background:var(--card);border-color:#cfcabb;font-weight:600}
+.fbar i{font-style:normal;margin-left:auto;font-size:11px}
+.pick{margin-top:14px}
+.pick-h{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12.5px;margin:0 4px 6px}
+.pick-h svg{font-size:14px}
+.sugg{display:grid;gap:0;justify-content:stretch}
+.sg{display:flex;flex-direction:row;align-items:center;gap:12px;border:0;border-top:1px solid var(--line);border-radius:0;padding:11px 6px;background:transparent;width:100%;text-align:left}
+.sg:first-child{border-top:0}
+.sg svg{font-size:20px;color:var(--muted);flex:none}
+.sg b{font-size:14.5px;font-weight:500;flex:none}
+.sg small{display:block;color:var(--muted);font-size:12.5px;margin-left:auto;text-align:right}
+.sg:hover{background:var(--soft);border-color:var(--line)}
+.sg.dg b,.sg.dg svg{color:var(--warn)}
+.beta{font-style:normal;font-size:10.5px;background:var(--soft2);border-radius:5px;padding:0 6px;color:var(--muted);font-weight:600}
+.xl .best td{background:var(--green-soft);font-weight:600}
+.deck{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slide{aspect-ratio:16/9;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:8px;display:flex;flex-direction:column;justify-content:center;gap:4px;position:relative}
+.slide span{position:absolute;left:6px;top:4px;font-size:10px;color:var(--muted)}
+.slide b{font-size:12.5px;line-height:1.3;text-align:center}
+@media (max-width:700px){.sg small{display:none}}
+.sugg{grid-template-columns:1fr!important}
+.sg{display:grid!important;grid-template-columns:28px 1fr;grid-template-rows:auto auto;column-gap:10px;row-gap:0;align-items:center}
+.sg svg{grid-row:1/3}
+.sg small{margin-left:0!important;text-align:left!important;grid-column:2;font-size:12px}
+.sg b{grid-column:2}
+@media (max-width:700px){.sg small{display:block!important}}
+
 </style>
 </head>
 <body data-pane="coach" data-view="map" data-skin="candy">
@@ -924,6 +972,7 @@ const IC={
  lock:P('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
  user:P('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
  layers:P('<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>'),
+ search:P('<circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/>'),
  monitor:P('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>')
 };
 
@@ -934,6 +983,9 @@ const FOLDERS={
  bank:{name:'銀行對帳單',path:'~/Documents/會計/銀行對帳單',sens:false,count:4,files:['2026-07_台新銀行.pdf','2026-08_台新銀行.pdf','2026-09_台新銀行.pdf','帳上明細_2026Q3.xlsx']},
  expenses:{name:'費用報銷',path:'~/Documents/會計/費用報銷',sens:false,count:6,files:['出差報銷_林小姐.xlsx','計程車收據_01.jpg','計程車收據_02.jpg','住宿發票.pdf','報銷申請表.docx','備註.txt']},
  personal:{name:'個人文件',path:'~/Documents/個人文件',sens:true,count:4,files:['薪資單_2026-09.pdf','身分證影本.jpg','存摺封面.png','健保卡.jpg']},
+ quotes:{name:'報價單',path:'~/Documents/採購/報價單',sens:false,count:3,files:['甲公司報價單.pdf','乙公司報價單.pdf','丙公司報價單.pdf']},
+ meeting:{name:'會議記錄',path:'~/Documents/會議記錄',sens:false,count:2,files:['週會逐字稿.txt','手寫筆記.jpg']},
+ report:{name:'月報',path:'~/Documents/月報',sens:false,count:2,files:['月報_2026-09.xlsx','上月簡報.pptx']},
  archive:{name:'舊檔案_2023前',path:'~/Documents/會計/舊檔案_2023前',sens:false,count:47,files:gen(47,i=>`舊報表_${2019+i%4}-${String(1+i%12).padStart(2,'0')}.xlsx`)}
 };
 const CONNECTORS=[
@@ -951,12 +1003,23 @@ const PLUGINS=[
 
 /* ========== 任務情境 ========== */
 const SUGG=[
+ {id:'compare',ic:'sheet',t:'把報價單做成 Excel 比較表',s:'整理三家報價，自動算合計',p:'請把資料夾裡三家公司的報價單，整理成一張 Excel 比較表：品名、單價、數量、小計、合計，並標出最便宜的一家。'},
+ {id:'word',ic:'file',t:'把會議記錄寫成 Word 紀要',s:'整理成有標題、決議、待辦的文件',p:'請把資料夾裡的會議記錄，整理成一份 Word 會議紀要：標題、決議事項、待辦事項（負責人與期限）。'},
+ {id:'slides',ic:'layers',t:'把月報做成 5 頁簡報',s:'一頁一個重點',p:'請把資料夾裡的月報，做成 5 頁簡報：封面、三個重點、下個月計畫。每頁只放一個重點。'},
  {id:'invoices',ic:'sheet',t:'整理發票成 Excel',s:'讀取發票、辨識欄位、產出彙整表',p:'請讀取我授權的資料夾，把每張發票的日期、廠商、統編、金額整理成 Excel；缺統編的標紅，不要修改原始檔案。'},
- {id:'bank',ic:'layers',t:'核對銀行對帳單',s:'比對銀行與帳上明細，找出未達帳',p:'請核對「銀行對帳單」資料夾裡的銀行對帳單與帳上明細，列出未達帳項目，輸出成 Excel 對帳表。'},
  {id:'dunning',ic:'mail',t:'寫催款信草稿',s:'找出逾期客戶並草擬信件（需 Gmail）',p:'請找出逾期超過 30 天的應收帳款，為每位客戶草擬一封禮貌的催款信，先不要寄出。'},
  {id:'delete',ic:'trash',t:'清理舊檔案',s:'⚠ 危險示範：會要求刪除權限',p:'請把資料夾內 2023 年以前的舊檔案全部刪除，節省空間。',dg:true}
 ];
 const SCEN={
+ compare:{id:'compare',re:/報價|比較表/,folder:'quotes',steps:[
+   {t:'讀取 3 份報價單'},{t:'整理品名、單價、數量'},{t:'建立 Excel：報價比較表.xlsx（小計與合計用公式）'},{t:'標出最便宜的一家'}],
+   out:[{name:'報價比較表.xlsx',type:'xlsx',pv:'compare'}]},
+ word:{id:'word',re:/會議|紀要|word|docx/i,folder:'meeting',steps:[
+   {t:'讀取會議記錄'},{t:'整理出決議事項與待辦事項'},{t:'建立 Word：週會紀要.docx'}],
+   out:[{name:'週會紀要.docx',type:'docx',pv:'minutes'}]},
+ slides:{id:'slides',re:/簡報|投影片|pptx|slides/i,folder:'report',steps:[
+   {t:'讀取月報'},{t:'挑出三個重點'},{t:'排成 5 頁簡報：月報簡報.pptx'}],
+   out:[{name:'月報簡報.pptx',type:'pptx',pv:'deck'}]},
  delete:{id:'delete',re:/刪除|刪掉|清除|清掉|delete/i,folder:'archive',steps:[
    {t:'掃描資料夾，找到 47 個 2023 年以前的檔案'},
    {t:'列出即將刪除的清單'},
@@ -985,6 +1048,13 @@ const SCEN={
 };
 
 const PREVIEW={
+ compare:()=>`<p class="note" style="margin-bottom:8px">教學範例。小計與合計是<b>真正的 Excel 公式</b>（例如 =C2*D2），改數字，合計會跟著變。綠色＝最便宜。</p><table class="xl"><tr><th>廠商</th><th>品名</th><th>單價</th><th>數量</th><th>小計</th></tr>
+ <tr><td>甲公司</td><td>影印紙</td><td class="r">120</td><td class="r">50</td><td class="r">6,000</td></tr>
+ <tr class="best"><td>乙公司</td><td>影印紙</td><td class="r">105</td><td class="r">50</td><td class="r">5,250</td></tr>
+ <tr><td>丙公司</td><td>影印紙</td><td class="r">110</td><td class="r">50</td><td class="r">5,500</td></tr>
+ <tr><th colspan="4" style="text-align:right">合計 =SUM(E2:E4)</th><th class="r">16,750</th></tr></table>`,
+ minutes:()=>`<div class="md"># 週會紀要　2026-09-30\n\n## 決議事項\n1. 十月份預算維持不變\n2. 新文具供應商改用乙公司\n\n## 待辦事項\n- 林小姐：10/3 前寄出報價確認信\n- 王先生：10/7 前更新預算表\n\n（教學範例：Claude 整理的初稿，語氣與內容請你讀過再使用）</div>`,
+ deck:()=>`<div class="deck">${['封面：九月份月報','重點 1：營收成長 8%','重點 2：費用下降 3%','重點 3：應收帳款減少','下個月計畫'].map((t,i)=>`<div class="slide"><span>${i+1}</span><b>${t}</b></div>`).join('')}</div><p style="font-size:13px;color:var(--muted);margin-top:8px">教學範例：每頁一個重點。請逐頁核對數字與用字。</p>`,
  invoices:()=>`<p class="note" style="margin-bottom:8px">教學範例資料（僅顯示前 6 列，共 12 列）。紅色＝缺統編，黃色＝金額與品項不符。</p><table class="xl"><tr><th>日期</th><th>廠商</th><th>統編</th><th>金額</th><th>狀態</th></tr>
  <tr><td>07-03</td><td>大同文具</td><td>12345678</td><td class="r">1,250</td><td>正常</td></tr>
  <tr class="bad"><td>07-05</td><td>台灣大哥大</td><td>（缺）</td><td class="r">1,099</td><td>缺統編</td></tr>
@@ -1010,6 +1080,10 @@ const MATCH={
   {id:'m-a',q:'想問：「應付帳款和應付票據差在哪？」',a:'Chat',why:'純問答，不需要動檔案，用 Chat。'},
   {id:'m-b',q:'資料夾裡有 200 張發票掃描檔，要整理成 Excel',a:'Cowork',why:'要讀很多檔案、做出新檔案，這是 Cowork 的工作。'},
   {id:'m-c',q:'工程師要修改公司報表系統的程式碼',a:'Code',why:'寫與改程式是 Code 的工作。'}]},
+ files:{opts:['Excel','Word','簡報'],items:[
+  {id:'f-a',q:'把三家報價整理成一張表，還要自動算合計',a:'Excel',why:'要表格、要算數字，用 Excel；Claude 會放進真正的公式。'},
+  {id:'f-b',q:'把開會的雜亂筆記，寫成有標題與待辦事項的文件',a:'Word',why:'以文字為主的文件，用 Word。'},
+  {id:'f-c',q:'把這份月報的重點，做成 5 頁給主管看的投影片',a:'簡報',why:'要一頁一個重點、用來報告，用簡報。'}]},
  ext:{opts:['Skill','MCP（連接器）','Project（專案）','排程'],items:[
   {id:'e-a',q:'每次都要用公司固定的月結報表格式',a:'Skill',why:'固定的做法寫成 Skill，Claude 每次都照著做。'},
   {id:'e-b',q:'想讓 Claude 直接去 Gmail 把催款信存成草稿',a:'MCP（連接器）',why:'要連到外部工具（Gmail），靠連接器（MCP）。'},
@@ -1045,11 +1119,11 @@ const VIDEOS={
   {dur:10,cap:'看這個例子：有目標、有資料來源、有輸出格式、也有限制。',html:TYPE('任務指令','請讀取「發票_2026Q3」，把每張發票的日期、廠商、統編、金額整理成 Excel，缺統編的標紅，不要修改原始檔案。','送出')},
   {dur:8,cap:'四要素：目標、資料、格式、限制。就像開傳票要填的四個欄位。',html:LIST('好指令四要素',['目標：要做什麼','資料：從哪裡讀','格式：輸出長怎樣','限制：哪些事不能做'])}],
  5:[
-  {dur:5,cap:'Cowork 可以擴充：連接器、技能、外掛。',html:T('第 6 單元','讓 Claude 接上你的工具與做法','連接器・技能・外掛',['連接器','技能','外掛'])},
+  {dur:5,cap:'Cowork 可以擴充：連接器、技能、外掛。',html:T('第 7 單元','讓 Claude 接上你的工具與做法','連接器・技能・外掛',['連接器','技能','外掛'])},
   {dur:9,cap:'連接器負責連外部服務；技能是你的標準作業程序；外掛是一整包角色套件。',html:COMPARE([{ic:'plug',h:'連接器',lines:['連 Gmail、雲端硬碟','像電子對帳介面']},{ic:'book',h:'Skill 技能',cls:'hot',lines:['你的 SOP','寫一次，每次照做']},{ic:'layers',h:'Plugin 外掛',lines:['財務會計套件','技能＋工具一次裝好']}])},
   {dur:7,cap:'例如連上 Gmail，Claude 就能幫你把催款信存成草稿，由你確認後再寄。',html:FLOW([{ic:'sheet',l:'逾期應收',s:'找出 3 家客戶'},{ic:'mail',l:'Gmail 草稿',s:'不會自動寄出'},{ic:'user',l:'你覆核',s:'確認後才寄'}])}],
  6:[
-  {dur:5,cap:'最後一課：讓 Claude 定時工作，並且守住安全底線。',html:T('第 7 單元','自動化，但責任仍在你','排程與安全檢查',['排程','拒絕','覆核'])},
+  {dur:5,cap:'最後一課：讓 Claude 定時工作，並且守住安全底線。',html:T('第 8 單元','自動化，但責任仍在你','排程與安全檢查',['排程','拒絕','覆核'])},
   {dur:8,cap:'排程可以固定時間自動執行，例如每月 5 號產出月結報表，再由你覆核。',html:FLOW([{ic:'clock',l:'每月 5 號 09:00',s:'排程觸發'},{ic:'spark',l:'Claude 自動執行',s:'讀資料、出報表'},{ic:'user',l:'你覆核',s:'簽核後使用'}])},
   {dur:9,cap:'遇到刪除或覆蓋檔案的請求，沒有備份就拒絕；內容單純又有備份，才允許。',html:COMPARE([{ic:'check',h:'可以允許',cls:'good',lines:['有備份','範圍清楚','影響可還原']},{ic:'warn',h:'應該拒絕',cls:'bad',lines:['要永久刪除','沒有備份','範圍看不懂']}])},
   {dur:9,cap:'安全清單：看清楚再允許、抽查數字、敏感資料不授權，排程指令要寫清楚。',html:LIST('安全檢查清單',['刪除與覆蓋，看清楚再按','輸出結果要抽查數字','敏感資料不授權','排程每次都是新對話：指令寫清楚'])}]
@@ -1059,13 +1133,13 @@ const VIDEOS={
 const has=e=>LOG.has(e);
 const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
 const UNITS=[
- {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，並點側邊欄的 Code；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
+ {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，並點側邊欄上方的 Code 分頁；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
   cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'},{f:'Code',s:'寫程式',b:'像請 IT 工程師蓋系統：專門寫與改程式。會計同仁通常用不到，知道有這個就好。'}],
   match:'modes',
   steps:[
    U('1-1','看完動畫（拖曳時間軸到最後也算）','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:1')),
    U('1-2','在模擬器輸入框左下角，切到「Chat」看看','輸入框左下角的 Chat｜Cowork 切換鈕','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
-   U('1-3','再點側邊欄的「Code」看看','側邊欄最下面的 Code','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
+   U('1-3','再點側邊欄上方的「Code」分頁看看','側邊欄最上面 Cowork｜Code 的右邊','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
    U('1-4','切回「Cowork」（今天的主角）','輸入框左下角的 Cowork；在 Code 畫面則按中間的按鈕','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork'),
    U('1-5','完成「三種模式」配對小遊戲（3 題）','在上方的配對遊戲，替每個情境選一個名詞','#match',()=>MATCH.modes.items.every(x=>has('match_ok:'+x.id)))],
   quiz:[
@@ -1093,7 +1167,7 @@ const UNITS=[
    U('2-2','點側邊欄的「新任務（New task）」','側邊欄最上面','.sb-new',()=>has('nav_new')),
    U('2-3','點側邊欄的「排程（Scheduled）」','側邊欄的第三個','[data-act="nav"][data-v="scheduled"]',()=>has('nav_scheduled')),
    U('2-4','點側邊欄的「自訂（Customize）」','側邊欄的第四個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
-   U('2-5','回到新任務，點輸入框下方的資料夾按鈕（Choose folder）','先回「新任務」，再點「Choose folder」','[data-act="folder-open"]',()=>has('folder_chip'))],
+   U('2-5','回到新任務，點輸入框下方的資料夾按鈕（Work in a project or folder）','先回「新任務」，再點「Work in a project or folder」','[data-act="folder-open"]',()=>has('folder_chip'))],
   quiz:[
    {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 模式'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
    {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
@@ -1101,14 +1175,14 @@ const UNITS=[
   cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
   steps:[
    U('3-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:3')),
-   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「Choose folder（選擇資料夾）」','[data-act="folder-open"]',()=>has('folder_picker_open')),
+   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「Work in a project or folder（在專案或資料夾中工作）」','[data-act="folder-open"]',()=>has('folder_picker_open')),
    U('3-3','點一下「個人文件」預覽內容，看看裡面有什麼','先看，不要按授權','[data-act="peek"][data-id="personal"]',()=>has('folder_peek:personal')),
    U('3-4','改為授權「發票_2026Q3」','點該資料夾，再按「授權此資料夾」','[data-act="peek"][data-id="invoices"]',()=>S.folder==='invoices')],
   quiz:[
    {q:'要整理 7～9 月的發票，應該授權哪個資料夾？',o:['整個「文件」資料夾','桌面','發票_2026Q3'],a:2,why:'只給任務需要的最小範圍，其他檔案就不會被讀到或改到。'},
    {q:'第一次使用，最安全的做法是？',o:['直接用正式資料夾','複製一份副本當練習資料夾','全部授權比較省事'],a:1,why:'Cowork 可能改檔名或寫入新檔。用副本，出錯也不影響原始憑證。'},
    {q:'資料夾裡混有薪資單，但任務只是整理發票，怎麼辦？',o:['移出敏感檔案，或改授權較小的資料夾','沒關係，Claude 不會看','全部壓縮成 zip 再授權'],a:0,why:'敏感資料與任務無關，就不該放進授權範圍。'}]},
- {id:4,tips:['先看範例指令長什麼樣子。','四要素缺一，結果就會亂猜。','成果交出去之前，先自己抽查幾筆：Claude 做的是初稿，簽核的人是你。','權限請求是你的覆核關卡，不是裝飾。'],prompts:[{t:'可直接貼上的指令',text:SUGG[0].p}],sample:{t:'練習用資料',rows:['2026-07-03、大同文具、12345678、1,250','2026-07-05、台灣大哥大、（缺統編）、1,099','2026-07-09、全聯福利中心、23456789、3,480']},short:'好指令',title:'下第一個任務：好指令四要素',goal:'用「目標、資料、格式、限制」下指令，並看懂權限請求。',builder:true,
+ {id:4,tips:['先看範例指令長什麼樣子。','四要素缺一，結果就會亂猜。','成果交出去之前，先自己抽查幾筆：Claude 做的是初稿，簽核的人是你。','權限請求是你的覆核關卡，不是裝飾。'],prompts:[{t:'可直接貼上的指令',text:SUGG.find(s=>s.id==='invoices').p}],sample:{t:'練習用資料',rows:['2026-07-03、大同文具、12345678、1,250','2026-07-05、台灣大哥大、（缺統編）、1,099','2026-07-09、全聯福利中心、23456789、3,480']},short:'好指令',title:'下第一個任務：好指令四要素',goal:'用「目標、資料、格式、限制」下指令，並看懂權限請求。',builder:true,
   cards:[{f:'四要素',s:'目標資料格式限制',b:'像開傳票要填的四個欄位，缺一不可。'},{f:'權限請求',s:'要你點頭',b:'像覆核流程：重要動作要主管（你）簽核才放行。'},{f:'抽查結果',s:'人工覆核',b:'像審計抽樣：不用全看，但一定要看。'}],
   steps:[
    U('4-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:4')),
@@ -1121,7 +1195,20 @@ const UNITS=[
    {q:'哪一個指令比較好？',o:['幫我處理一下發票','請把「發票_2026Q3」每張發票的日期、廠商、統編、金額整理成 Excel，缺統編標紅，不要改原始檔','整理檔案'],a:1,why:'有資料來源、輸出格式與限制，Claude 不用猜。'},
    {q:'「請整理這些發票」少了哪些要素？',o:['都有了','只缺目標','輸出格式與限制'],a:2,why:'沒說輸出長怎樣，也沒說哪些事不能做（例如不要改原檔）。'},
    {q:'Claude 要求「重新命名 12 個檔案」，你該怎麼做？',o:['看清楚範圍與影響，確認有備份再允許','不看直接允許','一律拒絕'],a:0,why:'權限請求是你的覆核關卡：看範圍、看影響、確認備份。'}]},
- {id:5,tips:['連接器、技能、外掛，三種擴充各管一件事。','連接器像電子對帳介面；技能像 SOP。','連接器只連需要的；草稿請自己確認再寄。','三題，分清楚三種擴充。'],prompts:[{t:'可直接貼上的指令（先連接 Gmail）',text:SUGG[2].p}],short:'擴充能力',title:'連接器、技能、外掛：讓 Claude 更懂你的工作',goal:'連上 Gmail、安裝財務外掛、建立自己的 Skill。',
+ {id:8,tips:['這一課用三個最簡單的例子：報價單、會議記錄、月報。','翻開卡片，看每種文件的「它幫你做什麼」與「你要檢查什麼」。','每種都在模擬器做一次，做完一定要點開檢查。','答錯可再試，看解析。'],short:'做出文件',title:'Excel、Word、簡報：請 Claude 直接做出檔案',goal:'知道 Claude 能做出 Excel 表、Word 文件、簡報，也知道做完要檢查什麼。',match:'files',
+  cards:[{f:'Excel 表',s:'整理成表格、會算數',b:'像請助理做表：資料整理成欄位，也能放真正的公式（例如 =單價×數量）。你要檢查：點開看公式與合計對不對。'},{f:'Word 文件',s:'整理成有條理的文件',b:'像請助理寫初稿：把雜亂的筆記整理成有標題、有段落的文件。你要檢查：事實、人名、語氣。（Word 檔的支援以你的版本為準）'},{f:'簡報',s:'一頁一個重點',b:'像請助理排版：把重點排成幾頁投影片。你要檢查：每頁只留一個重點，數字要核對。'}],
+  steps:[
+   U('8-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:8')),
+   U('8-2','完成「Excel／Word／簡報」配對遊戲（3 題）','替每個情境選一個','#match',()=>MATCH.files.items.every(x=>has('match_ok:'+x.id))),
+   U('8-3','做 Excel：選「報價單」資料夾，點「把報價單做成 Excel 比較表」並送出，完成後點開 Excel 檢查','先在輸入框下方的「Work in a project or folder」選資料夾','.sg[data-id="compare"]',()=>has('task_done:compare')&&has('file_open:xlsx')),
+   U('8-4','做 Word：選「會議記錄」資料夾，點「把會議記錄寫成 Word 紀要」並送出','點建議後別忘了先選對資料夾','.sg[data-id="word"]',()=>has('task_done:word')),
+   U('8-5','做簡報：選「月報」資料夾，點「把月報做成 5 頁簡報」並送出，完成後點開檢查','做完請點開簡報逐頁看','.sg[data-id="slides"]',()=>has('task_done:slides')&&has('file_open:pptx'))],
+  quiz:[
+   {q:'Claude 做出的 Excel，裡面的「合計」通常是？',o:['只是貼上去的數字','真正的公式，改數字合計會跟著變','一張圖片'],a:1,why:'Cowork 能做出帶有可用公式的 Excel。但仍要自己點開確認公式對不對。'},
+   {q:'想把雜亂的會議筆記整理成文件，最適合哪一種？',o:['簡報','Excel','Word 文件'],a:2,why:'以文字為主的整理，用文件最合適。'},
+   {q:'做簡報時，比較好的習慣是？',o:['每頁塞滿文字','每頁只留一個重點，並核對數字','不用檢查，直接用'],a:1,why:'一頁一個重點，看的人才記得住；數字一定要核對。'},
+   {q:'Claude 做好檔案之後，下一步是？',o:['直接寄給客戶','自己點開檢查：公式、數字、錯字','把原始資料刪掉'],a:1,why:'AI 的產出是初稿，簽核的人是你。'}]},
+ {id:5,tips:['連接器、技能、外掛，三種擴充各管一件事。','連接器像電子對帳介面；技能像 SOP。','連接器只連需要的；草稿請自己確認再寄。','三題，分清楚三種擴充。'],prompts:[{t:'可直接貼上的指令（先連接 Gmail）',text:SUGG.find(s=>s.id==='dunning').p}],short:'擴充能力',title:'連接器、技能、外掛：讓 Claude 更懂你的工作',goal:'連上 Gmail、安裝財務外掛、建立自己的 Skill。',
   cards:[{f:'連接器',s:'接外部服務',b:'像銀行的電子對帳介面：讓 Claude 連到 Gmail、雲端硬碟。'},{f:'Skill',s:'你的 SOP',b:'像公司作業手冊：寫一次，每次都照做。'},{f:'Plugin',s:'整包套件',b:'像會計部「新人套組」：SOP、工具、範本一次裝好。'}],
   steps:[
    U('5-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:5')),
@@ -1133,7 +1220,7 @@ const UNITS=[
    {q:'連接器的用途是？',o:['讓 Claude 連到 Gmail、雲端硬碟等外部服務','加快 Claude 的速度','讓檔案自動備份'],a:0,why:'連接器就是 Claude 與外部工具之間的橋。'},
    {q:'想讓 Claude 每次都用公司的月結報表格式，應該？',o:['每次都重新貼格式','建立 Skill','換一個資料夾'],a:1,why:'Skill 是可重複使用的作業說明，寫一次就能一直用。'},
    {q:'「財務會計外掛」比較像什麼？',o:['一個資料夾','一包整合技能與工具的套件','一種檔案格式'],a:1,why:'外掛把技能、連接器、常用指令打包，方便一次安裝。'}]},
- {id:6,tips:['最後一課：自動化很方便，責任仍在你。','拒絕是你的權力；人工覆核不可省。','遇到「刪除」先停一下：有備份嗎？範圍看得懂嗎？','最後測驗，完成就能領結業證書。'],prompts:[{t:'危險演練：先授權「舊檔案_2023前」，再交辦這句',text:SUGG[3].p,danger:true}],short:'排程與安全',title:'排程與安全：自動化，但責任仍在你',goal:'設定排程、練習拒絕危險請求、建立覆核習慣。',cert:true,
+ {id:6,tips:['最後一課：自動化很方便，責任仍在你。','拒絕是你的權力；人工覆核不可省。','遇到「刪除」先停一下：有備份嗎？範圍看得懂嗎？','最後測驗，完成就能領結業證書。'],prompts:[{t:'危險演練：先授權「舊檔案_2023前」，再交辦這句',text:SUGG.find(s=>s.id==='delete').p,danger:true}],short:'排程與安全',title:'排程與安全：自動化，但責任仍在你',goal:'設定排程、練習拒絕危險請求、建立覆核習慣。',cert:true,
   cards:[{f:'排程',s:'定時任務',b:'像月結行事曆：時間到就自動提醒並執行。'},{f:'拒絕',s:'覆核權',b:'覆核有權退件：不確定就先不放行。'},{f:'人工覆核',s:'責任在人',b:'AI 做初稿，簽核的人是你，責任也在你。'}],
   steps:[
    U('6-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:6')),
@@ -1155,18 +1242,25 @@ VIDEOS[7]=[
  {dur:10,cap:'帶走這四句：Skill 教做法、MCP 接工具、專案放一起、排程定時做。',html:LIST('四句話帶走',['Skill：教它怎麼做','MCP：接上外部工具','專案：說明與資料放一起','排程：時間到自動做'])}
 ];
 VTAGS[7]=['Skill 與 MCP','專案與排程','記住四句話'];
+
+VIDEOS[8]=[
+ {dur:6,cap:'Claude 不只會聊天，還能直接做出 Excel、Word 和簡報檔。',html:T('第 6 單元','Excel、Word、簡報<br>都能請它做','用三個最簡單的例子',['Excel 表','Word 文件','簡報'])},
+ {dur:11,cap:'Excel 整理成表格、會算數；Word 整理成文件；簡報把重點排成一頁一頁。',html:COMPARE([{ic:'sheet',h:'Excel 表',cls:'hot',lines:['整理成表格','有真正的公式','例：報價比較表']},{ic:'file',h:'Word 文件',lines:['整理成文件','標題、段落、待辦','例：會議紀要']},{ic:'layers',h:'簡報',lines:['排成投影片','一頁一個重點','例：月報 5 頁']}])},
+ {dur:10,cap:'做完之後，一定要自己打開檢查：Excel 看公式，Word 讀一遍，簡報核對數字。',html:LIST('做完要檢查',['Excel：點開看公式與合計','Word：讀一遍，語氣改成你的','簡報：每頁一個重點，核對數字'])}
+];
+VTAGS[8]=['三種文件','做完要檢查'];
 Object.keys(VIDEOS).forEach(u=>VIDEOS[u].forEach((s,i)=>{if(i>0)s.tag='②③④⑤'[i-1]+' '+VTAGS[u][i-1]}));
 
 /* ========== 模擬器狀態 ========== */
 const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
  conn:{},plugins:{},plugOpen:{},
  skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
- schedules:[],pmode:'manual',lang:'en',rp:{prog:1,folder:1,ctx:1},chat:[],model:'Opus 5.5',effort:'High',
+ schedules:[],pmode:'manual',lang:'en',rp:{prog:1,folder:1,ctx:1},chat:[],model:'Opus 4.8',effort:'High',output:null,
  projects:[{id:'p1',name:'2026 月結專案',inst:'金額用千分位、科目依公司科目表排序、異常項目標紅。',folder:'invoices'}]};
 /* ===== 介面語言（實際畫面是英文，預設 EN；可切換中文） ===== */
 const UI={
- en:{newTask:'New task',projects:'Projects',scheduled:'Scheduled',customize:'Customize',code:'Code',recents:'Recents',noTasks:'No tasks yet',user:'Student',plan:'Practice',greet:'What can I do for you?',greetChat:'How can I help you today?',ph:'Describe the task…  (Enter to send, Shift+Enter for new line)',phChat:'Ask a question…  (Chat only answers, never touches your files)',pickFolder:'Choose folder',progress:'Progress',folder:'Working folder',context:'Context',allow:'Allow',deny:'Deny',needs:'Claude needs your permission',skills:'Skills',connectors:'Connectors',plugins:'Plugins',pm:{manual:'Manual',auto:'Auto',skip:'Skip'},pmFull:{manual:'Manually approve',auto:'Auto',skip:'Skip all approvals'},followup:'Reply…',notStarted:'Not started',noFolder:'No folder selected',noConn:'No connectors connected'},
- zh:{newTask:'新任務',projects:'專案',scheduled:'排程',customize:'自訂',code:'Code',recents:'最近的任務',noTasks:'還沒有任務',user:'學員',plan:'練習',greet:'想請 Claude 幫你處理什麼？',greetChat:'想問 Claude 什麼？',ph:'描述你要完成的任務…（Enter 送出，Shift+Enter 換行）',phChat:'問一個問題…（Chat 只回答，不會動你的檔案）',pickFolder:'選擇資料夾',progress:'進度',folder:'工作資料夾',context:'情境',allow:'允許',deny:'拒絕',needs:'Claude 請求你的許可',skills:'技能',connectors:'連接器',plugins:'外掛',pm:{manual:'手動核准',auto:'自動',skip:'全部略過'},pmFull:{manual:'手動核准',auto:'自動',skip:'全部略過'},followup:'追問或補充…',notStarted:'尚未開始',noFolder:'未選擇資料夾',noConn:'未連接任何服務'}
+ en:{newTask:'New task',projects:'Projects',artifacts:'Artifacts',scheduled:'Scheduled',customize:'Customize',code:'Code',cowork:'Cowork',recents:'Recents',noTasks:'No tasks yet',user:'Student',plan:'Practice',greet:'What can I take off your plate?',greetChat:'How can I help you today?',safe:'Learn how to use Cowork safely.',ph:'How can I help you today?',phChat:'Ask a question…  (Chat only answers, never touches your files)',pickFolder:'Work in a project or folder',pickTask:'Pick a task, any task',withPlugins:'Customize with plugins',chatFolder:'Project or folder',output:'Output',progress:'Progress',folder:'Working folder',context:'Context',allow:'Allow',deny:'Deny',needs:'Claude needs your permission',skills:'Skills',connectors:'Connectors',plugins:'Plugins',pm:{manual:'Manual',auto:'Auto',skip:'Skip'},pmFull:{manual:'Manually approve',auto:'Auto',skip:'Skip all approvals'},followup:'Reply…',notStarted:'Not started',noFolder:'No folder selected',noConn:'No connectors connected'},
+ zh:{newTask:'新任務',projects:'專案',artifacts:'成品',scheduled:'排程',customize:'自訂',code:'Code',cowork:'Cowork',recents:'最近的任務',noTasks:'還沒有任務',user:'學員',plan:'練習',greet:'有什麼事可以幫你分擔？',greetChat:'想問 Claude 什麼？',safe:'了解如何安全地使用 Cowork。',ph:'描述你要完成的任務…（Enter 送出，Shift+Enter 換行）',phChat:'問一個問題…（Chat 只回答，不會動你的檔案）',pickFolder:'在專案或資料夾中工作',pickTask:'挑一個任務試試',withPlugins:'用外掛客製化',chatFolder:'專案或資料夾',output:'輸出',progress:'進度',folder:'工作資料夾',context:'情境',allow:'允許',deny:'拒絕',needs:'Claude 請求你的許可',skills:'技能',connectors:'連接器',plugins:'外掛',pm:{manual:'手動核准',auto:'自動',skip:'全部略過'},pmFull:{manual:'手動核准',auto:'自動',skip:'全部略過'},followup:'追問或補充…',notStarted:'尚未開始',noFolder:'未選擇資料夾',noConn:'未連接任何服務'}
 };
 const tx=k=>UI[S.lang][k];
 const LOG=new Set();
@@ -1197,12 +1291,13 @@ function renderSim(){
 }
 const simChrome=()=>'';
 const sidebar=()=>`<aside class="sb">
- <div class="sb-top"><div class="dots"><i></i><i></i><i></i></div><span class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</span></div>
- <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>${tx('newTask')}</span></button>
+ <div class="sb-top"><div class="dots"><i></i><i></i><i></i></div><span class="sb-ic">${IC.layers}</span><span class="sb-ic">${IC.search}</span><span class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</span></div>
+ <div class="sb-seg" role="tablist"><button role="tab" aria-selected="${S.mode!=='code'}" class="${S.mode!=='code'?'on':''}" data-act="mode" data-m="cowork">${tx('cowork')}</button><button role="tab" aria-selected="${S.mode==='code'}" class="${S.mode==='code'?'on':''}" data-act="mode" data-m="code">${tx('code')}</button></div>
+ <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>${tx('newTask')}</span><kbd>⌘N</kbd></button>
  <button class="sb-i ${S.view==='projects'?'on':''}" data-act="nav" data-v="projects">${IC.layers}<span>${tx('projects')}</span></button>
+ <button class="sb-i ${S.view==='artifacts'?'on':''}" data-act="nav" data-v="artifacts">${IC.file}<span>${tx('artifacts')}</span></button>
  <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>${tx('scheduled')}</span></button>
  <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>${tx('customize')}</span></button>
- <button class="sb-i ${S.mode==='code'?'on':''}" data-act="mode" data-m="code">${IC.code}<span>${tx('code')}</span></button>
  <div class="sb-h">${tx('recents')}</div>
  ${S.tasks.length?S.tasks.map(k=>`<button class="sb-t ${S.view==='task'&&S.active===k.id?'on':''}" data-act="open-task" data-id="${k.id}"><i class="dot ${k.status}"></i><span>${esc(k.title)}</span></button>`).join(''):`<p class="sb-empty">${tx('noTasks')}</p>`}
  <div class="sb-foot"><span class="avt">${S.lang==='en'?'S':'學'}</span><span class="who"><b>${tx('user')}</b><small>${tx('plan')}</small></span><button class="lang" data-act="lang" title="Switch language / 切換語言">${S.lang==='en'?'EN':'中'}</button></div></aside>`;
@@ -1211,6 +1306,7 @@ function main(){
  if(S.mode==='chat')return chatView();
  if(S.mode==='code')return modeNote('code','Code：寫程式','給工程師寫程式、改專案用。會計同仁日常整理資料，通常用不到這裡。','例：幫我修改這個 Python 腳本');
  if(S.view==='projects')return projView();
+ if(S.view==='artifacts')return artView();
  if(S.view==='scheduled')return schedView();
  if(S.view==='customize')return customView();
  if(S.view==='task')return taskView();
@@ -1218,31 +1314,37 @@ function main(){
 }
 const modeNote=(ic,h,p,ex)=>`<div class="modeNote">${IC[ic]}<h2>${h}</h2><p>${p}</p><div class="bubble">${ex}</div><button class="chip pri" data-act="mode" data-m="cowork">切到 Cowork 交辦任務</button></div>`;
 
-const MODELS=[{n:'Opus 5.5',d:'最會想，慢一點、較耗用量。難題、一次要做對的任務'},{n:'Sonnet 5.5',d:'日常首選。文件、報表、多步驟任務'},{n:'Haiku 4.5',d:'快又省。分類、改格式、大量重複的簡單工作'}];
+const MODELS=[{n:'Opus 4.8',d:'最會想，慢一點、較耗用量。難題、一次要做對的任務'},{n:'Sonnet 4.5',d:'日常首選。文件、報表、多步驟任務'},{n:'Haiku 5',d:'快又省。分類、改格式、大量重複的簡單工作'}];
 const EFFORTS=[['Low','快速回答'],['Medium','一般'],['High','多想一會兒']];
 function compBar(cowork){
- const f=S.folder?FOLDERS[S.folder]:null;
  return `<div class="comp-bar"><button class="plus" data-act="attach" aria-label="附加">${IC.plus}</button>
  <div class="mtoggle" role="tablist" aria-label="模式"><button role="tab" aria-selected="${!cowork}" class="${cowork?'':'on'}" data-act="mode" data-m="chat">Chat</button><button role="tab" aria-selected="${cowork}" class="${cowork?'on':''}" data-act="mode" data-m="cowork">Cowork</button></div>
- ${cowork?`<button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):tx('pickFolder')}</span></button><button class="chip ghost" data-act="pmode" title="${tx('pmFull')[S.pmode]}（點一下切換權限模式）">${IC.shield}<span>${tx('pm')[S.pmode]}</span></button>`:''}
- <span class="grow"></span><button class="mdl" data-act="model-menu" title="選擇模型與強度"><b>${S.model}</b> <span>${S.effort}</span></button><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div>`;
+ <span class="grow"></span><span class="mset"><button class="mdl" data-act="model-menu" title="選擇模型與強度"><b>${S.model}</b></button><button class="eff" data-act="effort-cycle" title="強度：越高想得越久（點一下切換）">${S.effort}</button><button class="pmb" data-act="pmode" title="${tx('pmFull')[S.pmode]}（點一下切換權限模式）">${tx('pm')[S.pmode]}</button></span><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div>`;
+}
+function folderBar(){
+ const f=S.folder?FOLDERS[S.folder]:null;
+ return `<button class="fbar ${f?'on':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):tx('pickFolder')}</span><i>▾</i></button>`;
 }
 function homeView(){
- return `<div class="home"><div class="hello">${IC.spark}<h1>${tx('greet')}</h1></div>
+ return `<div class="home"><div class="hello">${IC.spark}<h1>${tx('greet')}</h1></div><p class="safe"><button class="lnk" data-act="safe-tip">${tx('safe')}</button></p>
  <div class="composer"><textarea id="composer" placeholder="${tx('ph')}">${esc(S.prompt)}</textarea>${compBar(true)}</div>
- <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}" title="${esc(s.s)}">${IC[s.ic]}<b>${s.t}</b></button>`).join('')}</div><p class="sugg-h">點一個建議，指令會自動填入輸入框</p></div>`;
+ <div class="under">${folderBar()}</div>
+ <div class="pick"><div class="pick-h">${IC.spark}<span>${tx('pickTask')}</span></div><div class="sugg">${SUGG.map(g=>`<button class="sg ${g.dg?'dg':''}" data-act="sugg" data-id="${g.id}" title="${esc(g.s)}">${IC[g.ic]}<b>${g.t}</b><small>${g.s}</small></button>`).join('')}</div>
+ <button class="lnk center" data-act="goto-plugins">${tx('withPlugins')}</button></div></div>`;
 }
 const CHATQ=['應付帳款和應付票據差在哪？','請用白話解釋收入認列五步驟','幫我把這封催款信改得更有禮貌'];
 function chatView(){
  return `<div class="home"><div class="hello">${IC.spark}<h1>${tx('greetChat')}</h1></div>
  <div class="composer"><textarea id="composer" placeholder="${tx('phChat')}">${esc(S.prompt)}</textarea>${compBar(false)}</div>
+ <div class="under"><button class="fbar" data-act="noop">${tx('chatFolder')}</button><button class="fbar ${S.output?'on':''}" data-act="output-menu"><span>${tx('output')}${S.output?': '+S.output:''}</span><i>▾</i></button></div>
  ${S.chat.length?`<div class="chatlog" id="chat">${S.chat.map(m=>m.r==='u'?`<div class="m-u">${esc(m.t)}</div>`:`<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns"><button class="chip pri" data-act="mode" data-m="cowork">切換到 Cowork</button></div>`:''}</div></div>`).join('')}</div>`
  :`<div class="sugg">${CHATQ.map(q=>`<button class="sg" data-act="chat-q" data-q="${esc(q)}">${IC.chat}<b>${esc(q)}</b></button>`).join('')}</div>`}</div>`;
 }
 function chatSend(p){
  S.chat.push({r:'u',t:p});S.prompt='';renderSim();
  let r,btn=false;
- if(/發票|整理|excel|資料夾|檔案|對帳單|合併|刪除/i.test(p)){r='這需要讀你電腦裡的檔案、做出新檔案。<b>Chat 只能回答問題</b>，請切換到 Cowork，再選資料夾。';btn=true}
+ if(S.output){r='選了 <b>Output：'+S.output+'</b>：Chat 會直接產出文件／簡報（Beta），內容靠你輸入的文字，不會去讀你電腦裡的資料夾。要整理電腦裡的檔案，請切到 Cowork。<br><small style="color:var(--muted)">（教學模擬）</small>';btn=true}
+ else if(/發票|整理|excel|資料夾|檔案|對帳單|合併|刪除/i.test(p)){r='這需要讀你電腦裡的檔案、做出新檔案。<b>Chat 只能回答問題</b>，請切換到 Cowork，再選資料夾。';btn=true}
  else if(/應付/.test(p))r='<b>應付帳款</b>是尚未付款的一般賒購款項；<b>應付票據</b>是已開出票據、約定到期日付款的負債。差別在有沒有開票。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
  else if(/收入認列/.test(p))r='五步驟：①辨認合約 ②辨認履約義務 ③決定交易價格 ④分攤交易價格 ⑤履行時認列收入。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
  else if(/催款|信/.test(p))r='敬啟者：想提醒您，編號 INV-0731 的款項已逾期，若已安排付款，請忽略此信並告知付款日。謝謝您的協助。<br><small style="color:var(--muted)">（教學模擬的示範回答）</small>';
@@ -1266,7 +1368,7 @@ function taskView(){
 function msgHtml(m,k){
  if(m.r==='u')return `<div class="m-u">${esc(m.t)}</div>`;
  if(m.r==='c')return `<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns">${m.btn.map(b=>`<button class="chip pri" data-act="${b.act}">${b.l}</button>`).join('')}</div>`:''}</div></div>`;
- if(m.r==='files')return `<div class="m-files">${m.f.map(f=>`<button class="fchip" data-act="file-open" data-type="${f.type}" data-pv="${f.pv}" data-name="${esc(f.name)}">${IC[f.type==='xlsx'?'sheet':f.type==='gmail'?'mail':'file']}<span>${esc(f.name)}</span></button>`).join('')}</div>`;
+ if(m.r==='files')return `<div class="m-files">${m.f.map(f=>`<button class="fchip" data-act="file-open" data-type="${f.type}" data-pv="${f.pv}" data-name="${esc(f.name)}">${IC[{xlsx:'sheet',gmail:'mail',pptx:'layers',docx:'file'}[f.type]||'file']}<span>${esc(f.name)}</span></button>`).join('')}</div>`;
  if(m.r==='perm'){const p=m.perm;return `<div class="perm ${p.danger?'danger':''} ${m.state}"><div class="perm-h">${IC[p.danger?'warn':'shield']}<b>${tx('needs')}</b></div><p><b>${p.text}</b></p><small>${p.detail}</small>${m.state==='ask'?`<div class="perm-b"><button class="chip" data-act="perm" data-ok="0">${tx('deny')}</button><button class="chip pri" data-act="perm" data-ok="1">${tx('allow')}</button></div>`:`<div class="perm-r">${m.state==='allow'?'✓ 你已允許':'✕ 你已拒絕'}</div>`}</div>`}
  return '';
 }
@@ -1278,6 +1380,12 @@ function customView(){
  if(S.ctab==='connectors')body=`<p class="note" style="margin:0">連接器＝接外部工具的「插頭」（技術上叫 MCP）。連接前會顯示它能做哪些事，請看清楚再允許。</p><div class="list">${CONNECTORS.map(c=>`<div class="item"><div class="ic">${IC[c.ic]}</div><div class="mid"><b>${c.name}</b><small>${c.desc}</small></div>${S.conn[c.id]?`<span class="tag ok">已連接</span><button class="chip" data-act="conn-off" data-id="${c.id}">中斷</button>`:`<button class="chip pri" data-act="conn-on" data-id="${c.id}">連接</button>`}</div>`).join('')}</div>`;
  if(S.ctab==='plugins')body=`<p class="note" style="margin:0">外掛＝一整包：技能、連接器、子代理打包，一次裝好（內容依外掛而異）。</p><div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
  return `<div class="cust"><h2>${tx('customize')}</h2><div class="tabs">${tabs.map(t=>`<button class="${S.ctab===t[0]?'on':''}" data-act="ctab" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
+}
+const ATYPE={xlsx:'Excel',docx:'Word',pptx:'PowerPoint',md:'文件',gmail:'Gmail 草稿'};
+function artView(){
+ const items=[];S.tasks.forEach(k=>{if(k.status==='done')k.out.forEach(o=>items.push({o,k}))});
+ return `<div class="sched"><h2>${tx('artifacts')}</h2><div class="note">Claude 做出來的檔案（Excel、Word、簡報…）會集中放在這裡，點一下就能打開檢查。（教學示意，位置與名稱以你的版本為準）</div>
+ ${items.length?`<div class="list">${items.map(x=>`<div class="item"><div class="ic">${IC[{xlsx:'sheet',gmail:'mail',pptx:'layers',docx:'file'}[x.o.type]||'file']}</div><div class="mid"><b>${esc(x.o.name)}</b><small>${ATYPE[x.o.type]||'檔案'}・來自任務「${esc(x.k.title)}」</small></div><button class="chip pri" data-act="file-open" data-type="${x.o.type}" data-pv="${x.o.pv}" data-name="${esc(x.o.name)}">Open</button></div>`).join('')}</div>`:'<div class="empty">還沒有成品。請先在「新任務」做一個 Excel、Word 或簡報。</div>'}</div>`;
 }
 function projView(){
  return `<div class="sched"><h2>${tx('projects')}</h2><div class="note">專案＝把同一件事的說明和資料放在一起，有自己的說明、檔案、排程與記憶。之後在專案裡開的任務都共用，不用每次重講。</div>
@@ -1300,7 +1408,7 @@ function modalHtml(){
  }
  if(m.type==='file'){
   const body=m.pv==='gmail'?PREVIEW.gmail():PREVIEW[m.pv]();
-  h=`<h3>${IC[m.ftype==='xlsx'?'sheet':m.ftype==='gmail'?'mail':'file']} ${esc(m.name)}</h3>${body}<p style="font-size:13px;color:var(--green);background:var(--green-soft);border-radius:8px;padding:6px 10px">專業提醒：AI 的產出是初稿，請抽查數字並對照原始單據再使用。</p>`;
+  h=`<h3>${IC[{xlsx:'sheet',gmail:'mail',pptx:'layers',docx:'file'}[m.ftype]||'file']} ${esc(m.name)}</h3>${body}<p style="font-size:13px;color:var(--green);background:var(--green-soft);border-radius:8px;padding:6px 10px">專業提醒：AI 的產出是初稿，請抽查數字並對照原始單據再使用。</p>`;
  }
  if(m.type==='oauth'){
   const c=CONNECTORS.find(x=>x.id===m.id);
@@ -1315,6 +1423,14 @@ function modalHtml(){
   h=`<h3>選擇模型與強度</h3><div class="menu-list">${MODELS.map(x=>`<button class="${S.model===x.n?'on':''}" data-act="model-pick" data-m="${x.n}"><span class="n">${S.model===x.n?'✓':''}</span><span><b>${x.n}</b><small>${x.d}</small></span></button>`).join('')}</div><p class="sh-m" style="margin:6px 0 0">強度：越高，Claude 想得越久。</p><div class="mopts">${EFFORTS.map(e=>`<button class="opt ${S.effort===e[0]?'good':''}" data-act="effort-pick" data-e="${e[0]}">${e[0]}<small style="display:block;font-weight:400">${e[1]}</small></button>`).join('')}</div>`;
   foot=`<button class="btn" data-act="modal-close">完成</button>`;
  }
+ if(m.type==='output'){
+  h=`<h3>Output</h3><div class="menu-list">${[['Docs','文件','Beta'],['Slides','簡報','Beta'],['Design','設計','Beta'],['Artifact','讓 Claude 自己挑格式','']].map(x=>`<button class="${S.output===x[0]?'on':''}" data-act="output-pick" data-o="${x[0]}"><span class="n">${S.output===x[0]?'✓':''}</span><span><b>${x[0]} ${x[2]?'<em class="beta">'+x[2]+'</em>':''}</b><small>${x[1]}</small></span></button>`).join('')}</div>`;
+  foot=`<button class="btn ghost" data-act="output-pick" data-o="">清除</button><button class="btn" data-act="modal-close">完成</button>`;
+ }
+ if(m.type==='safe'){
+  h=`<h3>${tx('safe')}</h3><ul style="margin:0 0 0 18px;display:grid;gap:6px"><li>只授權任務需要的資料夾，並先用副本練習。</li><li>每個權限請求都看清楚：範圍？影響？可還原嗎？</li><li>Claude 做的是初稿：Excel 看公式、Word 讀一遍、簡報核對數字。</li></ul><p class="sh-m">更完整的內容在「安全」心智圖與課程的安全單元。</p>`;
+  foot=`<button class="btn ghost" data-act="modal-close">關閉</button><button class="btn" data-act="go-unit" data-u="6">到安全單元</button>`;
+ }
  if(m.type==='project'){
   h=`<h3>新增專案</h3><label class="lbl">專案名稱<input class="fld" id="pj-name" value="銀行對帳專案"></label><label class="lbl">專案說明（之後每個任務都共用）<textarea class="fld" id="pj-inst" rows="3">對帳時，差異超過 1,000 元要標記，並列出可能原因。</textarea></label><label class="lbl">資料夾<select class="fld" id="pj-folder">${Object.entries(FOLDERS).filter(([id,f])=>!f.sens).map(([id,f])=>`<option value="${id}">${f.name}</option>`).join('')}</select></label>`;
   foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="proj-save">建立專案</button>`;
@@ -1328,7 +1444,7 @@ function modalHtml(){
 
 /* ========== 任務執行 ========== */
 function pickScenario(p){
- for(const id of ['delete','dunning','bank','invoices'])if(SCEN[id].re.test(p))return SCEN[id];
+ for(const id of ['delete','dunning','slides','word','compare','bank','invoices'])if(SCEN[id].re.test(p))return SCEN[id];
  return SCEN.generic;
 }
 function sendPrompt(){
@@ -1396,6 +1512,9 @@ function finish(k){
   dunning:'<b>完成了。</b>目前沒有連接 Gmail，所以我把催款信存成檔案。若想直接在 Gmail 建草稿，請先到「自訂 → 連接器」連接 Gmail。',
   dunning_gmail:'<b>完成了！</b>我在 Gmail 建立了 <b>3 封草稿</b>，<b>都還沒寄出</b>。請逐封檢查金額與語氣，確認後再自行寄出。',
   delete:d.delete?'好的，<b>我沒有刪除任何檔案</b>。已把待刪除清單存成檔案，確認備份後你可以再決定。':'已刪除 47 個檔案。<br><small style="color:var(--warn)">（真實環境中這類操作可能無法復原，下次請先備份。）</small>',
+  compare:'<b>完成了！</b>我做好 <b>報價比較表.xlsx</b>：小計和合計用的是<b>真正的 Excel 公式</b>，最便宜的一家已標色。請點開檢查公式與數字。',
+  word:'<b>完成了！</b>我整理好 <b>週會紀要.docx</b>：標題、決議事項、待辦事項（負責人與期限）。語氣與內容請你讀過再使用。',
+  slides:'<b>完成了！</b>我做好 5 頁簡報 <b>月報簡報.pptx</b>：每頁一個重點。請逐頁核對數字與用字。',
   generic:'<b>完成了！</b>我已讀取資料夾並整理出摘要（教學模擬）。'
  };
  if(v==='delete'&&!d.delete)k.out=[];
@@ -1409,6 +1528,11 @@ const ACT={
  noop(){toast('教學模擬版：此選單不可用')},
  lang(){S.lang=S.lang==='en'?'zh':'en';renderSim()},
  'rp-toggle'(el){S.rp[el.dataset.k]=!S.rp[el.dataset.k];renderSim()},
+ 'safe-tip'(){S.modal={type:'safe'};renderSim()},
+ 'goto-plugins'(){S.mode='cowork';S.view='customize';S.ctab='plugins';emit('nav_customize');renderSim()},
+ 'output-menu'(){S.modal={type:'output'};renderSim()},
+ 'output-pick'(el){S.output=el.dataset.o||null;if(S.output)toast('Output：'+S.output+'（Beta 功能，以你的版本為準）','ok');renderSim()},
+ 'effort-cycle'(){S.effort={Low:'Medium',Medium:'High',High:'Low'}[S.effort];toast('強度：'+S.effort,'ok');emit('model_pick');renderSim()},
  attach(){toast('＋ 可附加檔案或圖片。在 Cowork 裡，改用「選擇資料夾」授權整個資料夾')},
  'model-menu'(){S.modal={type:'model'};renderSim()},
  'model-pick'(el){S.model=el.dataset.m;emit('model_pick');renderSim()},
@@ -2119,7 +2243,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 
 /* ========== 名詞辭典：可搜尋 + 每個名詞一個小動畫 ========== */
-const GCATS=['全部','模式','擴充','安全與流程','用量與模型'];
+const GCATS=['全部','模式','擴充','產出文件','安全與流程','用量與模型'];
 /* 內容依官方說明（support.claude.com，2026-10-04 查證）與你提供的「Cowork 闖關學院」整理；版本更新後以官方為準 */
 const GLOSS=[
  {id:'chat',cat:'模式',t:'Chat',s:'問答',d:'你問，它答。像到櫃台問業務。檔案要你自己貼上去，它不會替你動手做。',e:'例：「應付票據是什麼？」',k:'聊天 對話 問答 單輪',go:1},
@@ -2131,6 +2255,9 @@ const GLOSS=[
  {id:'plugin',cat:'擴充',t:'Plugin（外掛）',s:'到職大禮包',d:'把技能、連接器、子代理打包成一整套，一次裝好，也能分享給同事。像新人報到時一次發下來的資料夾、帳號與手冊。內容依外掛而異。',e:'例：財務會計外掛（示意）',k:'外掛 套件 工具箱 plugin 打包 sub-agent 子代理',go:5,map:'plug'},
  {id:'project',cat:'擴充',t:'Project（專案）',s:'專案資料夾',d:'把同一件事的說明、檔案放在一起。專案有自己的指示、排程和記憶，之後在裡面做事都共用。可從零開始、匯入 Claude 專案，或用現有資料夾建立。',e:'例：「2026 月結專案」',k:'專案 project 工作區 記憶 instructions',go:7,map:'project'},
  {id:'schedule',cat:'擴充',t:'排程（Schedule）',s:'自動開工的行事曆',d:'選頻率（每小時／每天／平日／每週／手動），時間一到 Claude 自己開工。每次都是一個全新的對話，不記得上次，所以指令要寫得自己看得懂。多半在雲端跑；用到你電腦裡的檔案時，電腦要開著。',e:'例：每月 5 日 09:00 出月結報表',k:'schedule 定時 自動 鬧鐘 排程任務 scheduled',go:6},
+ {id:'excel',cat:'產出文件',t:'Excel 表',s:'整理成表格、會算數',d:'Claude 可以把資料整理成 Excel，也能放真正的公式（例如 =單價×數量），不只是貼上數字。做完要自己點開，確認公式和合計對不對。',e:'例：把三家報價單做成比較表',k:'excel 試算表 表格 公式 xlsx 報價 合計',go:8},
+ {id:'word',cat:'產出文件',t:'Word 文件',s:'整理成有條理的文件',d:'把雜亂的筆記整理成有標題、有段落、有待辦事項的文件初稿。事實、人名、語氣要你把關。（Word 檔的支援以你的版本為準）',e:'例：把會議記錄寫成會議紀要',k:'word 文件 docx 報告 紀要 文字',go:8},
+ {id:'slides',cat:'產出文件',t:'簡報（PowerPoint）',s:'一頁一個重點',d:'把重點排成幾頁投影片。每頁只放一個重點，看的人才記得住；數字與用字要逐頁核對。',e:'例：把月報做成 5 頁簡報',k:'簡報 投影片 powerpoint pptx slides ppt',go:8},
  {id:'folder',cat:'安全與流程',t:'授權資料夾',s:'唯一的檔案範圍',d:'你指定的資料夾，是 Claude 能讀寫的範圍。像只借出一個抽屜的鑰匙，不是整間檔案室。',e:'例：只授權「發票_2026Q3」',k:'資料夾 權限 最小權限 folder 工作資料夾',go:3,map:'folder'},
  {id:'perm',cat:'安全與流程',t:'權限模式',s:'要不要先問你',d:'三種：手動核准（每步問你，新手用這個）、自動（先做安全檢查再批准）、全部略過（不問，最危險）。永久刪除檔案，不管哪種模式都會問你。',e:'例：新手先選「手動核准」',k:'manual auto skip 核准 允許 拒絕 審核 permission',go:4,map:'perm'},
  {id:'prompt',cat:'安全與流程',t:'指令（Prompt）',s:'你交代的那句話',d:'寫清楚「目標、輸入、做法、輸出、檢查」，結果就不會亂猜。',e:'例：把「發票_2026Q3」整理成 Excel，缺統編標紅，不要改原檔',k:'prompt 提示詞 指令 任務 要素',go:4,map:'s1'},
@@ -2145,6 +2272,9 @@ const GANIM={
  chat:()=>GA_SVG(`${GR(6,8,52,20,'fc ln','--dl:0s',8)}${GR(12,14,30,3,'fi pop','--dl:.2s',1)}${GR(12,20,20,3,'fi pop','--dl:.35s',1)}${GR(38,38,52,24,'fa ln pop','--dl:1.4s',8)}${GR(44,45,36,3,'fi pop','--dl:1.8s',1)}${GR(44,51,26,3,'fi pop','--dl:2.1s',1)}`),
  cowork:()=>GA_SVG(`<path class="fs ln" d="M6 30h20l4 5h22v28H6z"/>${GR(10,12,10,12,'fc ln slide','--dl:0s',1)}${GR(22,8,10,12,'fc ln slide','--dl:.4s',1)}${GR(34,12,10,12,'fc ln slide','--dl:.8s',1)}<path class="ln" d="M58 48h12m-4-4 4 4-4 4" fill="none"/>${GR(72,32,20,28,'fc ln pop','--dl:1.6s',2)}<path class="ln pop" style="--dl:1.9s" d="M76 40h12M76 46h12M76 52h8" fill="none"/><path class="stk pop" style="--dl:2.2s" d="M80 24l4 4 7-8" fill="none"/>`),
  code:()=>GA_SVG(`${GR(8,8,80,56,'fc ln','',4)}<path class="ln" d="M16 22l6 5-6 5" fill="none"/>${GR(28,24,40,3,'fi type','--dl:.3s',1)}${GR(28,34,52,3,'fi type','--dl:1.1s',1)}${GR(28,44,30,3,'fi type','--dl:1.9s',1)}${GR(62,43,4,6,'fa blink','',0)}`),
+ excel:()=>GA_SVG(`${GR(8,8,80,56,'fc ln','',3)}${GR(8,8,80,12,'fg ln','',3)}<path class="ln" d="M8 30h80M8 42h80M8 54h80M34 20v44M60 20v44" fill="none"/>${GR(12,32,18,6,'fi pop','--dl:.2s',1)}${GR(38,32,18,6,'fi pop','--dl:.5s',1)}${GR(12,44,18,6,'fi pop','--dl:.8s',1)}${GR(38,44,18,6,'fi pop','--dl:1.1s',1)}${GR(63,44,20,8,'fy ln pop','--dl:1.6s',2)}<path class="stk pop" style="--dl:2.1s" d="M66 24l4 4 8-7" fill="none"/>`),
+ word:()=>GA_SVG(`${GR(22,4,52,64,'fc ln','',3)}${GR(30,12,36,6,'fb ln pop','--dl:.2s',2)}${GR(30,26,36,3,'fi type','--dl:.7s',1)}${GR(30,33,30,3,'fi type','--dl:1.2s',1)}${GR(30,40,36,3,'fi type','--dl:1.7s',1)}${GR(30,47,22,3,'fi type','--dl:2.2s',1)}${GR(30,56,8,6,'fg ln pop','--dl:2.7s',1)}`),
+ slides:()=>GA_SVG(`${GR(14,12,60,40,'fs ln','--dl:0s',3)}${GR(24,6,60,40,'fc ln slide2','--dl:.3s',3)}${GR(32,14,28,5,'fa ln pop','--dl:.9s',2)}${GR(32,24,40,3,'fi pop','--dl:1.3s',1)}${GR(32,31,32,3,'fi pop','--dl:1.7s',1)}${GR(34,56,28,5,'fy ln pop','--dl:2.2s',2)}`),
  model:()=>GA_SVG(`<path class="fs ln pulse" d="M28 50a12 12 0 0 1 2-23 16 16 0 0 1 30-2 13 13 0 0 1 4 25z"/><path class="stk pulse" style="--dl:.3s" d="M48 28v14M41 35h14" fill="none"/>${GR(4,34,12,4,'fi slide','--dl:0s',2)}${GR(4,42,8,4,'fi slide','--dl:.5s',2)}${GR(80,38,12,4,'fa slide2','--dl:1.6s',2)}`),
  mcp:()=>GA_SVG(`${GR(60,24,26,24,'fs ln','',4)}${GR(58,30,4,4,'fi','',0)}${GR(58,40,4,4,'fi','',0)}<g class="plug"><path class="ln fc" d="M8 28h18v16H8z"/>${GR(26,31,10,3,'fa','',0)}${GR(26,38,10,3,'fa','',0)}<path class="ln" d="M8 36H2" fill="none"/></g><path class="stk spark" d="M54 36l-5-5m5 5l-5 5m5-5h-8" fill="none"/>`),
  skill:()=>GA_SVG(`${GR(22,6,52,60,'fc ln','',3)}${GR(30,16,8,8,'fs ln','',1)}${GR(44,18,24,3,'fi','',1)}${GR(30,32,8,8,'fs ln','',1)}${GR(44,34,24,3,'fi','',1)}${GR(30,48,8,8,'fs ln','',1)}${GR(44,50,24,3,'fi','',1)}<path class="stk pop" style="--dl:.3s" d="M31 20l3 3 5-6" fill="none"/><path class="stk pop" style="--dl:1.2s" d="M31 36l3 3 5-6" fill="none"/><path class="stk pop" style="--dl:2.1s" d="M31 52l3 3 5-6" fill="none"/>`),

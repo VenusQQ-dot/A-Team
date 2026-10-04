@@ -47,7 +47,7 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
  });
  await check('內容文字檢查：無過時說法、無英文 Prompt 標籤、無 undefined/NaN',async()=>{
   const h=fs.readFileSync(path.join(ROOT,'claude-cowork-basics.html'),'utf8');
-  for(const bad of ['電腦需開機、App 需開著才會跑','電腦要開著、App 要在執行','Prompt 組裝器','ACCT 內部教學','計程車跳錶','書桌大小','TAP ANYTHING'])ok(!h.includes(bad),'含有不該出現的字：'+bad);
+  for(const bad of ['Opus 5.5','Sonnet 5.5','Haiku 4.5','電腦需開機、App 需開著才會跑','電腦要開著、App 要在執行','Prompt 組裝器','ACCT 內部教學','計程車跳錶','書桌大小','TAP ANYTHING'])ok(!h.includes(bad),'含有不該出現的字：'+bad);
   const p=await open('?view=learn');
   for(const v of ['map','layers','overview','gloss','learn']){await p.evaluate(v=>setView(v),v);await p.waitForTimeout(150);const t=await p.evaluate(()=>document.body.innerText);for(const b of ['undefined','NaN','[object'])ok(!t.includes(b),`${v} 檢視出現 ${b}`)}
   noErr(p);await p.close2();
@@ -114,18 +114,18 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
  });
 
  console.log('\n[5] 名詞辭典');
- await check('14 個名詞、每個都有動畫、分類篩選正確',async()=>{
-  const p=await open('?view=gloss');eq(await cnt(p,'.gcard'),14);eq(await cnt(p,'.gcard .ga svg'),14);
-  const exp={'模式':3,'擴充':5,'安全與流程':3,'用量與模型':3};
+ await check('17 個名詞、每個都有動畫、分類篩選正確',async()=>{
+  const p=await open('?view=gloss');eq(await cnt(p,'.gcard'),17);eq(await cnt(p,'.gcard .ga svg'),17);
+  const exp={'模式':3,'擴充':5,'產出文件':3,'安全與流程':3,'用量與模型':3};
   for(const [c,n] of Object.entries(exp)){await p.locator(`.gcats button:text-is("${c}")`).click();eq(await cnt(p,'.gcard'),n,`分類 ${c}`)}
   noErr(p);await p.close2();
  });
  await check('搜尋：中英文、同義詞、無結果、清除、標示',async()=>{
   const p=await open('?view=gloss');
-  const cases=[['連接器',['MCP（連接器）','Plugin（外掛）']],['mcp',['MCP（連接器）']],['省錢',['Token','上下文視窗']],['刪除',['權限模式']],['gmail',['MCP（連接器）']],['haiku',['模型（Model）']],['skill.md',['Skill（技能）']],['白板',['上下文視窗']],['電表',['Token']],['專案',['Project（專案）']]];
+  const cases=[['連接器',['MCP（連接器）','Plugin（外掛）']],['mcp',['MCP（連接器）']],['省錢',['Token','上下文視窗']],['刪除',['權限模式']],['gmail',['MCP（連接器）']],['haiku',['模型（Model）']],['skill.md',['Skill（技能）']],['白板',['上下文視窗']],['電表',['Token']],['專案',['Project（專案）']],['excel',['Excel 表']],['簡報',['簡報（PowerPoint）']],['word',['Word 文件']]];
   for(const [q,must] of cases){await p.fill('#gl-q',q);const names=await p.locator('.gcard b').allInnerTexts();for(const m of must)ok(names.includes(m),`搜「${q}」缺少 ${m}（得到 ${names}）`)}
   await p.fill('#gl-q','xyz不存在');eq(await cnt(p,'.gcard'),0);ok(await cnt(p,'.empty')>0,'沒有「找不到」提示');
-  await p.fill('#gl-q','排程');ok(await cnt(p,'mark')>0,'沒有關鍵字標示');await p.fill('#gl-q','');eq(await cnt(p,'.gcard'),14);
+  await p.fill('#gl-q','排程');ok(await cnt(p,'mark')>0,'沒有關鍵字標示');await p.fill('#gl-q','');eq(await cnt(p,'.gcard'),17);
   await p.keyboard.press('/');noErr(p);await p.close2();
  });
  await check('動畫會前進；點一下可重播；辭典連結可跳轉',async()=>{
@@ -157,6 +157,7 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
    2:async()=>{await click(p,'.sb-new');await click(p,'[data-act="nav"][data-v="scheduled"]');await click(p,'[data-act="nav"][data-v="customize"]');await click(p,'.sb-new');await click(p,'[data-act="folder-open"]');await click(p,'[data-act="modal-close"]')},
    3:async()=>{await click(p,'[data-act="folder-open"]');await click(p,'[data-act="peek"][data-id="personal"]');await click(p,'[data-act="peek"][data-id="invoices"]');await click(p,'[data-act="folder-pick"]')},
    4:async()=>{await click(p,'#pb-send');await click(p,'.send');await p.waitForSelector('.perm.ask');await click(p,'[data-act="perm"][data-ok="1"]');await p.waitForSelector('.fchip',{timeout:9000});await click(p,'.fchip[data-type="xlsx"]');await click(p,'[data-act="modal-close"]')},
+   8:async()=>{for(const [fid,sid,type] of [['quotes','compare','xlsx'],['meeting','word',null],['report','slides','pptx']]){await click(p,'.sb-new');await click(p,'[data-act="folder-open"]');await click(p,`[data-act="peek"][data-id="${fid}"]`);await click(p,'[data-act="folder-pick"]');await click(p,`.sg[data-id="${sid}"]`);await click(p,'.send');await p.waitForSelector('.fchip',{timeout:9000});if(type){await click(p,`.fchip[data-type="${type}"]`);await click(p,'[data-act="modal-close"]')}}},
    5:async()=>{await click(p,'[data-act="nav"][data-v="customize"]');await click(p,'[data-act="ctab"][data-t="connectors"]');await click(p,'[data-act="conn-on"][data-id="gmail"]');await click(p,'[data-act="oauth-ok"]');await click(p,'[data-act="ctab"][data-t="plugins"]');await click(p,'[data-act="plug-on"][data-id="finance"]');await click(p,'[data-act="ctab"][data-t="skills"]');await click(p,'[data-act="skill-new"]');await click(p,'[data-act="skill-save"]');await click(p,'.sb-new');await click(p,'.sg[data-id="dunning"]');await click(p,'.send');await p.waitForSelector('.fchip',{timeout:9000})},
    6:async()=>{await click(p,'[data-act="nav"][data-v="scheduled"]');await click(p,'[data-act="sched-new"]');await click(p,'[data-act="sched-save"]');await click(p,'.sb-new');await click(p,'[data-act="folder-open"]');await click(p,'[data-act="peek"][data-id="archive"]');await click(p,'[data-act="folder-pick"]');await click(p,'.sg.dg');await click(p,'.send');await p.waitForSelector('.perm.ask');await click(p,'[data-act="perm"][data-ok="0"]');await p.waitForTimeout(1200)}
   };
@@ -164,7 +165,7 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
   await click(p,'[data-act="seg"][data-u="3"]');eq(await p.evaluate(()=>Course.cur),0,'未解鎖卻跳過去了');
   await p.evaluate(()=>Course.go(0,true,3));await next();eq(await p.evaluate(()=>[Course.cur,Course.slide]),[0,3],'未完成卻進了下一單元');
   await p.evaluate(()=>Course.go(0,true,0));
-  const ORDER=[1,7,2,3,4,5,6];
+  const ORDER=[1,7,2,3,4,8,5,6];
   for(let k=0;k<ORDER.length;k++){
    const u=ORDER[k];await video();await next();await next();await match();await act[u]();await next();await quiz(k===0);
    if(k<ORDER.length-1)await next();
@@ -227,9 +228,10 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
   await click(p,'.sb [data-m="code"]');ok((await txt(p,'.modeNote h2')).includes('Code'));await click(p,'.modeNote [data-m="cowork"]');eq(await p.evaluate(()=>S.mode),'cowork');
  }));
  await check('模型與強度選擇、EN／中文切換',()=>sim(async p=>{
-  eq((await txt(p,'.sb-new')).trim(),'New task');await click(p,'[data-act="lang"]');eq((await txt(p,'.sb-new')).trim(),'新任務');await click(p,'[data-act="lang"]');
-  await click(p,'.mdl');await click(p,'[data-act="model-pick"][data-m="Haiku 4.5"]');await click(p,'[data-act="effort-pick"][data-e="Low"]');await click(p,'.modal [data-act="modal-close"] >> text=完成');
-  eq((await txt(p,'.mdl')).replace(/\s+/g,' ').trim(),'Haiku 4.5 Low');
+  ok((await txt(p,'.sb-new')).startsWith('New task'),'英文標籤');await click(p,'[data-act="lang"]');ok((await txt(p,'.sb-new')).startsWith('新任務'),'中文標籤');await click(p,'[data-act="lang"]');
+  await click(p,'.mdl');await click(p,'[data-act="model-pick"][data-m="Haiku 5"]');await click(p,'[data-act="effort-pick"][data-e="Low"]');await click(p,'.modal [data-act="modal-close"] >> text=完成');
+  eq((await txt(p,'.mdl')).trim(),'Haiku 5');eq((await txt(p,'.eff')).trim(),'Low');
+  eq(await p.evaluate(()=>MODELS.map(m=>m.n)),['Opus 4.8','Sonnet 4.5','Haiku 5'],'模型清單必須只有三個指定模型');
  }));
  await check('專案、排程、技能、連接器、外掛、右側面板收合、追問',()=>sim(async p=>{
   await click(p,'[data-act="nav"][data-v="projects"]');eq(await cnt(p,'.item'),1);await click(p,'[data-act="proj-new"]');await click(p,'[data-act="proj-save"]');eq(await cnt(p,'.item'),2);
@@ -242,6 +244,20 @@ const click=(p,s)=>p.locator(s).first().click({timeout:5000});
   await click(p,'.sb-new');await p.evaluate(()=>{S.folder='bank';renderSim()});await send(p,'請核對銀行對帳單');await p.waitForSelector('.fchip',{timeout:9000});
   await click(p,'[data-act="rp-toggle"][data-k="prog"]');ok((await p.locator('.rcard').first().getAttribute('class')).includes('shut'),'右側面板沒收合');
   await p.fill('#composer','請把差異改成千分位');await p.keyboard.press('Enter');await p.waitForFunction(()=>document.querySelector('.chat').innerText.includes('收到'),null,{timeout:4000});
+ }));
+
+ await check('簡單範例：Excel／Word／簡報各做一次，預覽正確並出現在 Artifacts',()=>sim(async p=>{
+  const run=async(fid,sid,type,must)=>{await click(p,'.sb-new');await click(p,'[data-act="folder-open"]');await click(p,`[data-act="peek"][data-id="${fid}"]`);await click(p,'[data-act="folder-pick"]');await click(p,`.sg[data-id="${sid}"]`);await click(p,'.send');await p.waitForSelector('.fchip',{timeout:9000});eq(await cnt(p,'.perm'),0);await click(p,`.fchip[data-type="${type}"]`);ok((await txt(p,'.modal')).includes(must),`${sid} 預覽缺 ${must}`);await click(p,'[data-act="modal-close"]')};
+  await run('quotes','compare','xlsx','=SUM');await run('meeting','word','docx','決議事項');await run('report','slides','pptx','封面');
+  await click(p,'[data-act="nav"][data-v="artifacts"]');eq(await cnt(p,'.item'),3,'Artifacts 數量');await p.locator('.item [data-act="file-open"]').first().click();ok(await cnt(p,'.modal')>0,'Artifacts 打不開檔案');
+ }));
+ await check('新版首頁：側邊欄 Cowork｜Code、Output 選單、強度切換、安全提示、外掛連結',()=>sim(async p=>{
+  eq(await cnt(p,'.sb-seg button'),2);await click(p,'.sb-seg [data-m="code"]');ok((await txt(p,'.modeNote h2')).includes('Code'));await click(p,'.sb-seg [data-m="cowork"]');
+  const e0=await txt(p,'.eff');await click(p,'.eff');ok((await txt(p,'.eff'))!==e0,'強度沒切換');
+  await click(p,'[data-act="safe-tip"]');ok((await txt(p,'.modal')).includes('初稿'));await click(p,'[data-act="modal-close"]');
+  await click(p,'[data-act="goto-plugins"]');eq(await p.evaluate(()=>[S.view,S.ctab]),['customize','plugins']);
+  await click(p,'.sb-new');await click(p,'.mtoggle [data-m="chat"]');await click(p,'[data-act="output-menu"]');ok((await p.locator('.modal').innerText()).includes('Slides'));await click(p,'[data-act="output-pick"][data-o="Slides"]');await click(p,'.modal [data-act="modal-close"] >> text=完成');
+  ok((await txt(p,'[data-act="output-menu"]')).includes('Slides'),'Output 沒有套用');
  }));
 
  console.log('\n[8] 影片播放器');
