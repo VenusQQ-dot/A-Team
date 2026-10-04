@@ -8,10 +8,11 @@
 /*CSS*/
 </style>
 </head>
-<body data-pane="coach">
+<body data-pane="coach" data-view="map">
 <div id="app">
  <header class="topbar">
   <div class="brand"><div class="logo" aria-hidden="true">✺</div><div><b>Claude Cowork 基礎入門班</b><small>會計新手互動教學・教學仿製介面</small></div></div>
+  <div class="vsw" role="group" aria-label="檢視模式"><button data-act="view" data-v="map">心智圖</button><button data-act="view" data-v="layers">分層卡片</button><button data-act="view" data-v="overview">全景</button><button data-act="view" data-v="learn">實作課程</button></div>
   <div class="pbar" role="progressbar" aria-label="學習進度"><i id="pbar"></i></div>
   <div class="score" id="score"></div>
   <div class="tspacer"></div>
@@ -19,11 +20,19 @@
   <button class="tbtn" id="teacher" data-act="teacher" aria-pressed="false" title="解鎖全部單元、顯示答案提示">老師模式</button>
   <button class="tbtn" data-act="reset">重置進度</button>
  </header>
+ <section id="view-map" class="view" aria-label="心智圖">
+  <div class="mmbar"><div class="mtabs" id="mmtabs" role="tablist"></div><div class="mmtools"><button data-act="mm-all">全展開</button><button data-act="mm-none">全收合</button><button data-act="mm-fit">看全面</button><button data-act="mm-zoom" data-f="1.2" aria-label="放大">＋</button><button data-act="mm-zoom" data-f="0.83" aria-label="縮小">－</button></div></div>
+  <p class="mmlegend">點節點展開／收合；拖曳移動，兩指或 ＋－ 縮放。<b class="r">紅字＝這一站最常出事的地方。</b>框框＝白話講它在幹嘛。<b class="g">▶ 去練習</b>＝跳到模擬器動手做。</p>
+  <div id="mmv" tabindex="0" aria-label="心智圖畫布"><div id="mmc"><svg id="mmsvg" aria-hidden="true"></svg></div></div>
+ </section>
+ <section id="view-layers" class="view" aria-label="分層卡片"></section>
+ <section id="view-overview" class="view" aria-label="全景"></section>
  <div class="layout">
   <section class="coach" aria-label="課程內容"><nav class="units" id="units" aria-label="單元"></nav><div class="unit" id="unit"></div></section>
   <section class="stage" aria-label="Cowork 模擬器"><div class="sim" id="sim"></div></section>
  </div>
 </div>
+<div id="sheet" class="sheet-bg" hidden data-act="sheet-bg"></div>
 <div id="toasts" aria-live="polite"></div>
 <script>
 /*JS*/

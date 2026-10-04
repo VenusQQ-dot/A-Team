@@ -332,12 +332,132 @@ svg{flex:none}
  html{scroll-behavior:auto}.coach{scroll-behavior:auto}
 }
 
+/* ===== 檢視切換 ===== */
+.vsw{display:flex;background:#E8E0D0;border-radius:99px;padding:3px;margin-left:6px}
+.vsw button{padding:3px 14px;border-radius:99px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+.vsw button.on{background:var(--ink);color:#fff}
+.view{display:none;flex:1;min-height:0}
+body[data-view="map"] #view-map{display:flex;flex-direction:column}
+body[data-view="layers"] #view-layers,body[data-view="overview"] #view-overview{display:block;overflow:auto}
+body:not([data-view="learn"]) .layout{display:none}
+body:not([data-view="learn"]) .pbar,body:not([data-view="learn"]) .score,body:not([data-view="learn"]) #teacher,body:not([data-view="learn"]) [data-act="reset"],body:not([data-view="learn"]) .panes{display:none!important}
+
+/* ===== 心智圖 ===== */
+.mmbar{flex:none;display:flex;align-items:center;gap:10px;padding:8px 16px;border-bottom:1px solid var(--line);background:var(--paper);flex-wrap:wrap}
+.mtabs{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0}
+.mtab{flex:none;border:1px solid var(--line);background:#fff;border-radius:99px;padding:3px 14px;font-size:14px;white-space:nowrap}
+.mtab.on{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+.mmtools{display:flex;gap:6px}
+.mmtools button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:3px 11px;font-size:13px;white-space:nowrap}
+.mmtools button:hover{border-color:var(--accent)}
+.mmlegend{flex:none;margin:0;padding:6px 16px;font-size:13px;color:var(--muted);background:#F7F2E8;border-bottom:1px solid var(--line)}
+.mmlegend .r{color:#B4382B}.mmlegend .g{color:var(--green)}
+#mmv{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:none;cursor:grab;background:#F5F2EA;outline:0}
+#mmv.grab{cursor:grabbing}
+#mmc{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+#mmsvg{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+#mmsvg path{fill:none;stroke-width:2.4;stroke-linecap:round}
+#mmsvg path.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr .6s ease forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.mn{position:absolute;padding:0 4px 11px 2px;user-select:none;-webkit-user-select:none}
+.mn.has{cursor:pointer}
+.mn.born{animation:bn .4s ease both}
+@keyframes bn{from{opacity:0;transform:translateX(-14px)}}
+.mn.flash{animation:fl 1.1s ease 2}
+@keyframes fl{50%{background:rgba(201,100,66,.22);border-radius:10px}}
+.mn-h{display:flex;align-items:center;gap:8px}
+.mn-h b{font-size:17px;line-height:1.35}
+.mn-h .px{flex:none}
+.num{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px;font-style:normal;margin-right:6px;vertical-align:1px}
+.mn-d{margin:2px 0 0;color:#6B665B;font-size:14px;line-height:1.55}
+.mn-box{position:relative;margin-top:16px;background:#fff;border:2px solid;padding:6px 10px;font-size:14px;font-weight:600;line-height:1.45}
+.mn-box::before{content:"";position:absolute;left:14px;top:-11px;width:8px;height:9px;background:var(--c);clip-path:polygon(0 0,100% 0,100% 40%,45% 40%,45% 100%,0 100%)}
+.mn-red{display:flex;gap:6px;align-items:flex-start;margin-top:7px;color:#B4382B;font-size:13.5px;font-weight:700;line-height:1.45}
+.mn-red .px{margin-top:2px}
+.mn-go{margin-top:7px;font-size:13px;font-weight:700;border:1.5px solid currentColor;border-radius:99px;padding:0 10px;background:#fff}
+.mn-go:hover{background:var(--accent-soft)}
+.mn-t{position:absolute;right:-9px;bottom:-10px;width:18px;height:18px;border-radius:50%;background:var(--c);border:2.5px solid var(--c);padding:0}
+.mn.has .mn-t{box-shadow:0 0 0 4px rgba(255,255,255,.01)}
+.mn.has.open .mn-t{background:#fff}
+.mn:not(.has) .mn-t{width:12px;height:12px;right:-6px;bottom:-6px;pointer-events:none}
+.mn:focus-visible{outline:2px solid var(--blue);border-radius:8px}
+
+/* ===== 分層卡片 / 全景 ===== */
+.vwrap2{max-width:760px;margin:0 auto;padding:22px 18px 80px}
+.lytabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}
+.lytabs button{flex:none;border:1px solid var(--line);background:#fff;border-radius:99px;padding:3px 14px;font-size:14px;white-space:nowrap}
+.lytabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.lyh{font-size:28px;line-height:1.3}
+.lys{color:var(--muted);margin:2px 0 4px;font-size:16px}
+.lyhint{color:#8c8576;font-size:13.5px;margin-bottom:14px}
+.ly{display:grid;gap:8px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.g2s{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.bk{position:relative;text-align:left;background:#fff;border:3px solid;border-radius:16px;padding:10px 14px;display:grid;gap:2px;align-content:center;transition:transform .15s,box-shadow .15s}
+.bk b{font-size:17px;line-height:1.35}
+.bk small{color:var(--muted);font-size:13.5px;line-height:1.45}
+.bk::after{content:"↗";position:absolute;right:10px;top:5px;color:#9a937f;font-size:12px}
+.bk:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(60,40,20,.12)}
+.bk.bl{border-color:#3B5FA8}.bk.br{border-color:#A0522D}.bk.gr{border-color:#3E7C59}
+.bk.tall{min-height:150px}.bk.wide{text-align:center}
+.dash{border:2px dashed #A0522D;border-radius:18px;padding:8px 10px 10px;display:grid;gap:8px}
+.dash .cap{font-size:14px;font-weight:600}
+.av{display:flex;align-items:center;justify-content:center;gap:6px;color:#7a7466;font-size:13.5px}
+.av span{font-size:20px;color:#6b665b}
+.bk.big{padding:12px 14px 14px}
+.bk.big .bic{margin-bottom:2px}
+.bk.big em{font-style:normal;font-size:13px;font-weight:600;margin-top:4px;border-top:1.5px dashed var(--line);padding-top:5px}
+.chain{gap:0}
+.dn{text-align:center;color:#8c8576;font-size:18px;line-height:1.1;padding:2px 0}
+.bk.step{display:flex;align-items:center;gap:12px;padding:9px 14px}
+.bk.step .sn{width:26px;height:26px;border-radius:50%;color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.bk.step .stx{display:grid;flex:1;min-width:0}
+.bk.step .rd{display:flex;gap:5px;align-items:center;color:#B4382B;max-width:38%}
+.bk.step .rd small{color:#B4382B;font-weight:700;font-size:12.5px}
+.lynav{display:flex;justify-content:space-between;margin-top:18px}
+.ovl{margin-top:34px;padding-top:6px;border-top:2px solid var(--line)}
+.ovl h3{font-family:var(--serif);font-size:22px}
+.mapcards .bk{padding:12px 14px}
+
+/* ===== 細節面板 ===== */
+.sheet-bg{position:fixed;inset:0;background:rgba(43,42,39,.45);z-index:150;display:grid;align-items:end;justify-items:center;animation:fi .15s}
+.sheet-bg[hidden]{display:none}
+.sheet{position:relative;background:#fff;width:min(560px,100%);border-radius:20px 20px 0 0;padding:20px 22px 24px;display:grid;gap:10px;max-height:82vh;overflow:auto;animation:su .25s ease}
+@keyframes su{from{transform:translateY(40px);opacity:.5}}
+@media (min-width:700px){.sheet-bg{align-items:center}.sheet{border-radius:20px}}
+.sheet .x{position:absolute;right:14px;top:10px;font-size:26px;color:var(--muted);line-height:1}
+.sh-h{display:flex;align-items:center;gap:10px}
+.sh-h h3{font-family:var(--serif);font-size:24px}
+.sh-d{font-size:16px}
+.sh-box{border:2px solid var(--ink);padding:7px 11px;font-weight:600;background:#FBF8F2}
+.sh-red{display:flex;gap:7px;align-items:flex-start;color:#B4382B;font-weight:700;background:var(--warn-soft);border-radius:10px;padding:8px 11px}
+.sh-m{font-size:14px;color:var(--muted)}
+.sh-k{margin:0;padding-left:18px;font-size:14.5px;display:grid;gap:3px}
+.sh-b{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+
+@media (max-width:1000px){
+ .vsw button{padding:3px 9px;font-size:12.5px}
+ .vsw{margin-left:0}
+ .g3{grid-template-columns:1fr 1fr}.g2s{grid-template-columns:1fr}
+ .bk.step .rd{display:none}
+ .mmlegend{font-size:12px}
+}
+@media (max-width:700px){
+ .brand b{display:none}
+ .topbar{padding:0 8px;justify-content:space-between}
+ .mn-h b{font-size:16px}
+ .lyh{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){.mn.born,.mn.flash,#mmsvg path.draw,.sheet,.sheet-bg{animation:none}#mmsvg path.draw{stroke-dashoffset:0}}
+
 </style>
 </head>
-<body data-pane="coach">
+<body data-pane="coach" data-view="map">
 <div id="app">
  <header class="topbar">
   <div class="brand"><div class="logo" aria-hidden="true">✺</div><div><b>Claude Cowork 基礎入門班</b><small>會計新手互動教學・教學仿製介面</small></div></div>
+  <div class="vsw" role="group" aria-label="檢視模式"><button data-act="view" data-v="map">心智圖</button><button data-act="view" data-v="layers">分層卡片</button><button data-act="view" data-v="overview">全景</button><button data-act="view" data-v="learn">實作課程</button></div>
   <div class="pbar" role="progressbar" aria-label="學習進度"><i id="pbar"></i></div>
   <div class="score" id="score"></div>
   <div class="tspacer"></div>
@@ -345,11 +465,19 @@ svg{flex:none}
   <button class="tbtn" id="teacher" data-act="teacher" aria-pressed="false" title="解鎖全部單元、顯示答案提示">老師模式</button>
   <button class="tbtn" data-act="reset">重置進度</button>
  </header>
+ <section id="view-map" class="view" aria-label="心智圖">
+  <div class="mmbar"><div class="mtabs" id="mmtabs" role="tablist"></div><div class="mmtools"><button data-act="mm-all">全展開</button><button data-act="mm-none">全收合</button><button data-act="mm-fit">看全面</button><button data-act="mm-zoom" data-f="1.2" aria-label="放大">＋</button><button data-act="mm-zoom" data-f="0.83" aria-label="縮小">－</button></div></div>
+  <p class="mmlegend">點節點展開／收合；拖曳移動，兩指或 ＋－ 縮放。<b class="r">紅字＝這一站最常出事的地方。</b>框框＝白話講它在幹嘛。<b class="g">▶ 去練習</b>＝跳到模擬器動手做。</p>
+  <div id="mmv" tabindex="0" aria-label="心智圖畫布"><div id="mmc"><svg id="mmsvg" aria-hidden="true"></svg></div></div>
+ </section>
+ <section id="view-layers" class="view" aria-label="分層卡片"></section>
+ <section id="view-overview" class="view" aria-label="全景"></section>
  <div class="layout">
   <section class="coach" aria-label="課程內容"><nav class="units" id="units" aria-label="單元"></nav><div class="unit" id="unit"></div></section>
   <section class="stage" aria-label="Cowork 模擬器"><div class="sim" id="sim"></div></section>
  </div>
 </div>
+<div id="sheet" class="sheet-bg" hidden data-act="sheet-bg"></div>
 <div id="toasts" aria-live="polite"></div>
 <script>
 'use strict';
@@ -890,8 +1018,8 @@ const Course={
   const i=this.cur;this.renderNav();this.renderFoot();
   if(this.unitDone(i)&&!this.P.cel[i]){this.P.cel[i]=1;this.save();confetti();toast(i===UNITS.length-1?'全部單元完成！往下領取結業證書':'單元完成！下一單元已解鎖','ok')}
  },
- go(i){
-  if(!this.unlocked(i)){toast('請先完成上一個單元的練習與小測驗','warn');return}
+ go(i,force){
+  if(!force&&!this.unlocked(i)){toast('請先完成上一個單元的練習與小測驗','warn');return}
   if(this.player)this.player.destroy();
   this.cur=i;this.renderUnit();this.evaluate();$('.coach').scrollTop=0;
  },
@@ -906,7 +1034,7 @@ const Course={
  },
  renderUnit(){
   const u=UNITS[this.cur],n=this.cur+1;
-  $('#unit').innerHTML=`<div class="kick">單元 ${n} / ${UNITS.length}</div><h2 class="serif">${u.title}</h2><p class="goal">${u.goal}</p>
+  $('#unit').innerHTML=`<div class="kick">單元 ${n} / ${UNITS.length}</div><h2 class="serif">${u.title}</h2><p class="goal">${u.goal} <button class="mini" data-act="open-map" data-m="${UNITMAP[u.id]}">對照心智圖</button></p>
   <div id="player"></div>
   <h3>重點卡 <em>點一下翻面看會計比喻</em></h3><div class="cards">${u.cards.map(c=>`<div class="kcard" data-act="flip" role="button" tabindex="0" aria-label="${c.f}，點一下翻面"><div><span class="f"><b>${c.f}</b><small>${c.s}</small></span><span class="b">${c.b}</span></div></div>`).join('')}</div>
   <h3>實作練習 <em>在右邊模擬器操作，會自動打勾</em></h3><ul class="steps" id="steps"></ul>
@@ -1029,6 +1157,370 @@ window.addEventListener('DOMContentLoaded',()=>{
  let start=0;for(let i=0;i<UNITS.length;i++){if(Course.unlocked(i)&&!Course.unitDone(i)){start=i;break}start=i}
  Course.cur=start;Course.renderUnit();setPane('coach');
  window.addEventListener('beforeunload',()=>{try{speechSynthesis.cancel()}catch(e){}});
+});
+
+/* ========== 像素圖示（10x10 點陣） ========== */
+const PXD={
+ spark:['....##....','....##....','.#..##..#.','..######..','#########.','..######..','.#..##..#.','....##....','....##....'],
+ cloud:['..........','...###....','..#...#...','.#.....##.','#........#','#........#','#........#','.########.'],
+ terminal:['.########.','.#......#.','.#.#....#.','.#..#...#.','.#.#....#.','.#......#.','.########.'],
+ shield:['.########.','.#......#.','.#......#.','.#......#.','..#....#..','..#....#..','...#..#...','....##....'],
+ plug:['..#....#..','..#....#..','.########.','.#......#.','.#......#.','..#....#..','...#..#...','....##....','....##....'],
+ book:['.#######..','.#.....#..','.#.###.#..','.#.....#..','.#.###.#..','.#.....#..','.#######..','.#######..'],
+ mail:['..........','.########.','.##....##.','.#.#..#.#.','.#..##..#.','.#......#.','.#......#.','.########.'],
+ clock:['...####...','..#....#..','.#..#...#.','.#..#...#.','.#..###.#.','.#......#.','..#....#..','...####...'],
+ user:['...####...','..#....#..','..#....#..','...####...','..........','.########.','.#......#.','.#......#.'],
+ sheet:['.########.','.#..#...#.','.########.','.#..#...#.','.########.','.#..#...#.','.########.'],
+ trash:['..######..','.########.','..........','..#.#.#...','..#.#.#...','..#.#.#...','..#.#.#...','..#####...'],
+ eye:['..........','...####...','.##....##.','#..####..#','#..####..#','.##....##.','...####...'],
+ star:['....##....','....##....','.########.','..######..','...####...','...#..#...','..##..##..'],
+ chat:['.########.','.#......#.','.#.####.#.','.#......#.','.########.','..##......','..#.......'],
+ lock:['...####...','..#....#..','..#....#..','.########.','.#......#.','.#..##..#.','.#......#.','.########.'],
+ bulb:['...####...','..#....#..','.#......#.','.#......#.','..#....#..','...####...','...####...','....##....'],
+ route:['#.........','#.####....','#.#..#....','..#..#.##.','..#..#.#.#','..####.#.#','.......##.'],
+ people:['.##...##..','#..#.#..#.','.##...##..','..........','.########.','.#..#...#.','.#..#...#.','.########.'],
+ box:['.########.','.#......#.','.########.','.#......#.','.#.####.#.','.#......#.','.########.'],
+ file:['.######...','.#....#..','.#.....#.','.#.....#.','.#.....#.','.#.....#.','.########.'],
+ list:['.#.#####..','..........','.#.#####..','..........','.#.#####..','..........','.#.#####..'],
+ folder:['.####.....','#....#####','#........#','#........#','#........#','#........#','.########.'],
+ warn:['....##....','...#..#...','..#.##.#..','..#.##.#..','.#..##..#.','.#......#.','.#..##..#.','.########.']
+};
+function pix(n,col,sz){const g=PXD[n]||PXD.spark;let r='';g.forEach((row,y)=>{row=row.padEnd(10,'.');for(let x=0;x<10;x++)if(row[x]==='#')r+=`<rect x="${x}" y="${y}" width="1" height="1"/>`});
+ return `<svg class="px" viewBox="0 0 10 10" width="${sz||26}" height="${sz||26}" fill="${col||'currentColor'}" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
+
+/* ========== 心智圖內容 ========== */
+const COL=['#6A4FBF','#3E7C59','#A0522D','#3B5FA8','#8A6D1E','#A33B5E','#3A7F8C'];
+const NODES={};
+const MAPS=[
+ {id:'parts',tab:'零件',root:{id:'root1',t:'Cowork 運作架構',d:'你的電腦＋一個授權資料夾＋一位 AI 助理',ic:'spark',box:'這一枝看零件：整套東西由哪些部分組成',kids:[
+  {id:'model',t:'模型（Claude）',ic:'cloud',d:'在雲端思考的大腦。只會讀一段字、回一段字，本身碰不到你的檔案。',box:'我是大腦：只會讀字、回字；動手要靠下面那些零件',kids:[
+   {t:'它擅長',ic:'star',d:'讀懂文件、整理資料、寫作、推理'},
+   {t:'它自己做不到',ic:'lock',d:'自己翻你的硬碟、自己寄信',red:'所有「動手」都要經過 App 與你的授權'}]},
+  {id:'app',t:'Cowork App',ic:'terminal',d:'裝在你電腦上的程式。模型說「我要讀這個檔」，是 App 真的去讀、去寫。',box:'我是大腦的手腳：大腦說要讀檔，是我真的去做',kids:[
+   {id:'input',t:'輸入框',ic:'chat',d:'交辦任務的地方，旁邊可選資料夾',go:{u:4}},
+   {id:'progress',t:'進度面板',ic:'list',d:'任務畫面右側：每一步的狀態與新產生的檔案',go:{u:2}},
+   {id:'sidebar',t:'側邊欄',ic:'book',d:'新任務、排程、自訂都從這裡進出',go:{u:2}}]},
+  {id:'folder',t:'授權資料夾',ic:'folder',d:'你指定的資料夾，是 Claude 唯一能讀寫的檔案範圍。',box:'像只借出一個抽屜的鑰匙，不是整間檔案室',go:{u:3},kids:[
+   {t:'最小權限',ic:'shield',d:'只給任務需要的資料夾',box:'內控的精神：夠用就好'},
+   {t:'先放副本',ic:'sheet',d:'第一次用，先複製一份練習資料夾',box:'會計師查帳也先影印底稿'},
+   {t:'敏感資料別放',ic:'lock',d:'薪資、身分證、存摺與任務無關',red:'放進去，就等於交出去'}]},
+  {id:'conn',t:'連接器',ic:'plug',d:'讓 Claude 連到 Gmail、雲端硬碟等外部服務。',box:'像銀行的電子對帳介面',go:{u:5},more:'連接時會出現授權畫面，列出 Claude 能做的事。實際權限範圍以該畫面為準。',kids:[
+   {id:'gmail',t:'Gmail',ic:'mail',d:'讀取郵件、建立草稿',red:'草稿不等於寄出，請自己確認再寄'},
+   {id:'drive',t:'Google Drive',ic:'folder',d:'搜尋與讀取雲端檔案'},
+   {id:'cal',t:'Google Calendar',ic:'clock',d:'查看行程、安排會議'}]},
+  {id:'skill',t:'技能 Skill',ic:'book',d:'把你的做法寫成說明書，Claude 每次都照做。',box:'像公司作業手冊：寫一次，每次照做',go:{u:5},kids:[
+   {t:'例：月結報表格式',ic:'sheet',d:'千分位、科目排序、末列加總'},
+   {t:'例：發票命名規則',ic:'file',d:'日期_廠商_金額'}]},
+  {id:'plug',t:'外掛 Plugin',ic:'box',d:'把技能、連接器、常用指令打包成一整套。',box:'像會計部的「新人套組」',go:{u:5},kids:[
+   {t:'財務會計（示意）',ic:'sheet',d:'月結檢查、銀行對帳、差異分析'},
+   {t:'依職務挑選',ic:'user',d:'法務、業務…各有各的套件'}]},
+  {id:'you',t:'你（覆核者）',ic:'user',d:'重要動作要你點頭；產出要你抽查。',box:'AI 做初稿，簽核的是你',red:'沒覆核就直接使用，是最常出事的地方',go:{u:6},kids:[
+   {id:'permn',t:'權限請求',ic:'shield',d:'改檔名、覆蓋、刪除前會問你',go:{u:4}},
+   {id:'check',t:'抽查結果',ic:'eye',d:'對照原始單據抽樣核對'}]}]}},
+ {id:'flow',tab:'任務怎麼走',root:{id:'root2',t:'一個任務怎麼走',d:'例：把 12 張發票整理成 Excel',ic:'route',box:'這一枝看一個任務從下指令到交件，中間經過誰',kids:[
+  {id:'s1',num:1,t:'你下指令',ic:'chat',d:'寫清楚：目標、資料、格式、限制',box:'像開傳票：四個欄位缺一不可',red:'指令太模糊，Claude 只能用猜的',go:{u:4}},
+  {id:'s2',num:2,t:'選資料夾',ic:'folder',d:'授權這次任務要用的資料夾',red:'範圍太大，把無關的敏感檔案一起交出去',go:{u:3}},
+  {id:'s3',num:3,t:'Claude 擬計畫',ic:'list',d:'先拆成步驟，右側進度面板逐項列出',box:'像專案進度表：先排步驟再動工'},
+  {id:'s4',num:4,t:'逐步執行',ic:'terminal',d:'讀檔、辨識、寫入新檔；每一步的狀態都看得到'},
+  {id:'perm',num:5,t:'權限請求',ic:'shield',d:'改檔名、覆蓋、刪除前，會停下來問你',box:'像覆核流程：重要動作要你簽核',red:'沒看清楚就按「允許」',go:{u:4},kids:[
+   {t:'可以允許',ic:'star',d:'有備份、範圍清楚、影響可還原'},
+   {t:'應該拒絕',ic:'trash',d:'要永久刪除、沒有備份、看不懂範圍',red:'不確定就先拒絕，再問清楚'}]},
+  {id:'s6',num:6,t:'產出檔案',ic:'sheet',d:'結果放在授權資料夾，例如 發票彙整_2026Q3.xlsx'},
+  {id:'s7',num:7,t:'你覆核',ic:'eye',d:'抽查數字、對照原始單據，再正式使用',box:'像審計抽樣：不用全看，但一定要看',red:'把 AI 初稿當成定稿',go:{u:4}}]}},
+ {id:'safe',tab:'安全',root:{id:'root3',t:'守住安全底線',d:'自動化，但責任仍在你',ic:'shield',box:'這一枝看每個階段該檢查什麼',go:{u:6},kids:[
+  {t:'授權前',ic:'folder',d:'決定 Claude 看得到什麼',kids:[
+   {t:'選最小範圍',ic:'shield',d:'只授權任務需要的資料夾'},
+   {t:'先複製副本',ic:'sheet',d:'用練習資料夾，出錯不傷原件'},
+   {t:'移出敏感檔案',ic:'lock',d:'薪資、身分證、存摺',red:'與任務無關的資料，不該在範圍內'}]},
+  {t:'執行中',ic:'terminal',d:'Claude 動手的當下',kids:[
+   {t:'看清楚權限請求',ic:'shield',d:'範圍？影響？可還原嗎？',box:'三個問題都答得出來再按允許'},
+   {t:'刪除與覆蓋先拒絕',ic:'trash',d:'沒有備份就不要放行',red:'永久刪除無法復原'}]},
+  {t:'完成後',ic:'eye',d:'成果交付前的把關',kids:[
+   {t:'抽查數字',ic:'sheet',d:'隨機挑幾列重算'},
+   {t:'對照原始單據',ic:'file',d:'金額、日期、統編逐項核'},
+   {t:'留存紀錄',ic:'book',d:'誰下的指令、何時、產出什麼',box:'可稽核：事後找得到來龍去脈'}]},
+  {t:'排程任務',ic:'clock',d:'讓 Claude 定時自動工作',kids:[
+   {t:'電腦要開著',ic:'monitor_',d:'App 要在執行中（以你的版本說明為準）',red:'關機或沒開 App，排程就不會跑'},
+   {t:'排程也要覆核',ic:'eye',d:'自動產出的報表，一樣要抽查'}]},
+  {t:'連接器',ic:'plug',d:'連到外部服務時',kids:[
+   {t:'只連需要的服務',ic:'plug',d:'用不到的就不要連'},
+   {t:'草稿不等於寄出',ic:'mail',d:'寄信前請自己再讀一次',red:'金額、對象、語氣都要確認'}]}]}},
+ {id:'ext',tab:'擴充',root:{id:'root4',t:'怎麼讓 Claude 更懂你的工作',d:'連接器、技能、外掛三種擴充',ic:'plug',box:'這一枝看三種擴充怎麼分、怎麼選',go:{u:5},kids:[
+  {t:'連接器',ic:'plug',d:'連到外部服務',kids:[
+   {t:'像什麼',ic:'star',d:'銀行的電子對帳介面'},
+   {t:'什麼時候用',ic:'bulb',d:'資料在 Gmail、雲端硬碟裡'},
+   {t:'注意',ic:'warn',d:'只連需要的服務',red:'授權畫面列的權限要看清楚'}]},
+  {t:'技能 Skill',ic:'book',d:'把做法寫成說明書',kids:[
+   {t:'像什麼',ic:'star',d:'公司作業手冊（SOP）'},
+   {t:'什麼時候用',ic:'bulb',d:'同一套做法，每次都要照做'},
+   {t:'例子',ic:'sheet',d:'月結報表格式、發票命名規則'}]},
+  {t:'外掛 Plugin',ic:'box',d:'整包角色套件',kids:[
+   {t:'像什麼',ic:'star',d:'會計部的新人套組'},
+   {t:'什麼時候用',ic:'bulb',d:'想一次裝好整套工具與做法'},
+   {t:'注意',ic:'warn',d:'內容以你實際版本為準'}]},
+  {t:'怎麼選？',ic:'bulb',d:'三句話決定',box:'先問：我缺的是「連線」、「做法」還是「整套」？',kids:[
+   {t:'缺連線 → 連接器',ic:'plug',d:'資料在外部服務'},
+   {t:'缺做法 → 技能',ic:'book',d:'每次都要照同樣規則'},
+   {t:'缺整套 → 外掛',ic:'box',d:'一次裝好，省得一個個設'}]}]}},
+ {id:'cases',tab:'五個例子',root:{id:'root5',t:'五個例子：誰做、存哪裡',d:'會計日常各一條真實路徑',ic:'star',box:'這一枝看真實例子：每件事誰做、資料存哪裡',kids:[
+  {t:'發票整理',ic:'sheet',d:'整理 12 張發票',go:{u:4},kids:[
+   {t:'路徑',ic:'route',d:'丟進資料夾 → 下指令 → 允許改檔名 → 抽查 Excel'},
+   {t:'分工',ic:'people',d:'Claude：辨識、命名、建表。你：補缺統編、抽查'},
+   {t:'存哪裡',ic:'box',d:'原檔留在「發票_2026Q3」；新增「發票彙整」與「異常清單」'}]},
+  {t:'銀行對帳',ic:'layers_',d:'對帳單比帳上明細',kids:[
+   {t:'路徑',ic:'route',d:'對帳單＋帳上明細 → 比對 → 找出未達帳'},
+   {t:'分工',ic:'people',d:'Claude：比對找差異。你：判斷原因、調整分錄'},
+   {t:'存哪裡',ic:'box',d:'「銀行對帳表」放在同一個授權資料夾'}]},
+  {t:'催款信',ic:'mail',d:'逾期應收帳款',go:{u:5},kids:[
+   {t:'路徑',ic:'route',d:'連接 Gmail → 找逾期客戶 → 建草稿 → 你確認'},
+   {t:'分工',ic:'people',d:'Claude：草擬。你：確認金額與語氣後自己寄出',red:'草稿不等於寄出'},
+   {t:'存哪裡',ic:'box',d:'Gmail 草稿匣；未連接時存成 催款信草稿.md'}]},
+  {t:'月結排程',ic:'clock',d:'每月 5 日自動出報表',go:{u:6},kids:[
+   {t:'路徑',ic:'route',d:'建立排程 → 時間到自動執行 → 你覆核'},
+   {t:'分工',ic:'people',d:'Claude：產出報表。你：簽核'},
+   {t:'存哪裡',ic:'box',d:'報表放授權資料夾；排程設定在 App 裡',red:'電腦與 App 要開著'}]},
+  {t:'舊檔清理',ic:'trash',d:'要求刪除舊檔案',go:{u:6},kids:[
+   {t:'路徑',ic:'route',d:'授權舊檔資料夾 → 要求刪除 → 出現權限請求 → 拒絕'},
+   {t:'分工',ic:'people',d:'Claude：列清單。刪不刪由你決定',red:'沒有備份就不要允許'},
+   {t:'存哪裡',ic:'box',d:'待刪除清單.md；原檔完全不動'}]}]}}
+];
+PXD.monitor_=['.########.','.#......#.','.#......#.','.#......#.','.########.','...####...'];
+PXD.layers_=['....##....','...####...','..######..','.########.','..........','.########.','..######..'];
+/* 額外的區塊（不在心智圖內，但分層卡片會用到） */
+const EXTRA=[
+ {id:'p_acct',t:'會計同仁',ic:'user',d:'下指令、檢查結果的人。',box:'交辦任務，也負責把關',go:{u:4}},
+ {id:'p_boss',t:'主管與稽核',ic:'eye',d:'簽核成果、查看紀錄的人。',box:'看的是「誰做的、怎麼做的」',more:'AI 產出需要可追溯：指令、資料夾、產出檔案都要留下紀錄。'},
+ {id:'p_ext',t:'客戶與廠商',ic:'mail',d:'收到信件與報表的對象。',box:'他們看到的是你簽核後的成果',red:'寄出前一定要人工確認'},
+ {id:'sched',t:'排程',ic:'clock',d:'讓任務在固定時間自動執行。',box:'像月結行事曆',go:{u:6},red:'電腦與 App 要開著才會跑'},
+ {id:'slack',t:'Slack',ic:'chat',d:'搜尋對話、草擬訊息（示意）。'},
+ {id:'notion',t:'Notion',ic:'book',d:'搜尋與整理頁面（示意）。'}
+];
+(function prep(){
+ let c=0;
+ MAPS.forEach((m,mi)=>{
+  (function walk(n,depth,col,parent){
+   n.depth=depth;n.parent=parent;n.map=mi;n.open=depth===0;
+   if(!n.id)n.id=m.id+'-'+(++c);
+   n.col=depth===0?'#7D776B':col;
+   NODES[n.id]=n;
+   (n.kids||[]).forEach((k,i)=>walk(k,depth+1,depth===0?COL[i%COL.length]:col,n));
+  })(m.root,0,null,null);
+ });
+ EXTRA.forEach(e=>{e.col='#7D776B';NODES[e.id]=e});
+})();
+
+/* ========== 心智圖引擎 ========== */
+const MM={map:0,scale:1,tx:0,ty:0,W:250,GX:74,GY:16,els:{},bw:0,bh:0,justDragged:false,ptr:new Map(),inited:{}};
+const mmq=()=>({vp:$('#mmv'),cv:$('#mmc'),svg:$('#mmsvg')});
+function nodeHtml(n){
+ return `<div class="mn-h">${n.ic?pix(n.ic,n.col):''}<b>${n.num?`<i class="num">${n.num}</i>`:''}${n.t}</b></div>${n.d?`<p class="mn-d">${n.d}</p>`:''}${n.box?`<div class="mn-box" style="border-color:${n.col}">${n.box}</div>`:''}${n.red?`<div class="mn-red">${pix('warn','#B4382B',15)}<span>${n.red}</span></div>`:''}${n.go?`<button class="mn-go" data-act="go-unit" data-u="${n.go.u}" style="color:${n.col}">▶ 去練習</button>`:''}<button class="mn-t" tabindex="-1" aria-hidden="true"></button>`;
+}
+function mmRender(anchorId,opts){
+ opts=opts||{};
+ const {cv,svg}=mmq();if(!cv)return;
+ const m=MAPS[MM.map],vis=[];
+ (function walk(n){vis.push(n);if(n.open&&n.kids)n.kids.forEach(walk)})(m.root);
+ const keep=new Set(vis.map(n=>n.id)),born=new Set();
+ Object.keys(MM.els).forEach(id=>{if(!keep.has(id)){MM.els[id].remove();delete MM.els[id]}});
+ vis.forEach(n=>{
+  let e=MM.els[n.id];
+  if(!e){e=document.createElement('div');e.dataset.id=n.id;e.dataset.act='mm-node';e.style.setProperty('--c',n.col);e.innerHTML=nodeHtml(n);cv.appendChild(e);MM.els[n.id]=e;if(!opts.noBorn){e.classList.add('born');born.add(n.id)}}
+  const has=n.kids&&n.kids.length;
+  e.className='mn'+(has?' has':'')+(n.open&&has?' open':'')+(born.has(n.id)?' born':'')+(n.flash?' flash':'');
+  if(has){e.setAttribute('role','button');e.tabIndex=0;e.setAttribute('aria-expanded',!!n.open)}else{e.removeAttribute('role');e.removeAttribute('tabindex')}
+  e.style.width=MM.W+'px';
+ });
+ vis.forEach(n=>{n.h=MM.els[n.id].offsetHeight});
+ const anchor=anchorId&&NODES[anchorId],ox=anchor?anchor.x:0,oy=anchor?anchor.y:0;
+ let cursor=0;
+ const shift=(n,d)=>{n.y+=d;if(n.open&&n.kids)n.kids.forEach(k=>shift(k,d))};
+ (function place(n){
+  n.x=n.depth*(MM.W+MM.GX);
+  if(!(n.open&&n.kids&&n.kids.length)){n.y=cursor;cursor+=n.h+MM.GY;return}
+  const start=cursor;n.kids.forEach(place);
+  const a=n.kids[0],b=n.kids[n.kids.length-1];
+  n.y=((a.y+a.h)+(b.y+b.h))/2-n.h;
+  if(n.y<start){const d=start-n.y;n.kids.forEach(k=>shift(k,d));n.y=start;cursor+=d}
+  cursor=Math.max(cursor,n.y+n.h+MM.GY);
+ })(m.root);
+ let maxX=0,maxY=0;
+ vis.forEach(n=>{const e=MM.els[n.id];e.style.left=n.x+'px';e.style.top=n.y+'px';maxX=Math.max(maxX,n.x+MM.W+14);maxY=Math.max(maxY,n.y+n.h+14)});
+ MM.bw=maxX;MM.bh=maxY;
+ let p='';
+ vis.forEach(n=>{
+  const by=n.y+n.h;
+  p+=`<path d="M${n.x} ${by}H${n.x+MM.W}" stroke="${n.col}" ${born.has(n.id)?'class="draw"':''} pathLength="1"/>`;
+  if(n.open&&n.kids)n.kids.forEach(k=>{
+   const x1=n.x+MM.W,y1=n.y+n.h,x2=k.x,y2=k.y+k.h,xm=(x1+x2)/2;
+   p+=`<path d="M${x1} ${y1}C${xm} ${y1} ${xm} ${y2} ${x2} ${y2}" stroke="${k.col}" ${born.has(k.id)?'class="draw"':''} pathLength="1"/>`;
+  });
+ });
+ svg.setAttribute('width',maxX);svg.setAttribute('height',maxY);svg.innerHTML=p;
+ if(anchor&&anchor.x!==undefined){MM.tx+=(ox-anchor.x)*MM.scale;MM.ty+=(oy-anchor.y)*MM.scale}
+ mmApply();
+}
+function mmApply(){const {cv}=mmq();if(cv)cv.style.transform=`translate(${MM.tx}px,${MM.ty}px) scale(${MM.scale})`}
+function mmFit(initial){
+ const {vp}=mmq();if(!vp)return;
+ const vw=vp.clientWidth,vh=vp.clientHeight;if(!vw||!vh)return;
+ let s;
+ if(initial){
+  s=clamp((vw-24)/MM.bw,0.5,1);
+  const root=MAPS[MM.map].root,rb=root.y+root.h;
+  MM.scale=s;MM.tx=vw>MM.bw*s?Math.max(12,(vw-MM.bw*s)/2):12;
+  MM.ty=MM.bh*s<=vh?(vh-MM.bh*s)/2:clamp(vh/2-rb*s,vh-MM.bh*s-14,14);
+ }else{
+  s=clamp(Math.min(vw/MM.bw,vh/MM.bh),0.25,1.2);
+  MM.scale=s;MM.tx=Math.max(8,(vw-MM.bw*s)/2);MM.ty=MM.bh*s<vh?(vh-MM.bh*s)/2:14;
+ }
+ mmApply();
+}
+function mmZoom(f,cx,cy){
+ const {vp}=mmq();const r=vp.getBoundingClientRect();
+ cx=cx===undefined?r.width/2:cx;cy=cy===undefined?r.height/2:cy;
+ const ns=clamp(MM.scale*f,0.25,1.8);
+ MM.tx=cx-(cx-MM.tx)*ns/MM.scale;MM.ty=cy-(cy-MM.ty)*ns/MM.scale;MM.scale=ns;mmApply();
+}
+function mmSetAll(open){
+ (function w(n){if(n.kids&&n.kids.length){n.open=n.depth===0?true:open;n.kids.forEach(w)}})(MAPS[MM.map].root);
+ mmRender(null,{noBorn:false});mmFit(true);
+}
+function mmShow(i){
+ if(i!==undefined)MM.map=i;
+ const {cv}=mmq();if(!cv)return;
+ $$('.mtab').forEach((b,k)=>b.classList.toggle('on',k===MM.map));
+ Object.keys(MM.els).forEach(id=>MM.els[id].remove());MM.els={};
+ mmRender(null,{noBorn:true});mmFit(true);
+ store.set('cowork-map',MM.map);
+}
+function mmToggle(id){
+ const n=NODES[id];if(!n||!n.kids||!n.kids.length)return;
+ n.open=!n.open;
+ if(!n.open)(function c(x){(x.kids||[]).forEach(k=>{k.open=false;c(k)})})(n);
+ mmRender(id);
+}
+function focusNode(id){
+ const n=NODES[id];if(!n||n.map===undefined)return false;
+ setView('map',true);MM.map=n.map;
+ for(let p=n.parent;p;p=p.parent)p.open=true;
+ n.flash=true;
+ mmShow(n.map);
+ const {vp}=mmq();
+ MM.scale=Math.max(MM.scale,.8);MM.tx=vp.clientWidth/2-(n.x+MM.W/2)*MM.scale;MM.ty=vp.clientHeight/2-(n.y+n.h/2)*MM.scale;mmApply();
+ setTimeout(()=>{n.flash=false;const e=MM.els[id];if(e)e.classList.remove('flash')},2600);
+ return true;
+}
+function mmInitEvents(){
+ const {vp}=mmq();
+ let last=null,pd=0,pm=null;
+ vp.addEventListener('pointerdown',e=>{MM.ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,drag:false});if(MM.ptr.size===2){const [a,b]=[...MM.ptr.values()];pd=Math.hypot(a.x-b.x,a.y-b.y);pm=MM.scale}});
+ vp.addEventListener('pointermove',e=>{
+  const p=MM.ptr.get(e.pointerId);if(!p)return;
+  if(MM.ptr.size===2){
+   p.x=e.clientX;p.y=e.clientY;const [a,b]=[...MM.ptr.values()];const d=Math.hypot(a.x-b.x,a.y-b.y);
+   if(pd){const r=vp.getBoundingClientRect();const target=clamp(pm*d/pd,0.25,1.8);mmZoom(target/MM.scale,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top)}
+   MM.justDragged=true;return;
+  }
+  const dx=e.clientX-p.x,dy=e.clientY-p.y;
+  if(!p.drag&&Math.hypot(e.clientX-p.sx,e.clientY-p.sy)>6){p.drag=true;try{vp.setPointerCapture(e.pointerId)}catch(err){}vp.classList.add('grab')}
+  if(p.drag){MM.tx+=dx;MM.ty+=dy;mmApply();MM.justDragged=true}
+  p.x=e.clientX;p.y=e.clientY;
+ });
+ const up=e=>{MM.ptr.delete(e.pointerId);if(MM.ptr.size<2)pd=0;vp.classList.remove('grab');setTimeout(()=>{if(!MM.ptr.size)MM.justDragged=false},0)};
+ vp.addEventListener('pointerup',up);vp.addEventListener('pointercancel',up);
+ vp.addEventListener('wheel',e=>{e.preventDefault();const r=vp.getBoundingClientRect();
+  if(e.ctrlKey||e.metaKey)mmZoom(Math.exp(-e.deltaY*0.01),e.clientX-r.left,e.clientY-r.top);
+  else{MM.tx-=e.deltaX;MM.ty-=e.deltaY;mmApply()}},{passive:false});
+ vp.addEventListener('keydown',e=>{const n=e.target.closest&&e.target.closest('.mn.has');if(n&&(e.key==='Enter'||e.key===' ')){e.preventDefault();mmToggle(n.dataset.id)}});
+ new ResizeObserver(()=>{if(document.body.dataset.view==='map'&&!MM.inited.fit){MM.inited.fit=1}}).observe(vp);
+}
+
+/* ========== 分層卡片 ========== */
+const LAYERS=[
+ {t:'1 誰在用、接了什麼',s:'先看最外面：誰會用 Cowork，Cowork 又去找誰幫忙。'},
+ {t:'2 裡面有哪些零件',s:'再看裡面：七個零件各管什麼。'},
+ {t:'3 一個任務怎麼走',s:'最後看流程：從下指令到交件，哪一站最容易出事。'}];
+const bk=(ref,cls,t,s)=>`<button class="bk ${cls}" data-act="bk" data-ref="${ref}"><b>${t}</b>${s?`<small>${s}</small>`:''}</button>`;
+const av=(a,b)=>`<div class="av"><span>⇅</span><small>${a}</small></div>`;
+function layerHtml(i){
+ if(i===0)return `<div class="ly">
+  <div class="g3">${bk('p_acct','bl','會計同仁','下令、覆核')}${bk('p_boss','bl','主管與稽核','簽核、查紀錄')}${bk('p_ext','bl','客戶與廠商','收信、收報表')}</div>
+  ${av('下指令・看結果')}
+  <div class="g2s">${bk('input','br tall','Cowork 輸入框','主要入口<br>交辦任務<br>追問與補充')}
+   <div class="dash"><div class="cap">App 裡的其他入口</div><div class="g2">${bk('folder','br','授權資料夾','唯一的檔案範圍')}${bk('sched','br','排程','定時自動執行')}${bk('skill','br','自訂','技能、外掛')}${bk('permn','br','權限請求','要你點頭')}</div></div></div>
+  ${av('經過 App')}
+  ${bk('app','gr wide','Cowork App','裝在你的電腦上<br>真正動手讀寫檔案的程式')}
+  ${av('呼叫服務')}
+  <div class="dash"><div class="cap">外面接的服務</div><div class="g3">${bk('model','br','Claude 模型','雲端大腦<br>送字、收字')}${bk('gmail','br','Gmail','讀信、建草稿')}${bk('drive','br','Google Drive','雲端檔案')}${bk('cal','br','Calendar','行程')}${bk('slack','br','Slack','對話（示意）')}${bk('notion','br','Notion','頁面（示意）')}</div></div></div>`;
+ if(i===1)return `<div class="ly"><div class="g2">${['model','app','folder','conn','skill','plug','you'].map(id=>{const n=NODES[id];return `<button class="bk big" style="border-color:${n.col}" data-act="bk" data-ref="${id}"><span class="bic">${pix(n.ic,n.col,30)}</span><b>${n.t}</b><small>${n.d}</small>${n.box?`<em>${n.box}</em>`:''}</button>`}).join('')}</div></div>`;
+ return `<div class="ly chain">${['s1','s2','s3','s4','perm','s6','s7'].map((id,k)=>{const n=NODES[id];return `${k?'<div class="dn">↓</div>':''}<button class="bk step" style="border-color:${n.col}" data-act="bk" data-ref="${id}"><span class="sn" style="background:${n.col}">${n.num}</span><span class="stx"><b>${n.t}</b><small>${n.d}</small></span>${n.red?`<span class="rd" title="${esc(n.red)}">${pix('warn','#B4382B',18)}<small>${n.red}</small></span>`:''}</button>`}).join('')}</div>`;
+}
+const LY={cur:0};
+function renderLayers(){
+ $('#view-layers').innerHTML=`<div class="vwrap2"><div class="lytabs">${LAYERS.map((l,i)=>`<button class="${i===LY.cur?'on':''}" data-act="ly-tab" data-i="${i}">${l.t}</button>`).join('')}</div>
+ <h2 class="lyh serif">${LAYERS[LY.cur].t}</h2><p class="lys">${LAYERS[LY.cur].s}</p><p class="lyhint">點任何一塊看細節；有 ▶ 的可以直接去模擬器練習。</p>
+ ${layerHtml(LY.cur)}
+ <div class="lynav"><button class="btn ghost" data-act="ly-tab" data-i="${LY.cur-1}" ${LY.cur===0?'disabled':''}>← 上一層</button><button class="btn" data-act="ly-tab" data-i="${LY.cur+1}" ${LY.cur===LAYERS.length-1?'disabled':''}>下一層 →</button></div></div>`;
+}
+function renderOverview(){
+ $('#view-overview').innerHTML=`<div class="vwrap2"><h2 class="lyh serif">全景：一次看完 Cowork 運作架構</h2><p class="lys">三層疊在一起，從外到內、從零件到流程。每一塊都能點開。</p>
+ ${LAYERS.map((l,i)=>`<section class="ovl"><h3>${l.t}</h3><p class="lys">${l.s}</p>${layerHtml(i)}</section>`).join('')}
+ <section class="ovl"><h3>想看更細？選一張心智圖</h3><div class="g3 mapcards">${MAPS.map((m,i)=>`<button class="bk bl" data-act="open-map" data-m="${i}"><b>${m.tab}</b><small>${m.root.t}</small></button>`).join('')}</div></section></div>`;
+}
+function openSheet(id){
+ const n=NODES[id];if(!n)return;
+ const kids=(n.kids||[]).map(k=>`<li><b>${k.t}</b>${k.d?`：${k.d}`:''}</li>`).join('');
+ $('#sheet').innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(n.t)}"><button class="x" data-act="sheet-close" aria-label="關閉">×</button>
+  <div class="sh-h">${pix(n.ic,n.col==='#7D776B'?'#3E7C59':n.col,34)}<h3>${n.t}</h3></div>
+  <p class="sh-d">${n.d||''}</p>${n.box?`<div class="sh-box"><b>白話：</b>${n.box}</div>`:''}${n.red?`<div class="sh-red">${pix('warn','#B4382B',18)}<span>${n.red}</span></div>`:''}${n.more?`<p class="sh-m">${n.more}</p>`:''}${kids?`<ul class="sh-k">${kids}</ul>`:''}
+  <div class="sh-b">${n.go?`<button class="btn" data-act="go-unit" data-u="${n.go.u}">▶ 到模擬器練習（單元 ${n.go.u}）</button>`:''}${n.map!==undefined?`<button class="btn ghost" data-act="to-map" data-id="${id}">在心智圖中看</button>`:''}</div></div>`;
+ $('#sheet').hidden=false;$('#sheet .x').focus();
+}
+const closeSheet=()=>{$('#sheet').hidden=true};
+
+/* ========== 檢視切換 ========== */
+const VIEWS=['map','layers','overview','learn'];
+function setView(v,skipMap){
+ if(!VIEWS.includes(v))v='map';
+ document.body.dataset.view=v;
+ $$('.vsw button').forEach(b=>{const on=b.dataset.v===v;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+ closeSheet();
+ if(v==='map'){if(!$('#mmv').dataset.ready){$('#mmv').dataset.ready=1;mmInitEvents()}if(!skipMap)requestAnimationFrame(()=>mmShow())}
+ if(v==='layers')renderLayers();
+ if(v==='overview')renderOverview();
+ store.set('cowork-view',v);
+}
+function gotoUnit(u){
+ setView('learn');
+ if(typeof Course!=='undefined'){
+  const lk=!Course.unlocked(u-1);Course.go(u-1,true);
+  if(lk)toast('這個單元通常排在前面單元之後；已先帶你過來看，積分照算','ok');
+ }
+}
+Object.assign(GA,{
+ view(el){setView(el.dataset.v)},
+ 'mm-tab'(el){mmShow(+el.dataset.i)},
+ 'mm-node'(el,e){if(MM.justDragged)return;mmToggle(el.dataset.id)},
+ 'mm-all'(){mmSetAll(true)},
+ 'mm-none'(){mmSetAll(false)},
+ 'mm-fit'(){mmFit(false)},
+ 'mm-zoom'(el){mmZoom(+el.dataset.f)},
+ 'go-unit'(el){closeSheet();gotoUnit(+el.dataset.u)},
+ bk(el){openSheet(el.dataset.ref)},
+ 'sheet-close'(){closeSheet()},
+ 'sheet-bg'(el,e){if(e.target===el)closeSheet()},
+ 'to-map'(el){closeSheet();focusNode(el.dataset.id)},
+ 'open-map'(el){setView('map');mmShow(+el.dataset.m)},
+ 'ly-tab'(el){const i=+el.dataset.i;if(i>=0&&i<LAYERS.length){LY.cur=i;renderLayers();window.scrollTo(0,0)}}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+let _lw=innerWidth;window.addEventListener('resize',()=>{if(innerWidth!==_lw){_lw=innerWidth;if(document.body.dataset.view==='map')mmFit(true)}});
+const UNITMAP={1:0,2:0,3:2,4:1,5:3,6:2};
+window.addEventListener('DOMContentLoaded',()=>{
+ $('#mmtabs').innerHTML=MAPS.map((m,i)=>`<button class="mtab" data-act="mm-tab" data-i="${i}">${m.tab}</button>`).join('');
+ const sv=new URLSearchParams(location.search).get('view')||store.get('cowork-view','map');
+ MM.map=clamp(+store.get('cowork-map',0)||0,0,MAPS.length-1);
+ setView(VIEWS.includes(sv)?sv:'map');
 });
 
 </script>

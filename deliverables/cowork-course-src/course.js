@@ -72,8 +72,8 @@ const Course={
   const i=this.cur;this.renderNav();this.renderFoot();
   if(this.unitDone(i)&&!this.P.cel[i]){this.P.cel[i]=1;this.save();confetti();toast(i===UNITS.length-1?'全部單元完成！往下領取結業證書':'單元完成！下一單元已解鎖','ok')}
  },
- go(i){
-  if(!this.unlocked(i)){toast('請先完成上一個單元的練習與小測驗','warn');return}
+ go(i,force){
+  if(!force&&!this.unlocked(i)){toast('請先完成上一個單元的練習與小測驗','warn');return}
   if(this.player)this.player.destroy();
   this.cur=i;this.renderUnit();this.evaluate();$('.coach').scrollTop=0;
  },
@@ -88,7 +88,7 @@ const Course={
  },
  renderUnit(){
   const u=UNITS[this.cur],n=this.cur+1;
-  $('#unit').innerHTML=`<div class="kick">單元 ${n} / ${UNITS.length}</div><h2 class="serif">${u.title}</h2><p class="goal">${u.goal}</p>
+  $('#unit').innerHTML=`<div class="kick">單元 ${n} / ${UNITS.length}</div><h2 class="serif">${u.title}</h2><p class="goal">${u.goal} <button class="mini" data-act="open-map" data-m="${UNITMAP[u.id]}">對照心智圖</button></p>
   <div id="player"></div>
   <h3>重點卡 <em>點一下翻面看會計比喻</em></h3><div class="cards">${u.cards.map(c=>`<div class="kcard" data-act="flip" role="button" tabindex="0" aria-label="${c.f}，點一下翻面"><div><span class="f"><b>${c.f}</b><small>${c.s}</small></span><span class="b">${c.b}</span></div></div>`).join('')}</div>
   <h3>實作練習 <em>在右邊模擬器操作，會自動打勾</em></h3><ul class="steps" id="steps"></ul>
