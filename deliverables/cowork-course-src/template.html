@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Cowork 基礎入門班</title>
+<style>
+/*CSS*/
+</style>
+</head>
+<body data-pane="coach">
+<div id="app">
+ <header class="topbar">
+  <div class="brand"><div class="logo" aria-hidden="true">✺</div><div><b>Claude Cowork 基礎入門班</b><small>會計新手互動教學・教學仿製介面</small></div></div>
+  <div class="pbar" role="progressbar" aria-label="學習進度"><i id="pbar"></i></div>
+  <div class="score" id="score"></div>
+  <div class="tspacer"></div>
+  <div class="panes"><button class="tbtn on" data-act="pane" data-p="coach">課程</button><button class="tbtn" data-act="pane" data-p="sim">模擬器</button></div>
+  <button class="tbtn" id="teacher" data-act="teacher" aria-pressed="false" title="解鎖全部單元、顯示答案提示">老師模式</button>
+  <button class="tbtn" data-act="reset">重置進度</button>
+ </header>
+ <div class="layout">
+  <section class="coach" aria-label="課程內容"><nav class="units" id="units" aria-label="單元"></nav><div class="unit" id="unit"></div></section>
+  <section class="stage" aria-label="Cowork 模擬器"><div class="sim" id="sim"></div></section>
+ </div>
+</div>
+<div id="toasts" aria-live="polite"></div>
+<script>
+/*JS*/
+</script>
+</body>
+</html>

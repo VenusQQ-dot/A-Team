@@ -1,0 +1,1036 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Cowork 基礎入門班</title>
+<style>
+:root{color-scheme:light;--bg:#F1ECE2;--paper:#FBF8F2;--ink:#2B2A27;--muted:#6F6A5F;--line:#E1D8C8;--accent:#C96442;--accent-d:#A94E31;--accent-soft:#F6E1D6;--green:#3E7C59;--green-soft:#DDEBDF;--blue:#3B6EA5;--blue-soft:#DCE8F4;--warn:#B4382B;--warn-soft:#F8DDD8;--amber:#B7791F;--amber-soft:#F8EBC8;--r:12px;--serif:"Noto Serif TC","Source Han Serif TC","Songti TC","PMingLiU",Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+h1,h2,h3,h4,p{margin:0}
+svg{flex:none}
+#app{height:100%;display:flex;flex-direction:column}
+
+/* ===== top bar ===== */
+.topbar{height:56px;flex:none;display:flex;align-items:center;gap:16px;padding:0 20px;border-bottom:1px solid var(--line);background:var(--paper)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:32px;height:32px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:19px}
+.brand b{font-family:var(--serif);font-size:17px;white-space:nowrap}
+.brand small{display:block;color:var(--muted);font-size:12px;line-height:1.2}
+.pbar{flex:1;max-width:320px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.pbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .5s}
+.score{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.score b{color:var(--ink);font-size:17px}
+.tspacer{flex:1}
+.tbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 11px;font-size:13px;white-space:nowrap}
+.tbtn:hover{border-color:var(--accent)}
+.tbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.panes{display:none}
+
+/* ===== layout ===== */
+.layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(390px,37%) 1fr}
+.coach{overflow:auto;padding:14px 20px 70px;border-right:1px solid var(--line);scroll-behavior:smooth}
+.stage{padding:16px;min-width:0;min-height:0;display:flex;background:radial-gradient(circle at 1px 1px,#d8cfbd 1px,transparent 0) 0 0/18px 18px}
+
+/* ===== coach panel ===== */
+.units{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin:0 -4px 6px;scrollbar-width:thin}
+.upill{flex:none;display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px 4px 5px;font-size:13px;white-space:nowrap}
+.upill .n{width:22px;height:22px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-size:12px;font-weight:700}
+.upill.on{border-color:var(--accent);background:var(--accent-soft)}
+.upill.on .n{background:var(--accent);color:#fff}
+.upill.done .n{background:var(--green);color:#fff}
+.upill.lock{opacity:.5}
+.kick{color:var(--accent-d);font-size:13px;font-weight:700;letter-spacing:.06em}
+.unit h2{font-family:var(--serif);font-size:26px;line-height:1.3;margin:2px 0 4px}
+.goal{color:var(--muted);margin-bottom:12px}
+.unit h3{font-size:15px;margin:22px 0 8px;display:flex;align-items:center;gap:8px}
+.unit h3 em{font-style:normal;font-size:12px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:99px;padding:0 8px}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kcard{perspective:700px;height:132px}
+.kcard>div{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.kcard.flip>div{transform:rotateY(180deg)}
+.kcard span{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:10px 11px;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line);background:#fff}
+.kcard .f b{font-family:var(--serif);font-size:18px;line-height:1.3}
+.kcard .f small{color:var(--muted);margin-top:4px}
+.kcard .b{transform:rotateY(180deg);background:var(--accent-soft);border-color:#EBC3AF;font-size:13px;line-height:1.5}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.step{border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:9px 12px}
+.step .row{display:flex;align-items:flex-start;gap:10px}
+.chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex:none;margin-top:1px;color:#fff;font-size:14px}
+.step.ok{background:var(--green-soft);border-color:#B9D6C0}
+.step.ok .chk{background:var(--green);border-color:var(--green)}
+.step .tx{flex:1}
+.step .acts{display:flex;gap:6px;flex:none}
+.mini{font-size:12px;border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:1px 9px}
+.mini:hover{border-color:var(--accent);color:var(--accent-d)}
+.hint{margin:6px 0 0 32px;font-size:13px;color:var(--accent-d);background:var(--accent-soft);border-radius:8px;padding:5px 9px}
+
+.quiz{display:grid;gap:10px}
+.q{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.q.ok{border-color:#B9D6C0}
+.q p{font-weight:600;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:7px 11px;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.opt.good{background:var(--green-soft);border-color:var(--green);font-weight:600}
+.opt.bad{background:var(--warn-soft);border-color:var(--warn);text-decoration:line-through;color:var(--muted)}
+.opt.tip{box-shadow:inset 3px 0 0 var(--green)}
+.why{margin-top:8px;font-size:13px;color:var(--green);background:var(--green-soft);border-radius:8px;padding:6px 10px}
+.btn{background:var(--accent);color:#fff;border-radius:10px;padding:8px 16px;font-weight:600}
+.btn:hover{background:var(--accent-d)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.nextbar{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+
+.builder{margin-top:10px;background:#fff;border:1px dashed #D4B9A8;border-radius:var(--r);padding:12px;display:grid;gap:8px}
+.builder label,.builder legend{font-size:13px;font-weight:600;color:var(--muted)}
+.builder select,.builder textarea,.fld{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:inherit;background:var(--paper);color:var(--ink)}
+.builder fieldset{border:0;padding:0;margin:0;display:grid;gap:2px}
+.builder fieldset label{font-weight:400;color:var(--ink);display:flex;gap:7px;align-items:center}
+.cert{margin-top:18px;border:2px solid var(--accent);border-radius:14px;padding:16px;background:linear-gradient(135deg,#FFF8EE,#F9E7DA);text-align:center}
+.cert h3{justify-content:center;font-family:var(--serif);font-size:20px;margin:0 0 4px!important}
+.cert .big{font-family:var(--serif);font-size:34px;color:var(--accent-d)}
+.cert input{max-width:260px;text-align:center;margin:8px 0}
+
+/* ===== video player ===== */
+.vwrap{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 4px 18px rgba(60,40,20,.08)}
+.vstage{position:relative;aspect-ratio:16/9;background:#FBF6EC;overflow:hidden;font-size:11px;color:var(--ink);user-select:none}
+.vstage::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 1px 1px,#E3D8C4 1px,transparent 0) 0 0/1.6em 1.6em;opacity:.8}
+.vscene{position:absolute;inset:0}
+.vs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.4em;padding:2.4em 3em 4.6em;flex-wrap:wrap}
+.vi{opacity:0;transform:translateY(1.2em) scale(.97);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.9,.3,1.2)}
+.vi.in{opacity:1;transform:none}
+.vs-t,.vs-y,.vs-l{flex-wrap:nowrap}
+.vs-t{flex-direction:column;text-align:center;gap:.6em}
+.vs-t>*{max-width:100%}
+.vk{color:var(--accent-d);font-weight:700;font-size:1.6em;letter-spacing:.12em}
+.vh{font-family:var(--serif);font-size:3.1em;line-height:1.3;font-weight:700;max-width:100%}
+.vsub{font-size:1.7em;color:var(--muted)}
+.vcol{width:15em;background:#fff;border:.15em solid var(--line);border-radius:1em;padding:1.1em 1.1em 1.2em;display:flex;flex-direction:column;gap:.4em;text-align:center;align-items:center}
+.vcol b{font-family:var(--serif);font-size:1.9em}
+.vcol span{font-size:1.4em;color:var(--muted);line-height:1.4}
+.vcol.hot{border-color:var(--accent);background:var(--accent-soft)}
+.vcol.hot span{color:var(--ink)}
+.vcol.bad{border-color:var(--warn);background:var(--warn-soft)}
+.vcol.good{border-color:var(--green);background:var(--green-soft)}
+.vcic{font-size:3.6em;color:var(--accent-d);line-height:1}
+.vcol.bad .vcic{color:var(--warn)}.vcol.good .vcic{color:var(--green)}
+.vbox{width:12.5em;background:#fff;border:.15em solid var(--line);border-radius:1em;padding:1em;display:flex;flex-direction:column;align-items:center;gap:.3em;text-align:center}
+.vbox svg{font-size:3.4em;color:var(--accent-d)}
+.vbox b{font-size:1.6em;font-family:var(--serif)}
+.vbox small{font-size:1.2em;color:var(--muted);line-height:1.35}
+.varr{font-size:3em;color:var(--accent)}
+.vnote{width:100%;text-align:center;font-size:1.7em;color:var(--accent-d);font-weight:600}
+.vs-y{flex-direction:column}
+.vcomp{width:44em;max-width:100%;background:#fff;border:.15em solid var(--line);border-radius:1.2em;padding:1.1em 1.3em;box-shadow:0 .5em 1.6em rgba(60,40,20,.1);position:relative}
+.vlab{font-size:1.2em;color:var(--muted);margin-bottom:.4em;font-weight:600}
+.vtxt{font-size:1.75em;line-height:1.55;min-height:4.7em}
+.vbtn{position:absolute;right:1em;bottom:1em;background:var(--accent);color:#fff;border-radius:.7em;padding:.3em 1em;font-size:1.4em;font-weight:700}
+.vbtn.in{animation:vb 1s ease-in-out .3s 2}
+@keyframes vb{50%{transform:scale(1.12)}}
+.vs-l{flex-direction:column;align-items:flex-start;justify-content:center;gap:.7em;padding-left:9em}
+.vlt{font-family:var(--serif);font-size:2.8em;font-weight:700;margin-bottom:.1em}
+.vli{display:flex;align-items:center;gap:.7em;font-size:1.9em}
+.vli i{width:1.4em;height:1.4em;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:.8em;font-style:normal}
+.vs-d{gap:2em}
+.vfiles{display:grid;gap:.45em}
+.vf{display:flex;align-items:center;gap:.5em;background:#fff;border:.12em solid var(--line);border-radius:.6em;padding:.3em .8em;font-size:1.35em}
+.vf svg{color:var(--muted)}
+.vproc{width:12em;text-align:center;display:grid;gap:.5em}
+.vproc small{font-size:1.3em;color:var(--muted)}
+.vbar{height:.9em;border-radius:9em;background:var(--line);overflow:hidden}
+.vbar i{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--accent)}
+.vout{display:flex;flex-direction:column;align-items:center;gap:.2em;background:var(--green-soft);border:.15em solid var(--green);border-radius:1em;padding:1em 1.4em;text-align:center}
+.vout svg{font-size:3.6em;color:var(--green)}
+.vout b{font-size:1.6em;font-family:var(--serif)}
+.vout small{font-size:1.2em;color:var(--muted)}
+.vcap{position:absolute;left:0;right:0;bottom:0;padding:.7em 1.4em;background:linear-gradient(transparent,rgba(43,42,39,.82));color:#fff;font-size:1.55em;line-height:1.45;text-align:center;min-height:2.6em;display:flex;align-items:flex-end;justify-content:center}
+.vcap.off{display:none}
+.vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:#fff;border-radius:99px;padding:.6em 1.5em;font-size:1.9em;font-weight:700;box-shadow:0 .4em 1.6em rgba(201,100,66,.5);z-index:2}
+.vplay.hide{display:none}
+.vctl{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--paper);border-top:1px solid var(--line);font-size:13px}
+.vctl{flex-wrap:wrap}
+.vctl button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 9px;font-size:12px}
+.vctl button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.vctl .pp{width:30px;font-size:13px}
+.vseek{flex:1;accent-color:var(--accent);min-width:0}
+.vtime{font-variant-numeric:tabular-nums;color:var(--muted);min-width:76px;text-align:right}
+.vwrap:fullscreen{display:flex;flex-direction:column;justify-content:center;background:#111}
+.vwrap:fullscreen .vstage{aspect-ratio:auto;flex:1}
+
+/* ===== simulator ===== */
+.sim{flex:1;display:flex;flex-direction:column;background:#fff;border:1px solid #D5CBB8;border-radius:14px;box-shadow:0 14px 44px rgba(60,40,20,.16);overflow:hidden;min-width:0;min-height:0;position:relative}
+.sim-chrome{flex:none;height:46px;display:flex;align-items:center;gap:12px;padding:0 14px;background:#F4EFE6;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:6px}.dots i{width:11px;height:11px;border-radius:50%;background:#DDD3C2}
+.modes{margin:0 auto;display:flex;background:#E8E0D0;border-radius:99px;padding:3px}
+.modes button{padding:3px 20px;border-radius:99px;font-size:13px;font-weight:600;color:var(--muted)}
+.modes button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.sim-badge{font-size:11px;color:var(--amber);background:var(--amber-soft);border-radius:99px;padding:1px 9px;white-space:nowrap}
+.sim-body{flex:1;min-height:0;display:grid;grid-template-columns:196px 1fr}
+.sb{background:#F7F3EA;border-right:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:3px;overflow:auto;min-height:0}
+.sb button{display:flex;align-items:center;gap:9px;text-align:left;border-radius:9px;padding:7px 10px;font-size:14px;width:100%}
+.sb-new{background:var(--accent-soft);color:var(--accent-d);font-weight:700;margin-bottom:6px}
+.sb-new:hover{background:#F0D2C3}
+.sb-i:hover,.sb-t:hover{background:#ECE5D6}
+.sb-i.on,.sb-t.on{background:#E8E0D0;font-weight:600}
+.sb-h{font-size:11px;color:var(--muted);margin:12px 10px 2px;letter-spacing:.06em}
+.sb-empty{font-size:12px;color:var(--muted);padding:2px 10px}
+.sb-t{font-size:13px!important}
+.sb-t span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#C9BFAE;flex:none}
+.dot.running{background:var(--accent);animation:pl2 1.2s infinite}.dot.done{background:var(--green)}.dot.blocked{background:var(--amber)}
+@keyframes pl2{50%{opacity:.3}}
+.sb-foot{margin-top:auto;font-size:12px;color:var(--muted);padding:8px 10px;border-top:1px solid var(--line)}
+.sb-foot b{color:var(--ink);display:block}
+.sim-main{min-width:0;min-height:0;overflow:auto;display:flex;flex-direction:column}
+
+.home{margin:auto;width:100%;max-width:640px;padding:22px 24px;display:grid;gap:18px}
+.hello{display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--serif)}
+.hello svg{font-size:30px;color:var(--accent)}
+.hello h1{font-size:26px;font-weight:600}
+.composer{border:1px solid #D8CDB9;border-radius:16px;background:#fff;box-shadow:0 3px 14px rgba(60,40,20,.07);padding:10px 12px}
+.composer:focus-within{border-color:var(--accent)}
+.composer textarea{width:100%;border:0;resize:none;outline:0;font:inherit;min-height:74px;background:transparent}
+.comp-bar{display:flex;align-items:center;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:99px;padding:3px 12px;font-size:13px}
+.chip:hover{border-color:var(--accent)}
+.chip.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.chip.pri:hover{background:var(--accent-d)}
+.chip.ghost{color:var(--muted)}
+.chip.fold{background:var(--accent-soft);border-color:#EBC3AF;color:var(--accent-d);font-weight:600}
+.grow{flex:1}
+.send{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:18px}
+.send:hover{background:var(--accent-d)}
+.sugg-h{font-size:13px;color:var(--muted)}
+.sugg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sg{text-align:left;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;display:grid;gap:3px}
+.sg:hover{border-color:var(--accent);background:var(--accent-soft)}
+.sg svg{font-size:20px;color:var(--accent-d)}
+.sg b{font-size:14px}.sg small{color:var(--muted);line-height:1.4}
+.sg.dg svg{color:var(--warn)}
+
+.task{flex:1;min-height:0;display:grid;grid-template-columns:1fr 236px}
+.chat{overflow:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px;min-height:0}
+.t-title{font-family:var(--serif);font-size:18px;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:8px}
+.m-u{align-self:flex-end;max-width:85%;background:#F0E8D8;border-radius:14px 14px 4px 14px;padding:8px 13px;white-space:pre-wrap}
+.m-c{display:flex;gap:10px;max-width:96%}
+.m-c .av{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-d);display:grid;place-items:center;flex:none;font-size:15px}
+.m-c ul{margin:6px 0 6px 18px;padding:0}
+.m-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.m-files{display:flex;gap:8px;flex-wrap:wrap;margin-left:36px}
+.fchip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 12px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.fchip:hover{border-color:var(--green);background:var(--green-soft)}
+.fchip svg{color:var(--green);font-size:18px}
+.perm{margin-left:36px;border:1.5px solid #E5C9A5;background:#FFF8EC;border-radius:12px;padding:10px 13px;display:grid;gap:3px}
+.perm.danger{border-color:#E3A59C;background:#FDF0EE}
+.perm.allow{opacity:.75}.perm.deny{opacity:.75}
+.perm-h{display:flex;align-items:center;gap:7px;color:var(--amber)}
+.perm.danger .perm-h{color:var(--warn)}
+.perm small{color:var(--muted)}
+.perm-b{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.perm-r{font-size:13px;font-weight:600;color:var(--muted)}
+.fup{margin-top:auto;border:1px solid #D8CDB9;border-radius:14px;display:flex;gap:8px;padding:6px 8px;align-items:center;position:sticky;bottom:0;background:#fff}
+.fup textarea{flex:1;border:0;outline:0;resize:none;font:inherit;height:36px;padding-top:6px}
+.rp{border-left:1px solid var(--line);background:#FAF7F0;padding:12px;overflow:auto;display:grid;gap:14px;align-content:start;min-height:0}
+.rp h4{font-size:12px;color:var(--muted);letter-spacing:.06em;margin-bottom:6px}
+.prog{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:13px}
+.prog li{display:flex;gap:8px;align-items:flex-start;line-height:1.4;color:var(--muted)}
+.prog li i{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;font-style:normal;font-size:12px;margin-top:1px}
+.prog li.run{color:var(--ink);font-weight:600}.prog li.run i{border-color:var(--accent)}
+.prog li.done{color:var(--ink)}.prog li.done i{background:var(--green);border-color:var(--green);color:#fff}
+.prog li.skip{text-decoration:line-through}
+.spin{width:8px;height:8px;border:2px solid var(--accent);border-right-color:transparent;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ff{font-size:12.5px;display:grid;gap:3px}
+.ff div{display:flex;gap:6px;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--muted)}
+.ff div.new{color:var(--green);font-weight:600}
+.ff b{color:var(--ink)}
+.tag{font-size:11px;border-radius:99px;padding:0 8px;background:var(--line);color:var(--muted)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}.tag.ok{background:var(--green-soft);color:var(--green)}
+
+.cust{padding:20px 24px;display:grid;gap:14px;align-content:start}
+.cust h2,.sched h2{font-family:var(--serif);font-size:22px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tabs button{padding:6px 14px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent}
+.tabs button.on{color:var(--accent-d);border-color:var(--accent)}
+.list{display:grid;gap:8px}
+.item{border:1px solid var(--line);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:12px;background:#fff}
+.item .ic{width:36px;height:36px;border-radius:9px;background:var(--accent-soft);color:var(--accent-d);display:grid;place-items:center;font-size:19px;flex:none}
+.item .mid{flex:1;min-width:0}.item small{color:var(--muted);display:block;line-height:1.4}
+.item .det{margin-top:6px;font-size:12.5px;background:var(--paper);border-radius:8px;padding:6px 10px}
+.sw{width:40px;height:22px;border-radius:99px;background:#D2C8B6;position:relative;transition:.2s;flex:none}
+.sw::after{content:"";position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.sw.on{background:var(--green)}.sw.on::after{left:20px}
+.sched{padding:20px 24px;display:grid;gap:14px;align-content:start}
+.note{font-size:13px;color:var(--amber);background:var(--amber-soft);border-radius:10px;padding:8px 12px}
+.empty{border:1px dashed #CFC4AF;border-radius:12px;padding:22px;text-align:center;color:var(--muted)}
+.modeNote{margin:auto;max-width:460px;text-align:center;padding:30px;display:grid;gap:10px;justify-items:center}
+.modeNote svg{font-size:40px;color:var(--accent)}
+.modeNote h2{font-family:var(--serif)}
+.bubble{background:#F0E8D8;border-radius:12px;padding:7px 14px;font-size:13px}
+
+/* modal */
+.modal-bg{position:absolute;inset:0;background:rgba(43,42,39,.42);display:grid;place-items:center;z-index:20;padding:14px;animation:fi .15s}
+@keyframes fi{from{opacity:0}}
+.modal{background:#fff;border-radius:16px;width:min(620px,100%);max-height:100%;overflow:auto;padding:18px 20px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3);display:grid;gap:10px}
+.modal h3{font-family:var(--serif);font-size:19px;padding-right:26px}
+.modal .x{position:absolute;right:12px;top:10px;font-size:22px;color:var(--muted);line-height:1}
+.modal .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:4px}
+.fp{display:grid;grid-template-columns:230px 1fr;gap:12px;min-height:250px}
+.fp .l{display:grid;gap:6px;align-content:start}
+.frow{text-align:left;border:1px solid var(--line);border-radius:10px;padding:7px 10px;display:flex;gap:9px;align-items:center}
+.frow:hover{border-color:var(--accent)}.frow.on{background:var(--accent-soft);border-color:var(--accent)}
+.frow small{display:block;color:var(--muted);font-size:11.5px;line-height:1.3}
+.frow svg{font-size:20px;color:var(--accent-d)}
+.fp .r{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;background:var(--paper);display:flex;flex-direction:column;gap:6px}
+.fp .r .fl{display:grid;gap:2px;color:var(--muted);flex:1}
+.warnbar{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:5px 9px;font-weight:600;font-size:12.5px}
+.xl{border-collapse:collapse;width:100%;font-size:13px}
+.xl th{background:#E8F0E8;border:1px solid #CBD8CB;padding:3px 8px;text-align:left}
+.xl td{border:1px solid #E4E4E4;padding:3px 8px}
+.xl .bad td{background:var(--warn-soft);color:var(--warn);font-weight:600}
+.xl .warn td{background:var(--amber-soft);color:var(--amber)}
+.xl td.r{text-align:right;font-variant-numeric:tabular-nums}
+.md{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13.5px;white-space:pre-wrap;line-height:1.7}
+.mail{border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;background:#fff;display:grid;gap:2px}
+.mail .tag{justify-self:start}
+.lbl{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+.lbl .fld{font-weight:400;color:var(--ink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+#toasts{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);display:grid;gap:8px;z-index:100;pointer-events:none;width:min(520px,92vw)}
+.toast{background:var(--ink);color:#fff;border-radius:12px;padding:9px 15px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:ti .3s;text-align:center}
+.toast.ok{background:var(--green)}.toast.warn{background:var(--warn)}
+@keyframes ti{from{opacity:0;transform:translateY(12px)}}
+.pulse{outline:3px solid var(--accent)!important;outline-offset:3px;animation:pl 1s ease-in-out 4;border-radius:10px;position:relative;z-index:5}
+@keyframes pl{50%{outline-color:transparent;box-shadow:0 0 0 9px rgba(201,100,66,.28)}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:200}
+
+@media (max-width:1000px){
+ .layout{grid-template-columns:1fr}
+ .coach,.stage{display:none}
+ body[data-pane="coach"] .coach{display:block}
+ body[data-pane="sim"] .stage{display:flex}
+ .panes{display:flex;gap:4px}
+ .pbar{display:none}
+ .topbar{overflow:hidden}
+ .topbar{gap:8px;padding:0 10px}.brand small{display:none}
+ .sim-body{grid-template-columns:1fr}.sb{display:none}
+ .task{grid-template-columns:1fr}.rp{border-left:0;border-top:1px solid var(--line)}
+ .fp{grid-template-columns:1fr}.sugg{grid-template-columns:1fr}
+}
+@media (max-width:700px){.brand>div:last-child,.score{display:none}.tspacer{display:none}.topbar{justify-content:space-between}}
+@media (prefers-reduced-motion:reduce){
+ .kcard>div,.pbar i,.sw,.sw::after{transition:none}
+ .pulse,.spin,.dot.running,.vbtn.in{animation:none}
+ html{scroll-behavior:auto}.coach{scroll-behavior:auto}
+}
+
+</style>
+</head>
+<body data-pane="coach">
+<div id="app">
+ <header class="topbar">
+  <div class="brand"><div class="logo" aria-hidden="true">✺</div><div><b>Claude Cowork 基礎入門班</b><small>會計新手互動教學・教學仿製介面</small></div></div>
+  <div class="pbar" role="progressbar" aria-label="學習進度"><i id="pbar"></i></div>
+  <div class="score" id="score"></div>
+  <div class="tspacer"></div>
+  <div class="panes"><button class="tbtn on" data-act="pane" data-p="coach">課程</button><button class="tbtn" data-act="pane" data-p="sim">模擬器</button></div>
+  <button class="tbtn" id="teacher" data-act="teacher" aria-pressed="false" title="解鎖全部單元、顯示答案提示">老師模式</button>
+  <button class="tbtn" data-act="reset">重置進度</button>
+ </header>
+ <div class="layout">
+  <section class="coach" aria-label="課程內容"><nav class="units" id="units" aria-label="單元"></nav><div class="unit" id="unit"></div></section>
+  <section class="stage" aria-label="Cowork 模擬器"><div class="sim" id="sim"></div></section>
+ </div>
+</div>
+<div id="toasts" aria-live="polite"></div>
+<script>
+'use strict';
+/* ========== 基礎工具 ========== */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const fmt=s=>{s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+
+const P=d=>`<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const IC={
+ folder:P('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'),
+ file:P('<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>'),
+ sheet:P('<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16"/>'),
+ mail:P('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>'),
+ clock:P('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+ shield:P('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/>'),
+ plug:P('<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/>'),
+ spark:P('<path d="M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"/>'),
+ chat:P('<path d="M4 5h16v11H9l-5 4z"/>'),
+ code:P('<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>'),
+ check:P('<path d="m5 12 5 5 9-10"/>'),
+ plus:P('<path d="M12 5v14M5 12h14"/>'),
+ send:P('<path d="M12 19V5M6 11l6-6 6 6"/>'),
+ book:P('<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/>'),
+ trash:P('<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'),
+ warn:P('<path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17v.5"/>'),
+ lock:P('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+ user:P('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+ layers:P('<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>'),
+ monitor:P('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>')
+};
+
+/* ========== 模擬資料夾 ========== */
+const gen=(n,f)=>Array.from({length:n},(_,i)=>f(i+1));
+const FOLDERS={
+ invoices:{name:'發票_2026Q3',path:'~/Documents/會計/發票_2026Q3',sens:false,count:12,files:['IMG_0231.jpg','IMG_0232.jpg','scan_0705.pdf','IMG_0240.jpg','發票-好市多.pdf','IMG_0255.jpg','scan_0718.pdf','IMG_0261.jpg','IMG_0262.jpg','scan_0725.pdf','IMG_0270.jpg','IMG_0271.jpg']},
+ bank:{name:'銀行對帳單',path:'~/Documents/會計/銀行對帳單',sens:false,count:4,files:['2026-07_台新銀行.pdf','2026-08_台新銀行.pdf','2026-09_台新銀行.pdf','帳上明細_2026Q3.xlsx']},
+ expenses:{name:'費用報銷',path:'~/Documents/會計/費用報銷',sens:false,count:6,files:['出差報銷_林小姐.xlsx','計程車收據_01.jpg','計程車收據_02.jpg','住宿發票.pdf','報銷申請表.docx','備註.txt']},
+ personal:{name:'個人文件',path:'~/Documents/個人文件',sens:true,count:4,files:['薪資單_2026-09.pdf','身分證影本.jpg','存摺封面.png','健保卡.jpg']},
+ archive:{name:'舊檔案_2023前',path:'~/Documents/會計/舊檔案_2023前',sens:false,count:47,files:gen(47,i=>`舊報表_${2019+i%4}-${String(1+i%12).padStart(2,'0')}.xlsx`)}
+};
+const CONNECTORS=[
+ {id:'gmail',name:'Gmail',desc:'讀取郵件、建立草稿（不會自動寄出）',ic:'mail',perm:['讀取你的郵件','建立郵件草稿']},
+ {id:'drive',name:'Google Drive',desc:'讀取與搜尋雲端硬碟的檔案',ic:'folder',perm:['搜尋與讀取檔案']},
+ {id:'calendar',name:'Google Calendar',desc:'查看行事曆、安排會議',ic:'clock',perm:['讀取行程','建立行程']},
+ {id:'slack',name:'Slack',desc:'搜尋對話、草擬訊息',ic:'chat',perm:['搜尋頻道訊息']},
+ {id:'notion',name:'Notion',desc:'搜尋與整理 Notion 頁面',ic:'book',perm:['讀取頁面']}
+];
+const PLUGINS=[
+ {id:'finance',name:'財務會計',desc:'月結、對帳、差異分析的整包工作流程',ic:'sheet',items:['技能：月結結帳檢查','技能：銀行對帳','常用指令：差異分析','建議連接器：Excel／ERP'],skills:[{id:'p-close',name:'月結結帳檢查',desc:'逐項檢查月結清單'},{id:'p-recon',name:'銀行對帳',desc:'比對銀行與帳上差異'}]},
+ {id:'legal',name:'法務',desc:'合約審閱與條款比對',ic:'shield',items:['技能：合約審閱','常用指令：條款比對'],skills:[]},
+ {id:'sales',name:'業務',desc:'客戶拜訪與提案整理',ic:'user',items:['技能：客戶摘要','常用指令：提案大綱'],skills:[]}
+];
+
+/* ========== 任務情境 ========== */
+const SUGG=[
+ {id:'invoices',ic:'sheet',t:'整理發票成 Excel',s:'讀取發票、辨識欄位、產出彙整表',p:'請讀取我授權的資料夾，把每張發票的日期、廠商、統編、金額整理成 Excel；缺統編的標紅，不要修改原始檔案。'},
+ {id:'bank',ic:'layers',t:'核對銀行對帳單',s:'比對銀行與帳上明細，找出未達帳',p:'請核對「銀行對帳單」資料夾裡的銀行對帳單與帳上明細，列出未達帳項目，輸出成 Excel 對帳表。'},
+ {id:'dunning',ic:'mail',t:'寫催款信草稿',s:'找出逾期客戶並草擬信件（需 Gmail）',p:'請找出逾期超過 30 天的應收帳款，為每位客戶草擬一封禮貌的催款信，先不要寄出。'},
+ {id:'delete',ic:'trash',t:'清理舊檔案',s:'⚠ 危險示範：會要求刪除權限',p:'請把資料夾內 2023 年以前的舊檔案全部刪除，節省空間。',dg:true}
+];
+const SCEN={
+ delete:{id:'delete',re:/刪除|刪掉|清除|清掉|delete/i,folder:'archive',steps:[
+   {t:'掃描資料夾，找到 47 個 2023 年以前的檔案'},
+   {t:'列出即將刪除的清單'},
+   {t:'刪除這 47 個檔案',perm:{kind:'delete',danger:true,text:'永久刪除 47 個檔案',detail:'舊報表_2019-01.xlsx … 舊報表_2022-12.xlsx（刪除後無法從模擬環境復原）'}}],
+   out:[{name:'待刪除清單.md',type:'md',pv:'dellist'}]},
+ dunning:{id:'dunning',re:/催款|逾期|應收|email|信件|草擬/i,folder:null,steps:[
+   {t:'找出逾期超過 30 天的應收帳款（3 家客戶）'},
+   {t:'依客戶與金額草擬禮貌的催款信'},
+   {t:'建立草稿'}],out:[]},
+ bank:{id:'bank',re:/對帳|銀行|bank/i,folder:'bank',steps:[
+   {t:'讀取 3 份銀行對帳單與帳上明細'},
+   {t:'逐筆比對日期與金額'},
+   {t:'找出 3 筆未達帳並分類原因'},
+   {t:'建立 Excel：銀行對帳表_2026Q3.xlsx'}],
+   out:[{name:'銀行對帳表_2026Q3.xlsx',type:'xlsx',pv:'bank'}]},
+ invoices:{id:'invoices',re:/發票|invoice|整理|彙整|excel/i,folder:'invoices',steps:[
+   {t:'讀取資料夾，找到 12 份發票檔案'},
+   {t:'辨識每張發票的日期、廠商、統編、金額'},
+   {t:'把檔名改成「日期_廠商_金額」',perm:{kind:'rename',danger:false,text:'重新命名 12 個檔案',detail:'例：IMG_0231.jpg → 2026-07-03_大同文具_1250.jpg'}},
+   {t:'建立 Excel：發票彙整_2026Q3.xlsx'},
+   {t:'標記異常：2 張缺統編、1 張金額與品項不符'}],
+   out:[{name:'發票彙整_2026Q3.xlsx',type:'xlsx',pv:'invoices'},{name:'異常清單.md',type:'md',pv:'issues'}]},
+ generic:{id:'generic',re:/./,folder:null,steps:[
+   {t:'理解你的需求並讀取授權資料夾'},{t:'整理重點並產出摘要'}],
+   out:[{name:'摘要.md',type:'md',pv:'summary'}]}
+};
+
+const PREVIEW={
+ invoices:()=>`<p class="note" style="margin-bottom:8px">教學範例資料（僅顯示前 6 列，共 12 列）。紅色＝缺統編，黃色＝金額與品項不符。</p><table class="xl"><tr><th>日期</th><th>廠商</th><th>統編</th><th>金額</th><th>狀態</th></tr>
+ <tr><td>07-03</td><td>大同文具</td><td>12345678</td><td class="r">1,250</td><td>正常</td></tr>
+ <tr class="bad"><td>07-05</td><td>台灣大哥大</td><td>（缺）</td><td class="r">1,099</td><td>缺統編</td></tr>
+ <tr><td>07-09</td><td>全聯福利中心</td><td>23456789</td><td class="r">3,480</td><td>正常</td></tr>
+ <tr class="bad"><td>07-12</td><td>好市多</td><td>（缺）</td><td class="r">5,620</td><td>缺統編</td></tr>
+ <tr><td>07-18</td><td>遠傳電信</td><td>34567890</td><td class="r">899</td><td>正常</td></tr>
+ <tr class="warn"><td>07-25</td><td>誠品書店</td><td>45678901</td><td class="r">2,300</td><td>金額與品項不符</td></tr></table>`,
+ issues:()=>`<div class="md"># 異常清單（需要你人工確認）\n\n1. 2026-07-05 台灣大哥大：缺少統一編號\n2. 2026-07-12 好市多：缺少統一編號\n3. 2026-07-25 誠品書店：發票金額 2,300，與品項加總 2,030 不符\n\n建議：先向廠商補開或補齊資料，再入帳。</div>`,
+ bank:()=>`<table class="xl"><tr><th>日期</th><th>摘要</th><th>銀行</th><th>帳上</th><th>差異</th></tr>
+ <tr><td>08-29</td><td>客戶 A 匯款</td><td class="r">120,000</td><td class="r">0</td><td class="r">120,000</td></tr>
+ <tr><td>09-15</td><td>手續費</td><td class="r">-30</td><td class="r">0</td><td class="r">-30</td></tr>
+ <tr class="warn"><td>09-30</td><td>支票 #1088（在途）</td><td class="r">0</td><td class="r">-45,000</td><td class="r">45,000</td></tr></table><p style="margin-top:8px;font-size:13px;color:var(--muted)">未達帳 3 筆：銀行已入帳帳上未記 2 筆、帳上已記銀行未入帳 1 筆。</p>`,
+ dunning:()=>`<div class="md">主旨：【帳款提醒】2026 年 7 月份貨款\n\nA 公司 王經理 您好：\n\n敬請協助確認發票 INV-0731 之貨款 NT$ 120,000，付款期限已逾 30 天。\n若已安排付款，請忽略此信並惠予回覆付款日期。\n\n謝謝您的協助。\n財務部 敬上\n\n（教學範例：Claude 產出的初稿，寄出前仍須由你覆核）</div>`,
+ gmail:()=>[['A 公司 王經理','NT$ 120,000','逾期 34 天'],['B 商行 陳小姐','NT$ 58,000','逾期 41 天'],['C 工作室 林先生','NT$ 23,500','逾期 33 天']].map(m=>`<div class="mail"><span class="tag ok">Gmail 草稿（未寄出）</span><b>【帳款提醒】致 ${m[0]}</b><span>${m[1]}・${m[2]}</span></div>`).join(''),
+ dellist:()=>`<div class="md"># 待刪除清單（尚未刪除）\n\n共 47 個檔案，2019–2022 年的舊報表。\n你拒絕了刪除請求，所以所有檔案都還在原處。\n\n確認不需要後，請你自己備份，再決定是否刪除。</div>`,
+ summary:()=>`<div class="md"># 摘要\n\n（教學模擬）Claude 已讀取你授權的資料夾並整理出重點。\n在真實 Cowork 中，這裡會是依你的指令產出的檔案內容。</div>`
+};
+
+/* ========== 影片場景產生器 ========== */
+const T=(k,h,s)=>`<div class="vs vs-t"><div class="vk vi" data-at="0.2">${k}</div><div class="vh vi" data-at="0.7">${h}</div><div class="vsub vi" data-at="1.7">${s}</div></div>`;
+const COMPARE=cols=>`<div class="vs">${cols.map((c,i)=>`<div class="vcol vi ${c.cls||''}" data-at="${0.3+i*0.9}"><div class="vcic">${IC[c.ic]}</div><b>${c.h}</b>${c.lines.map((l,j)=>`<span class="vi" data-at="${0.8+i*0.9+j*0.45}">${l}</span>`).join('')}</div>`).join('')}</div>`;
+const FLOW=(items,note)=>`<div class="vs">${items.map((x,i)=>(i?`<div class="varr vi" data-at="${0.15+i*0.8}">→</div>`:'')+`<div class="vbox vi" data-at="${0.4+i*0.8}">${IC[x.ic]}<b>${x.l}</b><small>${x.s||''}</small></div>`).join('')}${note?`<div class="vnote vi" data-at="${0.8+items.length*0.8}">${note}</div>`:''}</div>`;
+const TYPE=(label,text,btn)=>`<div class="vs vs-y"><div class="vcomp vi" data-at="0.2"><div class="vlab">${label}</div><div class="vtxt" data-type="${esc(text)}" data-prog="0.9,${(text.length/13).toFixed(1)}"></div><div class="vbtn vi" data-at="${(1.3+text.length/13).toFixed(1)}">${btn||'送出'}</div></div></div>`;
+const LIST=(title,items)=>`<div class="vs vs-l"><div class="vlt vi" data-at="0.2">${title}</div>${items.map((x,i)=>`<div class="vli vi" data-at="${0.9+i*0.9}"><i>${IC.check}</i>${x}</div>`).join('')}</div>`;
+const FILES=(from,to,note)=>`<div class="vs vs-d"><div class="vfiles">${from.map((f,i)=>`<div class="vf vi" data-at="${0.3+i*0.3}">${IC.file}${f}</div>`).join('')}</div><div class="vproc"><div class="vbar"><i data-prog="${(0.6+from.length*0.3).toFixed(1)},2.4"></i></div><small class="vi" data-at="1">Claude 處理中…</small></div><div class="vout vi" data-at="${(0.6+from.length*0.3+2.4).toFixed(1)}">${IC.sheet}<b>${to}</b><small>${note||''}</small></div></div>`;
+
+const VIDEOS={
+ 1:[
+  {dur:5,cap:'先搞懂：Claude 有三種用法——Chat 聊天、Cowork 幫你做事、Code 寫程式。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚三個模式，就不會用錯地方')},
+  {dur:9,cap:'Chat 負責問答；Cowork 像同事，能讀你授權的資料夾、產出檔案；Code 給工程師寫程式。',html:COMPARE([{ic:'chat',h:'Chat',lines:['問答、寫作','解釋會計準則','不碰你的檔案']},{ic:'layers',h:'Cowork',cls:'hot',lines:['讀你授權的資料夾','做完整件任務','產出 Excel、簡報']},{ic:'code',h:'Code',lines:['寫程式、改專案','給工程師用','今天先不用管']}])},
+  {dur:9,cap:'例如把 12 張發票丟給 Cowork：它會讀檔、辨識、整理成 Excel，就像新來的助理。',html:FILES(['發票_001.pdf','發票_002.jpg','發票_003.pdf','發票_004.jpg'],'發票彙整.xlsx','自動整理完成')},
+  {dur:7,cap:'記住：問問題用 Chat，交代任務用 Cowork。接著到右邊模擬器實際點點看。',html:LIST('記住這三句',['Chat：問問題','Cowork：交付任務，要給資料夾','Code：寫程式，給工程師'])}],
+ 2:[
+  {dur:5,cap:'打開 Cowork，你會看到三個區塊：側邊欄、輸入框、進度面板。',html:T('第 2 單元','三個區塊，看懂就會用','像認識一間新辦公室的格局')},
+  {dur:9,cap:'從左到右：側邊欄找功能、輸入框下指令、選資料夾給資料、右側看進度。',html:FLOW([{ic:'book',l:'側邊欄',s:'新任務・排程・自訂'},{ic:'chat',l:'輸入框',s:'寫下要做什麼'},{ic:'folder',l:'資料夾',s:'給它資料'},{ic:'check',l:'進度面板',s:'看做到哪一步'}])},
+  {dur:7,cap:'三個最常用的入口：新任務、排程、自訂。自訂裡有技能、連接器和外掛。',html:LIST('三個常用入口',['新任務：交辦一件事','排程：固定時間自動做','自訂：技能・連接器・外掛'])}],
+ 3:[
+  {dur:5,cap:'Cowork 只能碰你「授權」的資料夾，這是最重要的安全觀念。',html:T('第 3 單元','只借一個抽屜，不給整間檔案室','授權資料夾 = 最小權限')},
+  {dur:9,cap:'只授權任務需要的資料夾；整個「文件」資料夾可能混有薪資和身分證，風險大。',html:COMPARE([{ic:'folder',h:'發票_2026Q3',cls:'good',lines:['只含發票','範圍小','建議授權']},{ic:'lock',h:'整個「文件」',cls:'bad',lines:['含薪資、身分證','範圍太大','不要授權']}])},
+  {dur:8,cap:'授權前三件事：選最小範圍、先複製副本、敏感資料不要放進去。',html:LIST('授權前三件事',['選最小範圍的資料夾','先複製一份副本當練習','敏感資料不要放進去'])}],
+ 4:[
+  {dur:5,cap:'同樣的任務，指令寫得好不好，結果差很多。',html:T('第 4 單元','好指令 = 好結果','用「四要素」寫出可直接執行的任務')},
+  {dur:10,cap:'看這個例子：有目標、有資料來源、有輸出格式、也有限制。',html:TYPE('任務指令','請讀取「發票_2026Q3」，把每張發票的日期、廠商、統編、金額整理成 Excel，缺統編的標紅，不要修改原始檔案。','送出')},
+  {dur:8,cap:'四要素：目標、資料、格式、限制。就像開傳票要填的四個欄位。',html:LIST('好指令四要素',['目標：要做什麼','資料：從哪裡讀','格式：輸出長怎樣','限制：哪些事不能做'])}],
+ 5:[
+  {dur:5,cap:'Cowork 可以擴充：連接器、技能、外掛。',html:T('第 5 單元','讓 Claude 接上你的工具與做法','連接器・技能・外掛')},
+  {dur:9,cap:'連接器負責連外部服務；技能是你的標準作業程序；外掛是一整包角色套件。',html:COMPARE([{ic:'plug',h:'連接器',lines:['連 Gmail、雲端硬碟','像電子對帳介面']},{ic:'book',h:'Skill 技能',cls:'hot',lines:['你的 SOP','寫一次，每次照做']},{ic:'layers',h:'Plugin 外掛',lines:['財務會計套件','技能＋工具一次裝好']}])},
+  {dur:7,cap:'例如連上 Gmail，Claude 就能幫你把催款信存成草稿，由你確認後再寄。',html:FLOW([{ic:'sheet',l:'逾期應收',s:'找出 3 家客戶'},{ic:'mail',l:'Gmail 草稿',s:'不會自動寄出'},{ic:'user',l:'你覆核',s:'確認後才寄'}])}],
+ 6:[
+  {dur:5,cap:'最後一課：讓 Claude 定時工作，並且守住安全底線。',html:T('第 6 單元','自動化，但責任仍在你','排程與安全檢查')},
+  {dur:8,cap:'排程可以固定時間自動執行，例如每月 5 號產出月結報表，再由你覆核。',html:FLOW([{ic:'clock',l:'每月 5 號 09:00',s:'排程觸發'},{ic:'spark',l:'Claude 自動執行',s:'讀資料、出報表'},{ic:'user',l:'你覆核',s:'簽核後使用'}])},
+  {dur:9,cap:'遇到刪除或覆蓋檔案的請求，沒有備份就拒絕；內容單純又有備份，才允許。',html:COMPARE([{ic:'check',h:'可以允許',cls:'good',lines:['有備份','範圍清楚','影響可還原']},{ic:'warn',h:'應該拒絕',cls:'bad',lines:['要永久刪除','沒有備份','範圍看不懂']}])},
+  {dur:9,cap:'安全清單：看清楚再允許、抽查數字、敏感資料不授權，排程需電腦開著。',html:LIST('安全檢查清單',['刪除與覆蓋，看清楚再按','輸出結果要抽查數字','敏感資料不授權','排程時電腦與 App 要開著'])}]
+};
+
+/* ========== 單元定義 ========== */
+const has=e=>LOG.has(e);
+const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
+const UNITS=[
+ {id:1,short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
+  cards:[{f:'Cowork',s:'同事型助理',b:'像一位新來的助理：你交代任務、給資料夾，他自己動手做完。'},{f:'Chat',s:'一般對話',b:'像諮詢顧問：你問他答，但不會替你打開檔案做事。'},{f:'Code',s:'寫程式',b:'像 IT 工程師：專門寫與改程式，會計同仁通常用不到。'}],
+  steps:[
+   U('1-1','看完動畫（拖曳時間軸到最後也算）','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:1')),
+   U('1-2','在模擬器點上方的「Chat」分頁看看','模擬器最上方的三個分頁','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
+   U('1-3','再點「Code」分頁','同一排的最右邊','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
+   U('1-4','回到「Cowork」分頁（今天的主角）','點中間的 Cowork','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork')],
+  quiz:[
+   {q:'「把 200 張發票整理成 Excel」最適合用哪個模式？',o:['Chat','Cowork','Code'],a:1,why:'需要讀檔、處理多個檔案並產出 Excel，這是 Cowork 的強項。'},
+   {q:'「請用白話解釋收入認列五步驟」最適合用哪個模式？',o:['Cowork','Code','Chat'],a:2,why:'純問答不需要碰檔案，用 Chat 最快。'},
+   {q:'Cowork 和 Chat 最大的差別是？',o:['Cowork 能在你授權的資料夾內讀寫檔案、完成多步驟任務','Cowork 回答比較長','Cowork 不需要網路'],a:0,why:'關鍵是「能動手做」：在你授權的範圍內讀、寫、整理檔案。'}]},
+ {id:2,short:'介面導覽',title:'介面導覽：三個區塊看懂 Cowork',goal:'找到新任務、排程、自訂與資料夾選擇的位置。',
+  cards:[{f:'側邊欄',s:'功能入口',b:'像檔案櫃目錄：新任務、排程、自訂都從這裡進出。'},{f:'輸入框＋資料夾',s:'下指令',b:'像請款單：寫清楚要做什麼（輸入框）、資料放哪（資料夾）。'},{f:'進度面板',s:'任務畫面右側',b:'像專案進度表：一眼看到做到第幾步、產出了什麼檔案。'}],
+  steps:[
+   U('2-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:2')),
+   U('2-2','點側邊欄的「新任務」','左上角橘色按鈕','.sb-new',()=>has('nav_new')),
+   U('2-3','點側邊欄的「排程」','側邊欄第二個','[data-act="nav"][data-v="scheduled"]',()=>has('nav_scheduled')),
+   U('2-4','點側邊欄的「自訂」','側邊欄第三個','[data-act="nav"][data-v="customize"]',()=>has('nav_customize')),
+   U('2-5','回到新任務，點輸入框下方的資料夾按鈕','先回「新任務」，再點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_chip'))],
+  quiz:[
+   {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 分頁'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
+   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 分頁'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
+ {id:3,short:'授權資料夾',title:'授權資料夾：只給需要的，其他不給',goal:'學會最小權限：選對資料夾，避開敏感資料。',
+  cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
+  steps:[
+   U('3-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:3')),
+   U('3-2','打開資料夾選擇視窗','回到「新任務」，點「選擇資料夾」','[data-act="folder-open"]',()=>has('folder_picker_open')),
+   U('3-3','點一下「個人文件」預覽內容，看看裡面有什麼','先看，不要按授權','[data-act="peek"][data-id="personal"]',()=>has('folder_peek:personal')),
+   U('3-4','改為授權「發票_2026Q3」','點該資料夾，再按「授權此資料夾」','[data-act="peek"][data-id="invoices"]',()=>S.folder==='invoices')],
+  quiz:[
+   {q:'要整理 7～9 月的發票，應該授權哪個資料夾？',o:['整個「文件」資料夾','桌面','發票_2026Q3'],a:2,why:'只給任務需要的最小範圍，其他檔案就不會被讀到或改到。'},
+   {q:'第一次使用，最安全的做法是？',o:['直接用正式資料夾','複製一份副本當練習資料夾','全部授權比較省事'],a:1,why:'Cowork 可能改檔名或寫入新檔。用副本，出錯也不影響原始憑證。'},
+   {q:'資料夾裡混有薪資單，但任務只是整理發票，怎麼辦？',o:['移出敏感檔案，或改授權較小的資料夾','沒關係，Claude 不會看','全部壓縮成 zip 再授權'],a:0,why:'敏感資料與任務無關，就不該放進授權範圍。'}]},
+ {id:4,short:'好指令',title:'下第一個任務：好指令四要素',goal:'用「目標、資料、格式、限制」下指令，並看懂權限請求。',builder:true,
+  cards:[{f:'四要素',s:'目標資料格式限制',b:'像開傳票要填的四個欄位，缺一不可。'},{f:'權限請求',s:'要你點頭',b:'像覆核流程：重要動作要主管（你）簽核才放行。'},{f:'抽查結果',s:'人工覆核',b:'像審計抽樣：不用全看，但一定要看。'}],
+  steps:[
+   U('4-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:4')),
+   U('4-2','用下方「Prompt 組裝器」產生指令並送到輸入框','按「送到 Cowork 輸入框」','#pb-send',()=>has('prompt_built')),
+   U('4-3','確認已授權「發票_2026Q3」資料夾','不是這個資料夾的話，請重新選','[data-act="folder-open"]',()=>S.folder==='invoices'),
+   U('4-4','在模擬器按送出（箭頭按鈕）','輸入框右下角','.send',()=>has('task_started:invoices')||has('task_started:bank')),
+   U('4-5','回應權限請求：看清楚後按「允許」或「拒絕」','出現黃色權限卡時回應','.perm',()=>has('perm_allowed:rename')||has('perm_denied:rename')),
+   U('4-6','等任務完成後，點開產出的 Excel 檢查','點對話中的檔案按鈕','.fchip',()=>has('file_open:xlsx'))],
+  quiz:[
+   {q:'哪一個指令比較好？',o:['幫我處理一下發票','請把「發票_2026Q3」每張發票的日期、廠商、統編、金額整理成 Excel，缺統編標紅，不要改原始檔','整理檔案'],a:1,why:'有資料來源、輸出格式與限制，Claude 不用猜。'},
+   {q:'「請整理這些發票」少了哪些要素？',o:['都有了','只缺目標','輸出格式與限制'],a:2,why:'沒說輸出長怎樣，也沒說哪些事不能做（例如不要改原檔）。'},
+   {q:'Claude 要求「重新命名 12 個檔案」，你該怎麼做？',o:['看清楚範圍與影響，確認有備份再允許','不看直接允許','一律拒絕'],a:0,why:'權限請求是你的覆核關卡：看範圍、看影響、確認備份。'}]},
+ {id:5,short:'擴充能力',title:'連接器、技能、外掛：讓 Claude 更懂你的工作',goal:'連上 Gmail、安裝財務外掛、建立自己的 Skill。',
+  cards:[{f:'連接器',s:'接外部服務',b:'像銀行的電子對帳介面：讓 Claude 連到 Gmail、雲端硬碟。'},{f:'Skill',s:'你的 SOP',b:'像公司作業手冊：寫一次，每次都照做。'},{f:'Plugin',s:'整包套件',b:'像會計部「新人套組」：SOP、工具、範本一次裝好。'}],
+  steps:[
+   U('5-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:5')),
+   U('5-2','到「自訂 → 連接器」，連接 Gmail','先點側邊欄「自訂」','[data-act="nav"][data-v="customize"]',()=>has('connector_on:gmail')),
+   U('5-3','到「外掛」分頁，安裝「財務會計」外掛','自訂頁面上方的分頁','[data-act="ctab"][data-t="plugins"]',()=>has('plugin_on:finance')),
+   U('5-4','在「技能」分頁建立一個 Skill，例如「月結報表格式」','按「建立 Skill」','[data-act="ctab"][data-t="skills"]',()=>has('skill_created')),
+   U('5-5','回新任務，點「寫催款信草稿」卡片並送出，讓 Claude 在 Gmail 建草稿','Gmail 要先連接','.sg',()=>has('task_done:dunning_gmail'))],
+  quiz:[
+   {q:'連接器的用途是？',o:['讓 Claude 連到 Gmail、雲端硬碟等外部服務','加快 Claude 的速度','讓檔案自動備份'],a:0,why:'連接器就是 Claude 與外部工具之間的橋。'},
+   {q:'想讓 Claude 每次都用公司的月結報表格式，應該？',o:['每次都重新貼格式','建立 Skill','換一個資料夾'],a:1,why:'Skill 是可重複使用的作業說明，寫一次就能一直用。'},
+   {q:'「財務會計外掛」比較像什麼？',o:['一個資料夾','一包整合技能與工具的套件','一種檔案格式'],a:1,why:'外掛把技能、連接器、常用指令打包，方便一次安裝。'}]},
+ {id:6,short:'排程與安全',title:'排程與安全：自動化，但責任仍在你',goal:'設定排程、練習拒絕危險請求、建立覆核習慣。',cert:true,
+  cards:[{f:'排程',s:'定時任務',b:'像月結行事曆：時間到就自動提醒並執行。'},{f:'拒絕',s:'覆核權',b:'覆核有權退件：不確定就先不放行。'},{f:'人工覆核',s:'責任在人',b:'AI 做初稿，簽核的人是你，責任也在你。'}],
+  steps:[
+   U('6-1','看完動畫','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:6')),
+   U('6-2','到「排程」建立一個「每月 5 日 09:00 產出月結報表」','側邊欄「排程」→「新增排程」','[data-act="nav"][data-v="scheduled"]',()=>has('schedule_created')),
+   U('6-3','危險演練：授權「舊檔案_2023前」，送出「清理舊檔案」，並按「拒絕」','點「清理舊檔案」卡片，記得先選資料夾','.sg.dg',()=>has('perm_denied:delete'))],
+  quiz:[
+   {q:'Claude 要求永久刪除 47 個檔案，而你沒有備份。該怎麼辦？',o:['允許，Claude 不會出錯','拒絕，先備份再決定','關掉視窗當作沒看到'],a:1,why:'刪除無法復原。沒備份就拒絕，先確認清單與備份。'},
+   {q:'排程任務什麼時候能執行？',o:['電腦關機也可以','只有週一','電腦開著且 App 在執行中'],a:2,why:'排程在你的電腦上執行，所以電腦要開著、App 要在執行（以你的版本說明為準）。'},
+   {q:'Claude 產出對帳表後，下一步最合理的是？',o:['抽查數字並對照原始單據','直接送給主管','刪掉原始檔'],a:0,why:'AI 的產出是初稿。抽樣核對原始憑證，才是專業會計的做法。'},
+   {q:'哪種資料夾最不該直接授權？',o:['發票_2026Q3','含薪資與身分證的個人文件','銀行對帳單副本'],a:1,why:'個資與薪資與任務無關，授權就是增加外洩風險。'}]}
+];
+
+/* ========== 模擬器狀態 ========== */
+const S={mode:'cowork',view:'home',ctab:'skills',folder:null,peek:null,modal:null,prompt:'',tasks:[],active:null,
+ conn:{},plugins:{},plugOpen:{},
+ skills:[{id:'inv',name:'發票整理',desc:'依公司規則辨識發票欄位並命名',on:true,src:'內建'},{id:'acct',name:'會計科目對照',desc:'把摘要對應到公司會計科目',on:false,src:'內建'}],
+ schedules:[]};
+const LOG=new Set();
+let _uid=0;
+function emit(e){LOG.add(e);if(typeof Course!=='undefined')Course.evaluate()}
+
+function toast(msg,kind){
+ const box=$('#toasts');if(!box)return;
+ const d=document.createElement('div');d.className='toast '+(kind||'');d.textContent=msg;box.appendChild(d);
+ setTimeout(()=>d.remove(),kind==='ok'?2600:3600);
+ while(box.children.length>3)box.firstChild.remove();
+}
+function pulse(sel){
+ $$('.pulse').forEach(e=>e.classList.remove('pulse'));
+ const el=$(sel);if(!el)return false;
+ el.classList.add('pulse');el.scrollIntoView({block:'nearest',behavior:'smooth'});
+ setTimeout(()=>el.classList.remove('pulse'),4500);return true;
+}
+
+/* ========== 渲染 ========== */
+function renderSim(){
+ const root=$('#sim');if(!root)return;
+ const a=document.activeElement,keep=a&&a.id==='composer'?a.selectionStart:null;
+ const old=$('#chat');const wasBottom=!old||old.scrollHeight-old.scrollTop-old.clientHeight<80;
+ root.innerHTML=simChrome()+`<div class="sim-body">${sidebar()}<main class="sim-main">${main()}</main></div>`+modalHtml();
+ const c=$('#chat');if(c&&wasBottom)c.scrollTop=c.scrollHeight;
+ if(keep!==null){const n=$('#composer');if(n){n.focus();try{n.setSelectionRange(keep,keep)}catch(e){}}}
+}
+const simChrome=()=>`<div class="sim-chrome"><div class="dots"><i></i><i></i><i></i></div><div class="modes" role="tablist">${[['chat','Chat'],['cowork','Cowork'],['code','Code']].map(m=>`<button role="tab" aria-selected="${S.mode===m[0]}" class="${S.mode===m[0]?'on':''}" data-act="mode" data-m="${m[0]}">${m[1]}</button>`).join('')}</div><div class="sim-badge" title="介面為教學仿製，實際畫面以你的版本為準">教學模擬版</div></div>`;
+const sidebar=()=>`<aside class="sb">
+ <button class="sb-new" data-act="nav" data-v="home">${IC.plus}<span>新任務</span></button>
+ <button class="sb-i ${S.view==='scheduled'?'on':''}" data-act="nav" data-v="scheduled">${IC.clock}<span>排程</span></button>
+ <button class="sb-i ${S.view==='customize'?'on':''}" data-act="nav" data-v="customize">${IC.book}<span>自訂</span></button>
+ <div class="sb-h">最近的任務</div>
+ ${S.tasks.length?S.tasks.map(k=>`<button class="sb-t ${S.view==='task'&&S.active===k.id?'on':''}" data-act="open-task" data-id="${k.id}"><i class="dot ${k.status}"></i><span>${esc(k.title)}</span></button>`).join(''):'<p class="sb-empty">還沒有任務</p>'}
+ <div class="sb-foot"><b>學員</b>教學模擬環境<br>不會動到真實檔案</div></aside>`;
+
+function main(){
+ if(S.mode==='chat')return modeNote('chat','Chat：一般對話','適合問答、寫作、解釋概念。它不會替你讀取電腦資料夾，也不會自動產出一整包檔案。','例：請用白話解釋「收入認列五步驟」');
+ if(S.mode==='code')return modeNote('code','Code：寫程式','給工程師寫程式、改專案用。會計同仁日常整理資料，通常用不到這裡。','例：幫我修改這個 Python 腳本');
+ if(S.view==='scheduled')return schedView();
+ if(S.view==='customize')return customView();
+ if(S.view==='task')return taskView();
+ return homeView();
+}
+const modeNote=(ic,h,p,ex)=>`<div class="modeNote">${IC[ic]}<h2>${h}</h2><p>${p}</p><div class="bubble">${ex}</div><button class="chip pri" data-act="mode" data-m="cowork">切到 Cowork 交辦任務</button></div>`;
+
+function homeView(){
+ const f=S.folder?FOLDERS[S.folder]:null;
+ return `<div class="home"><div class="hello">${IC.spark}<h1>想請 Claude 幫你處理什麼？</h1></div>
+ <div class="composer"><textarea id="composer" placeholder="描述你要完成的任務…（Enter 送出，Shift+Enter 換行）">${esc(S.prompt)}</textarea>
+ <div class="comp-bar"><button class="chip ${f?'fold':''}" data-act="folder-open">${IC.folder}<span>${f?esc(f.name):'選擇資料夾'}</span></button><button class="chip ghost" data-act="noop">Claude ▾</button><span class="grow"></span><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
+ <div class="sugg-h">不知道從哪開始？點一張卡片，指令會自動填入輸入框：</div>
+ <div class="sugg">${SUGG.map(s=>`<button class="sg ${s.dg?'dg':''}" data-act="sugg" data-id="${s.id}">${IC[s.ic]}<b>${s.t}</b><small>${s.s}</small></button>`).join('')}</div></div>`;
+}
+
+function taskView(){
+ const k=S.tasks.find(x=>x.id===S.active);if(!k)return homeView();
+ const f=k.folder?FOLDERS[k.folder]:null;
+ const newFiles=k.status==='done'?k.out:[];
+ return `<div class="task"><div class="chat" id="chat"><div class="t-title">${esc(k.title)}</div>${k.msgs.map(m=>msgHtml(m,k)).join('')}
+ <div class="fup"><textarea id="composer" placeholder="追問或補充…" aria-label="追問">${esc(S.prompt)}</textarea><button class="send" data-act="send" aria-label="送出">${IC.send}</button></div></div>
+ <aside class="rp"><section><h4>進度</h4>${k.steps.length?`<ol class="prog">${k.steps.map(s=>`<li class="${s.st}"><i>${s.st==='done'?IC.check:s.st==='skip'?'—':s.st==='run'?'<b class="spin"></b>':''}</i><span>${s.t}</span></li>`).join('')}</ol>`:'<p style="font-size:13px;color:var(--muted)">尚未開始</p>'}</section>
+ <section><h4>工作資料夾</h4>${f?`<div class="ff"><div><b>${esc(f.name)}</b></div>${f.files.slice(0,5).map(n=>`<div>${esc(n)}</div>`).join('')}${f.count>5?`<div>…共 ${f.count} 個檔案</div>`:''}${newFiles.map(o=>`<div class="new">+ ${esc(o.name)}</div>`).join('')}</div>`:'<p style="font-size:13px;color:var(--muted)">未選擇資料夾</p>'}</section>
+ <section><h4>情境</h4><div class="ff"><div>${CONNECTORS.filter(c=>S.conn[c.id]).map(c=>`<span class="tag ok">${c.name}</span>`).join(' ')||'未連接任何服務'}</div><div>${S.skills.filter(s=>s.on).length} 個技能啟用中</div></div></section></aside></div>`;
+}
+function msgHtml(m,k){
+ if(m.r==='u')return `<div class="m-u">${esc(m.t)}</div>`;
+ if(m.r==='c')return `<div class="m-c"><span class="av">${IC.spark}</span><div>${m.t}${m.btn?`<div class="m-btns">${m.btn.map(b=>`<button class="chip pri" data-act="${b.act}">${b.l}</button>`).join('')}</div>`:''}</div></div>`;
+ if(m.r==='files')return `<div class="m-files">${m.f.map(f=>`<button class="fchip" data-act="file-open" data-type="${f.type}" data-pv="${f.pv}" data-name="${esc(f.name)}">${IC[f.type==='xlsx'?'sheet':f.type==='gmail'?'mail':'file']}<span>${esc(f.name)}</span></button>`).join('')}</div>`;
+ if(m.r==='perm'){const p=m.perm;return `<div class="perm ${p.danger?'danger':''} ${m.state}"><div class="perm-h">${IC[p.danger?'warn':'shield']}<b>Claude 請求你的許可</b></div><p><b>${p.text}</b></p><small>${p.detail}</small>${m.state==='ask'?`<div class="perm-b"><button class="chip" data-act="perm" data-ok="0">拒絕</button><button class="chip pri" data-act="perm" data-ok="1">允許</button></div>`:`<div class="perm-r">${m.state==='allow'?'✓ 你已允許':'✕ 你已拒絕'}</div>`}</div>`}
+ return '';
+}
+
+function customView(){
+ const tabs=[['skills','技能'],['connectors','連接器'],['plugins','外掛']];
+ let body='';
+ if(S.ctab==='skills')body=`<div class="list">${S.skills.map(s=>`<div class="item"><div class="ic">${IC.book}</div><div class="mid"><b>${esc(s.name)}</b> <span class="tag">${esc(s.src)}</span><small>${esc(s.desc)}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用 ${esc(s.name)}" data-act="skill-toggle" data-id="${s.id}"></button></div>`).join('')}</div><div><button class="chip pri" data-act="skill-new">${IC.plus}建立 Skill</button></div>`;
+ if(S.ctab==='connectors')body=`<div class="list">${CONNECTORS.map(c=>`<div class="item"><div class="ic">${IC[c.ic]}</div><div class="mid"><b>${c.name}</b><small>${c.desc}</small></div>${S.conn[c.id]?`<span class="tag ok">已連接</span><button class="chip" data-act="conn-off" data-id="${c.id}">中斷</button>`:`<button class="chip pri" data-act="conn-on" data-id="${c.id}">連接</button>`}</div>`).join('')}</div>`;
+ if(S.ctab==='plugins')body=`<div class="list">${PLUGINS.map(p=>`<div class="item"><div class="ic">${IC[p.ic]}</div><div class="mid"><b>${p.name}</b><small>${p.desc}</small>${S.plugOpen[p.id]?`<div class="det">${p.items.map(i=>`<div>・${i}</div>`).join('')}<div style="color:var(--muted)">（教學示意內容）</div></div>`:''}<button class="mini" style="margin-top:4px" data-act="plug-detail" data-id="${p.id}">${S.plugOpen[p.id]?'收合':'查看內容'}</button></div>${S.plugins[p.id]?`<span class="tag ok">已安裝</span><button class="chip" data-act="plug-off" data-id="${p.id}">移除</button>`:`<button class="chip pri" data-act="plug-on" data-id="${p.id}">安裝</button>`}</div>`).join('')}</div>`;
+ return `<div class="cust"><h2>自訂</h2><div class="tabs">${tabs.map(t=>`<button class="${S.ctab===t[0]?'on':''}" data-act="ctab" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
+}
+function schedView(){
+ return `<div class="sched"><h2>排程任務</h2><div class="note">排程任務在你的電腦上執行：電腦需開機、App 需開著才會跑（實際規則以你的版本說明為準）。</div>
+ ${S.schedules.length?`<div class="list">${S.schedules.map((s,i)=>`<div class="item"><div class="ic">${IC.clock}</div><div class="mid"><b>${esc(s.name)}</b><small>${esc(s.freq)} ${esc(s.time)}・${esc(s.prompt.slice(0,40))}</small></div><button class="sw ${s.on?'on':''}" role="switch" aria-checked="${s.on}" aria-label="啟用排程" data-act="sched-toggle" data-i="${i}"></button></div>`).join('')}</div>`:`<div class="empty">還沒有排程。<br>例如：每月 5 日 09:00，自動產出上月月結報表。</div>`}
+ <div><button class="chip pri" data-act="sched-new">${IC.plus}新增排程</button></div></div>`;
+}
+
+function modalHtml(){
+ const m=S.modal;if(!m)return '';
+ let h='',foot='';
+ if(m.type==='folder'){
+  const pk=m.peek?FOLDERS[m.peek]:null;
+  h=`<h3>選擇要授權給 Claude 的資料夾</h3><div class="fp"><div class="l">${Object.entries(FOLDERS).map(([id,f])=>`<button class="frow ${m.peek===id?'on':''}" data-act="peek" data-id="${id}">${IC.folder}<span><b>${f.name}</b><small>${f.count} 個檔案${f.sens?'・含敏感資料':''}</small></span></button>`).join('')}</div>
+  <div class="r">${pk?`<b>${pk.name}</b><small style="color:var(--muted)">${pk.path}</small>${pk.sens?'<div class="warnbar">⚠ 含薪資單、身分證等敏感資料，與會計任務無關</div>':''}<div class="fl">${pk.files.slice(0,8).map(n=>`<div>${IC.file.replace('<svg','<svg style="vertical-align:-2px;margin-right:4px"')}${esc(n)}</div>`).join('')}${pk.count>8?`<div>…共 ${pk.count} 個</div>`:''}</div><button class="btn" data-act="folder-pick" data-id="${m.peek}">授權此資料夾</button>`:'<p style="color:var(--muted)">點選左側資料夾，先預覽裡面有什麼，再決定要不要授權。</p>'}</div></div>`;
+ }
+ if(m.type==='file'){
+  const body=m.pv==='gmail'?PREVIEW.gmail():PREVIEW[m.pv]();
+  h=`<h3>${IC[m.ftype==='xlsx'?'sheet':m.ftype==='gmail'?'mail':'file']} ${esc(m.name)}</h3>${body}<p style="font-size:13px;color:var(--green);background:var(--green-soft);border-radius:8px;padding:6px 10px">專業提醒：AI 的產出是初稿，請抽查數字並對照原始單據再使用。</p>`;
+ }
+ if(m.type==='oauth'){
+  const c=CONNECTORS.find(x=>x.id===m.id);
+  h=`<h3>連接 ${c.name}</h3><p>Claude 想要取得以下權限：</p><ul style="margin:0 0 0 18px">${c.perm.map(x=>`<li>${x}</li>`).join('')}</ul><p style="font-size:13px;color:var(--muted)">（教學模擬：不會真的連線到你的帳號。實務上授權前請確認範圍。）</p>`;
+  foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="oauth-ok" data-id="${m.id}">允許</button>`;
+ }
+ if(m.type==='skill'){
+  h=`<h3>建立 Skill</h3><label class="lbl">技能名稱<input class="fld" id="sk-name" placeholder="例如：月結報表格式" value="月結報表格式"></label><label class="lbl">做法說明（寫給 Claude 的 SOP）<textarea class="fld" id="sk-body" rows="4">產出月結報表時：1) 金額一律千分位、單位新台幣元 2) 科目依公司科目表排序 3) 最後一列加總並標示差異</textarea></label>`;
+  foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="skill-save">儲存</button>`;
+ }
+ if(m.type==='sched'){
+  h=`<h3>新增排程</h3><label class="lbl">名稱<input class="fld" id="sc-name" value="每月月結報表"></label><div class="row2"><label class="lbl">頻率<select class="fld" id="sc-freq"><option>每天</option><option>每週一</option><option selected>每月 5 日</option></select></label><label class="lbl">時間<select class="fld" id="sc-time"><option>08:00</option><option selected>09:00</option><option>18:00</option></select></label></div><label class="lbl">要做什麼<textarea class="fld" id="sc-prompt" rows="3">讀取「發票_2026Q3」資料夾，產出上月發票彙整表，異常項目標紅，完成後提醒我覆核。</textarea></label>`;
+  foot=`<button class="btn ghost" data-act="modal-close">取消</button><button class="btn" data-act="sched-save">建立排程</button>`;
+ }
+ return `<div class="modal-bg" data-act="modal-bg"><div class="modal" role="dialog" aria-modal="true"><button class="x" data-act="modal-close" aria-label="關閉">×</button>${h}${foot?`<div class="foot">${foot}</div>`:''}</div></div>`;
+}
+
+/* ========== 任務執行 ========== */
+function pickScenario(p){
+ for(const id of ['delete','dunning','bank','invoices'])if(SCEN[id].re.test(p))return SCEN[id];
+ return SCEN.generic;
+}
+function sendPrompt(){
+ const p=S.prompt.trim();
+ if(!p){toast('請先輸入任務內容，或點下方的建議卡片');return}
+ if(S.view==='task'&&S.active){ // 追問
+  const k=S.tasks.find(x=>x.id===S.active);
+  if(k&&k.status==='done'){k.msgs.push({r:'u',t:p});S.prompt='';renderSim();emit('followup');
+   setTimeout(()=>{k.msgs.push({r:'c',t:'收到！我會依你的補充調整並更新輸出檔案。<br><small style="color:var(--muted)">（教學模擬：此處不會真的修改檔案）</small>'});renderSim()},800);return}
+  if(k&&(k.status==='running')){toast('Claude 還在工作中，等這個任務完成再追問');return}
+ }
+ const sc=pickScenario(p);
+ const k={id:++_uid,title:p.length>16?p.slice(0,16)+'…':p,prompt:p,folder:S.folder,sc,status:'plan',steps:[],msgs:[{r:'u',t:p}],out:[],_i:0,pending:null};
+ S.tasks.unshift(k);S.active=k.id;S.view='task';S.prompt='';
+ const f=S.folder?FOLDERS[S.folder]:null;
+ let block=null;
+ if(f&&f.sens)block={t:`⚠ 我看到授權的「${f.name}」含有薪資單與身分證，和這個任務無關。<b>建議改授權較小、較單純的資料夾</b>，再重新送出。`,ev:'send_sensitive'};
+ else if(sc.id!=='dunning'&&sc.id!=='generic'&&!f)block={t:'我還沒有任何資料夾的存取權限。請先<b>選擇資料夾</b>，我才能讀取資料。',ev:'send_no_folder'};
+ else if(sc.folder&&S.folder!==sc.folder)block={t:`這個任務需要「${FOLDERS[sc.folder].name}」的資料，但目前授權的是「${f.name}」，裡面沒有相關檔案。請改選資料夾後重新送出。`,ev:'send_mismatch'};
+ if(block){k.status='blocked';S.prompt=p;k.msgs.push({r:'c',t:block.t,btn:[{act:'folder-open',l:'選擇資料夾'}]});renderSim();emit(block.ev);return}
+ runTask(k);
+}
+function runTask(k){
+ let sc=k.sc,variant=sc.id;
+ let steps=sc.steps.map(s=>({...s}));
+ if(sc.id==='dunning'){
+  if(S.conn.gmail){variant='dunning_gmail';steps[2].t='在 Gmail 建立 3 封草稿（不會自動寄出）';k.out=[{name:'Gmail 草稿 ×3',type:'gmail',pv:'gmail'}]}
+  else{steps[2].t='沒有連接 Gmail，改存成檔案：催款信草稿.md';k.out=[{name:'催款信草稿.md',type:'md',pv:'dunning'}]}
+ }else k.out=sc.out.map(o=>({...o}));
+ k.variant=variant;k.steps=steps.map(s=>({t:s.t,st:'todo',perm:s.perm}));k.status='running';k._i=0;
+ k.msgs.push({r:'c',t:'好的，我先擬定計畫，再依序執行。你可以隨時在右側「<b>進度</b>」看到我做到哪一步。'});
+ renderSim();emit('task_started:'+sc.id);
+ advance(k);
+}
+function advance(k){
+ if(!S.tasks.includes(k))return;
+ if(k._i>=k.steps.length)return finish(k);
+ const st=k.steps[k._i];st.st='run';renderSim();
+ setTimeout(()=>{
+  if(!S.tasks.includes(k))return;
+  if(st.perm){k.pending={i:k._i};k.msgs.push({r:'perm',perm:st.perm,state:'ask'});renderSim();emit('perm_asked:'+st.perm.kind);return}
+  st.st='done';k._i++;renderSim();advance(k);
+ },1000);
+}
+function respondPerm(ok){
+ const k=S.tasks.find(x=>x.id===S.active);if(!k||!k.pending)return;
+ const m=[...k.msgs].reverse().find(x=>x.r==='perm'&&x.state==='ask');if(!m)return;
+ const kind=m.perm.kind,st=k.steps[k.pending.i];
+ m.state=ok?'allow':'deny';k.pending=null;k.denied=k.denied||{};k.denied[kind]=!ok;
+ st.st=ok?'done':'skip';k._i++;
+ if(!ok&&kind==='delete'){k.steps.slice(k._i).forEach(s=>s.st='skip');k._i=k.steps.length}
+ renderSim();emit((ok?'perm_allowed:':'perm_denied:')+kind);
+ if(ok&&kind==='delete')toast('⚠ 在真實環境中，刪除後可能無法復原。沒備份時請拒絕。','warn');
+ setTimeout(()=>advance(k),400);
+}
+function finish(k){
+ k.status='done';const v=k.variant,d=k.denied||{};
+ const files=k.out.length?{r:'files',f:k.out}:null;
+ const T2={
+  invoices:`<b>完成了！</b>我整理了 12 張發票，產出：<ul><li>發票彙整_2026Q3.xlsx：日期、廠商、統編、金額</li><li>異常清單.md：2 張缺統編、1 張金額與品項不符</li></ul>${d.rename?'你拒絕了重新命名，所以原檔名維持不變。<br>':'已把檔名統一改為「日期_廠商_金額」。<br>'}建議你<b>先點開 Excel 抽查幾列</b>，再正式使用。`,
+  bank:'<b>完成了！</b>共比對 3 個月的交易，找到 <b>3 筆未達帳</b>（匯款在途、手續費、未兌現支票）。請抽查並對照原始單據。',
+  dunning:'<b>完成了。</b>目前沒有連接 Gmail，所以我把催款信存成檔案。若想直接在 Gmail 建草稿，請先到「自訂 → 連接器」連接 Gmail。',
+  dunning_gmail:'<b>完成了！</b>我在 Gmail 建立了 <b>3 封草稿</b>，<b>都還沒寄出</b>。請逐封檢查金額與語氣，確認後再自行寄出。',
+  delete:d.delete?'好的，<b>我沒有刪除任何檔案</b>。已把待刪除清單存成檔案，確認備份後你可以再決定。':'已刪除 47 個檔案。<br><small style="color:var(--warn)">（真實環境中這類操作可能無法復原，下次請先備份。）</small>',
+  generic:'<b>完成了！</b>我已讀取資料夾並整理出摘要（教學模擬）。'
+ };
+ if(v==='delete'&&!d.delete)k.out=[];
+ k.msgs.push({r:'c',t:T2[v]||T2.generic,btn:v==='dunning'?[{act:'goto-conn',l:'前往連接器'}]:null});
+ if(k.out.length)k.msgs.push({r:'files',f:k.out});
+ renderSim();emit('task_done:'+v);
+}
+
+/* ========== 事件委派 ========== */
+const ACT={
+ noop(){toast('教學模擬版：此選單不可用')},
+ mode(el){S.mode=el.dataset.m;emit('mode_'+S.mode);renderSim()},
+ nav(el){S.mode='cowork';S.view=el.dataset.v;emit('nav_'+(S.view==='home'?'new':S.view));renderSim()},
+ 'open-task'(el){S.mode='cowork';S.view='task';S.active=+el.dataset.id;renderSim()},
+ 'folder-open'(){S.modal={type:'folder',peek:null};emit('folder_chip');emit('folder_picker_open');renderSim()},
+ peek(el){S.modal={type:'folder',peek:el.dataset.id};emit('folder_peek:'+el.dataset.id);renderSim()},
+ 'folder-pick'(el){
+  const id=el.dataset.id;S.folder=id;S.modal=null;emit('folder_selected:'+id);
+  if(FOLDERS[id].sens)toast('⚠ 已授權含敏感資料的資料夾。與任務無關的資料不該授權！','warn');
+  else toast('已授權資料夾：'+FOLDERS[id].name,'ok');
+  renderSim();
+ },
+ 'modal-close'(){S.modal=null;renderSim()},
+ 'modal-bg'(el,e){if(e.target===el){S.modal=null;renderSim()}},
+ sugg(el){const s=SUGG.find(x=>x.id===el.dataset.id);S.prompt=s.p;emit('sugg:'+s.id);renderSim();const c=$('#composer');if(c)c.focus()},
+ send(){sendPrompt()},
+ perm(el){respondPerm(el.dataset.ok==='1')},
+ 'file-open'(el){S.modal={type:'file',pv:el.dataset.pv,name:el.dataset.name,ftype:el.dataset.type};emit('file_open:'+el.dataset.type);renderSim()},
+ ctab(el){S.ctab=el.dataset.t;renderSim()},
+ 'conn-on'(el){S.modal={type:'oauth',id:el.dataset.id};renderSim()},
+ 'oauth-ok'(el){const id=el.dataset.id;S.conn[id]=true;S.modal=null;emit('connector_on:'+id);toast('已連接 '+CONNECTORS.find(c=>c.id===id).name,'ok');renderSim()},
+ 'conn-off'(el){S.conn[el.dataset.id]=false;emit('connector_off:'+el.dataset.id);renderSim()},
+ 'plug-detail'(el){S.plugOpen[el.dataset.id]=!S.plugOpen[el.dataset.id];renderSim()},
+ 'plug-on'(el){
+  const p=PLUGINS.find(x=>x.id===el.dataset.id);S.plugins[p.id]=true;
+  p.skills.forEach(s=>{if(!S.skills.some(x=>x.id===s.id))S.skills.push({...s,on:true,src:'外掛：'+p.name})});
+  emit('plugin_on:'+p.id);toast('已安裝外掛：'+p.name,'ok');renderSim();
+ },
+ 'plug-off'(el){const p=PLUGINS.find(x=>x.id===el.dataset.id);S.plugins[p.id]=false;S.skills=S.skills.filter(s=>!p.skills.some(x=>x.id===s.id));renderSim()},
+ 'skill-toggle'(el){const s=S.skills.find(x=>x.id===el.dataset.id);s.on=!s.on;emit('skill_toggle');renderSim()},
+ 'skill-new'(){S.modal={type:'skill'};renderSim()},
+ 'skill-save'(){
+  const n=$('#sk-name').value.trim(),b=$('#sk-body').value.trim();
+  if(!n||!b){toast('名稱和做法說明都要填','warn');return}
+  S.skills.push({id:'u'+Date.now(),name:n,desc:b.slice(0,40)+'…',on:true,src:'我建立的'});S.modal=null;S.ctab='skills';
+  emit('skill_created');toast('Skill 已建立：'+n,'ok');renderSim();
+ },
+ 'sched-new'(){S.modal={type:'sched'};renderSim()},
+ 'sched-save'(){
+  const n=$('#sc-name').value.trim(),p=$('#sc-prompt').value.trim();
+  if(!n||!p){toast('名稱和內容都要填','warn');return}
+  S.schedules.push({name:n,freq:$('#sc-freq').value,time:$('#sc-time').value,prompt:p,on:true});S.modal=null;
+  emit('schedule_created');toast('排程已建立：'+n,'ok');renderSim();
+ },
+ 'sched-toggle'(el){const s=S.schedules[+el.dataset.i];s.on=!s.on;renderSim()},
+ 'goto-conn'(){S.view='customize';S.ctab='connectors';renderSim()}
+};
+
+/* ========== 動畫影片播放器（時間驅動，與 Remotion 同樣的「畫面 = f(時間)」概念） ========== */
+class Player{
+ constructor(host,scenes,key){
+  Object.assign(this,{h:host,sc:scenes,key,t:0,playing:false,idx:-1,speed:1,cap:true,tts:false,done:false,started:false,raf:0,last:0});
+  this.total=scenes.reduce((a,s)=>a+s.dur,0);this.starts=[];let c=0;scenes.forEach(s=>{this.starts.push(c);c+=s.dur});
+  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vcap"></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
+  <div class="vctl"><button class="pp" data-v="toggle" aria-label="播放或暫停">▶</button><input class="vseek" type="range" min="0" max="1000" value="0" aria-label="影片進度"><span class="vtime">0:00 / ${fmt(this.total)}</span><button data-v="speed" aria-label="播放速度">1x</button><button data-v="cap" class="on">字幕</button><button data-v="tts" title="用瀏覽器朗讀字幕">旁白</button><button data-v="full">全螢幕</button></div></div>`;
+  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);
+  this.seek=$('.vseek',host);this.timeEl=$('.vtime',host);this.pp=$('.pp',host);this.playBtn=$('.vplay',host);
+  host.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;const a=b.dataset.v;
+   if(a==='play'||a==='toggle'){this.playing?this.pause():this.play()}
+   else if(a==='speed'){this.speed=this.speed===1?1.5:this.speed===1.5?2:1;b.textContent=this.speed+'x'}
+   else if(a==='cap'){this.cap=!this.cap;b.classList.toggle('on',this.cap);this.capEl.classList.toggle('off',!this.cap)}
+   else if(a==='tts'){this.tts=!this.tts;b.classList.toggle('on',this.tts);if(!this.tts)this.say('');else this.say(this.sc[Math.max(0,this.idx)].cap)}
+   else if(a==='full'){try{(document.fullscreenElement?document.exitFullscreen():this.wrap.requestFullscreen()).catch(()=>{})}catch(err){}}});
+  this.seek.addEventListener('input',()=>{this.started=true;this.playBtn.classList.add('hide');this.t=this.seek.value/1000*this.total;this.draw(this.t);this.checkDone()});
+  this.ro=new ResizeObserver(()=>{this.stage.style.fontSize=Math.max(6,this.stage.clientWidth/58)+'px'});this.ro.observe(this.stage);
+  this.stage.style.fontSize=Math.max(6,this.stage.clientWidth/58)+'px';
+  this.draw(1.6);this.timeEl.textContent='0:00 / '+fmt(this.total);
+ }
+ say(txt){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();if(!txt||!this.tts)return;const u=new SpeechSynthesisUtterance(txt);u.lang='zh-TW';u.rate=1.05;speechSynthesis.speak(u)}catch(e){}}
+ play(){
+  if(this.t>=this.total-0.05)this.t=0;
+  if(!this.started){this.started=true;this.t=0;this.idx=-1}
+  this.playing=true;this.playBtn.classList.add('hide');this.pp.textContent='❚❚';this.last=performance.now();
+  this.say(this.sc[Math.max(0,this.idx)>=0?Math.max(0,this.idx):0].cap);
+  cancelAnimationFrame(this.raf);this.raf=requestAnimationFrame(ts=>this.tick(ts));
+ }
+ pause(){this.playing=false;this.pp.textContent='▶';cancelAnimationFrame(this.raf);this.say('')}
+ tick(ts){
+  if(!this.playing)return;
+  const dt=Math.min(0.1,(ts-this.last)/1000);this.last=ts;this.t=Math.min(this.total,this.t+dt*this.speed);
+  this.draw(this.t);
+  if(this.t>=this.total){this.pause();this.playBtn.querySelector('span').textContent='再看一次';this.playBtn.classList.remove('hide');this.checkDone();return}
+  this.raf=requestAnimationFrame(x=>this.tick(x));
+ }
+ checkDone(){if(!this.done&&this.t>=this.total-0.4){this.done=true;emit('video_done:'+this.key)}}
+ draw(t){
+  let i=0;for(let k=0;k<this.sc.length;k++)if(t>=this.starts[k])i=k;
+  const local=t-this.starts[i];
+  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capEl.textContent=this.sc[i].cap;
+   if(this.playing&&this.idx!==-1)this.say(this.sc[i].cap);this.idx=i}
+  $$('[data-at]',this.scene).forEach(e=>e.classList.toggle('in',local>=+e.dataset.at));
+  $$('[data-prog]',this.scene).forEach(e=>{const [a,d]=e.dataset.prog.split(',').map(Number);const p=clamp((local-a)/d);e.style.setProperty('--p',p);
+   if(e.dataset.type!==undefined){const f=e.dataset.type;e.textContent=f.slice(0,Math.ceil(f.length*p))+(p>0&&p<1?'▍':'')}});
+  this.seek.value=Math.round(t/this.total*1000);this.timeEl.textContent=fmt(t)+' / '+fmt(this.total);
+ }
+ destroy(){this.pause();try{this.ro.disconnect()}catch(e){}}
+}
+
+/* ========== 課程控制 ========== */
+const STORE_KEY='cowork-course-v1';
+const POINTS={step:10,quiz1:5,quiz2:2};
+const hintOpen={};const wrong={};
+const Course={
+ cur:0,player:null,
+ P:Object.assign({steps:{},quiz:{},name:'',cel:{}},store.get(STORE_KEY,{})),
+ teacher:store.get('cowork-teacher',false),
+ save(){store.set(STORE_KEY,this.P)},
+ stepsDone(u){return u.steps.every(s=>this.P.steps[s.id])},
+ quizDone(u,i){return u.quiz.every((_,q)=>this.P.quiz[u.id+'-'+q])},
+ unitDone(i){const u=UNITS[i];return this.stepsDone(u)&&this.quizDone(u,i)},
+ unlocked(i){return this.teacher||i===0||this.unitDone(i-1)},
+ score(){let s=0;UNITS.forEach(u=>{u.steps.forEach(x=>{if(this.P.steps[x.id])s+=POINTS.step});u.quiz.forEach((_,q)=>{s+=this.P.quiz[u.id+'-'+q]||0})});return s},
+ max(){return UNITS.reduce((a,u)=>a+u.steps.length*POINTS.step+u.quiz.length*POINTS.quiz1,0)},
+ evaluate(){
+  const u=UNITS[this.cur];let ch=false;
+  u.steps.forEach(s=>{if(!this.P.steps[s.id]&&s.check()){this.P.steps[s.id]=1;ch=true;toast('+10 分  ✓ '+s.text,'ok')}});
+  if(ch){this.save();this.renderSteps();this.renderTop();this.afterProgress()}
+ },
+ afterProgress(){
+  const i=this.cur;this.renderNav();this.renderFoot();
+  if(this.unitDone(i)&&!this.P.cel[i]){this.P.cel[i]=1;this.save();confetti();toast(i===UNITS.length-1?'全部單元完成！往下領取結業證書':'單元完成！下一單元已解鎖','ok')}
+ },
+ go(i){
+  if(!this.unlocked(i)){toast('請先完成上一個單元的練習與小測驗','warn');return}
+  if(this.player)this.player.destroy();
+  this.cur=i;this.renderUnit();this.evaluate();$('.coach').scrollTop=0;
+ },
+ renderTop(){
+  const sc=this.score(),mx=this.max();
+  $('#pbar').style.width=Math.round(sc/mx*100)+'%';
+  $('#score').innerHTML=`積分 <b>${sc}</b> / ${mx}`;
+  const t=$('#teacher');t.classList.toggle('on',this.teacher);t.setAttribute('aria-pressed',this.teacher);
+ },
+ renderNav(){
+  $('#units').innerHTML=UNITS.map((u,i)=>`<button class="upill ${i===this.cur?'on':''} ${this.unitDone(i)?'done':''} ${this.unlocked(i)?'':'lock'}" data-act="unit" data-i="${i}"><span class="n">${this.unitDone(i)?'✓':this.unlocked(i)?i+1:'🔒'}</span>${u.short}</button>`).join('');
+ },
+ renderUnit(){
+  const u=UNITS[this.cur],n=this.cur+1;
+  $('#unit').innerHTML=`<div class="kick">單元 ${n} / ${UNITS.length}</div><h2 class="serif">${u.title}</h2><p class="goal">${u.goal}</p>
+  <div id="player"></div>
+  <h3>重點卡 <em>點一下翻面看會計比喻</em></h3><div class="cards">${u.cards.map(c=>`<div class="kcard" data-act="flip" role="button" tabindex="0" aria-label="${c.f}，點一下翻面"><div><span class="f"><b>${c.f}</b><small>${c.s}</small></span><span class="b">${c.b}</span></div></div>`).join('')}</div>
+  <h3>實作練習 <em>在右邊模擬器操作，會自動打勾</em></h3><ul class="steps" id="steps"></ul>
+  ${u.builder?builderHtml():''}
+  <h3>小測驗</h3><div class="quiz" id="quiz"></div>
+  <div id="foot"></div>`;
+  this.player=new Player($('#player'),VIDEOS[u.id],u.id);
+  this.renderSteps();this.renderQuiz();this.renderFoot();this.renderNav();this.renderTop();
+  if(u.builder)buildPrompt();
+ },
+ renderSteps(){
+  const u=UNITS[this.cur];
+  $('#steps').innerHTML=u.steps.map((s,i)=>{const ok=this.P.steps[s.id];
+   return `<li class="step ${ok?'ok':''}"><div class="row"><span class="chk">${ok?IC.check:''}</span><span class="tx">${i+1}. ${s.text}</span><span class="acts">${ok?'':`<button class="mini" data-act="hint" data-id="${s.id}">提示</button>`}${this.teacher&&!ok?`<button class="mini" data-act="force" data-id="${s.id}">略過</button>`:''}</span></div>${hintOpen[s.id]&&!ok?`<div class="hint">💡 ${s.hint}（模擬器中對應的位置已閃爍標示）</div>`:''}</li>`}).join('');
+ },
+ renderQuiz(){
+  const u=UNITS[this.cur];
+  $('#quiz').innerHTML=u.quiz.map((q,qi)=>{const key=u.id+'-'+qi,got=this.P.quiz[key],bad=wrong[key]||[];
+   return `<div class="q ${got?'ok':''}"><p>Q${qi+1}. ${q.q}</p><div class="opts">${q.o.map((o,oi)=>`<button class="opt ${got&&oi===q.a?'good':''} ${bad.includes(oi)?'bad':''} ${this.teacher&&!got&&oi===q.a?'tip':''}" data-act="ans" data-q="${qi}" data-o="${oi}" ${got?'disabled':''}>${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>${got?`<div class="why">✓ ${q.why}</div>`:bad.length?'<div class="why" style="color:var(--warn);background:var(--warn-soft)">再想想，換一個選項試試。</div>':''}</div>`}).join('');
+ },
+ renderFoot(){
+  const i=this.cur,u=UNITS[i],done=this.unitDone(i),last=i===UNITS.length-1;
+  let h=`<div class="nextbar"><button class="btn ghost" data-act="unit" data-i="${i-1}" ${i===0?'disabled':''}>← 上一單元</button>`;
+  h+=last?`<span></span>`:`<button class="btn" data-act="unit" data-i="${i+1}" ${done||this.teacher?'':'disabled'}>${done||this.teacher?'下一單元 →':'完成練習與測驗後解鎖'}</button>`;
+  h+='</div>';
+  if(last&&UNITS.every((_,k)=>this.unitDone(k))){
+   const sc=this.score(),mx=this.max(),pct=sc/mx,rank=pct>=.9?'Cowork 達人':pct>=.7?'合格的 AI 同事':'見習生';
+   h+=`<div class="cert"><h3>結業！你的成績</h3><div class="big">${sc} / ${mx}</div><p>稱號：<b>${rank}</b></p><input class="fld" id="cert-name" placeholder="輸入姓名" value="${esc(this.P.name||'')}" aria-label="姓名"><br><button class="btn" data-act="cert">下載結業證書 PNG</button></div>`;
+  }
+  $('#foot').innerHTML=h;
+ }
+};
+
+function builderHtml(){
+ return `<div class="builder"><b>Prompt 組裝器</b><label>1) 目標<select id="pb-goal"><option value="把每張發票的日期、廠商、統編、金額整理成 Excel">整理發票成 Excel</option><option value="核對銀行對帳單與帳上明細，列出未達帳項目">銀行對帳</option></select></label>
+ <fieldset><legend>2) 限制（可複選）</legend><label><input type="checkbox" class="pb-l" value="不要修改原始檔案" checked>不要修改原始檔案</label><label><input type="checkbox" class="pb-l" value="缺統編的標紅" checked>缺統編的標紅</label><label><input type="checkbox" class="pb-l" value="重大動作先問我">重大動作先問我</label></fieldset>
+ <label>3) 預覽（資料來源＝你授權的資料夾；格式＝Excel）<textarea id="pb-out" rows="4" readonly></textarea></label><button class="btn" id="pb-send" data-act="pb-send">送到 Cowork 輸入框 →</button></div>`;
+}
+function buildPrompt(){
+ const g=$('#pb-goal');if(!g)return '';
+ const ls=$$('.pb-l:checked').map(x=>x.value);
+ const t=`請讀取我授權的資料夾，${g.value}。輸出：Excel 檔（一列一筆，含欄位標題）。${ls.length?'限制：'+ls.join('；')+'。':''}`;
+ $('#pb-out').value=t;return t;
+}
+
+/* ========== 全域事件 ========== */
+const GA={
+ unit(el){const i=+el.dataset.i;if(i>=0&&i<UNITS.length)Course.go(i)},
+ flip(el){el.classList.toggle('flip')},
+ hint(el){
+  const u=UNITS[Course.cur],s=u.steps.find(x=>x.id===el.dataset.id);hintOpen[s.id]=true;Course.renderSteps();
+  if(matchMedia('(max-width:1000px)').matches&&!s.sel.startsWith('.vplay')){setPane('sim');setTimeout(()=>pulse(s.sel),50)}else pulse(s.sel);
+ },
+ force(el){const s=UNITS[Course.cur].steps.find(x=>x.id===el.dataset.id);Course.P.steps[s.id]=1;Course.save();Course.renderSteps();Course.renderTop();Course.afterProgress()},
+ ans(el){
+  const u=UNITS[Course.cur],qi=+el.dataset.q,oi=+el.dataset.o,q=u.quiz[qi],key=u.id+'-'+qi;
+  if(Course.P.quiz[key])return;
+  if(oi===q.a){Course.P.quiz[key]=(wrong[key]&&wrong[key].length)?POINTS.quiz2:POINTS.quiz1;Course.save();Course.renderQuiz();Course.renderTop();Course.afterProgress()}
+  else{(wrong[key]=wrong[key]||[]).push(oi);Course.renderQuiz()}
+ },
+ 'pb-send'(){
+  const t=buildPrompt();S.prompt=t;S.mode='cowork';S.view='home';S.modal=null;renderSim();emit('prompt_built');
+  toast('已送到輸入框！接著確認資料夾，再按送出','ok');if(matchMedia('(max-width:1000px)').matches)setPane('sim');
+ },
+ cert(){drawCert()},
+ pane(el){setPane(el.dataset.p)},
+ teacher(){Course.teacher=!Course.teacher;store.set('cowork-teacher',Course.teacher);Course.renderUnit();toast(Course.teacher?'老師模式：全部單元解鎖、顯示答案提示、可略過步驟':'已關閉老師模式')},
+ reset(){if(confirm('確定要清除所有學習進度與積分嗎？')){store.del(STORE_KEY);location.reload()}}
+};
+function setPane(p){document.body.dataset.pane=p;$$('.panes button').forEach(b=>b.classList.toggle('on',b.dataset.p===p))}
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-act]');if(!el)return;
+ const a=el.dataset.act;
+ if(a==='modal-bg'){ACT[a](el,e);return}
+ const f=GA[a]||ACT[a];if(f){f(el,e)}
+});
+document.addEventListener('keydown',e=>{
+ if(e.target.id==='composer'&&e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();sendPrompt();return}
+ if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('kcard')){e.preventDefault();e.target.classList.toggle('flip')}
+ if(e.key==='Escape'&&S.modal){S.modal=null;renderSim()}
+});
+document.addEventListener('input',e=>{
+ if(e.target.id==='composer')S.prompt=e.target.value;
+ if(e.target.id==='cert-name'){Course.P.name=e.target.value;Course.save()}
+ if(e.target.id==='pb-goal'||e.target.classList.contains('pb-l'))buildPrompt();
+});
+document.addEventListener('change',e=>{if(e.target.id==='pb-goal'||e.target.classList.contains('pb-l'))buildPrompt()});
+
+/* ========== 結業證書 / 彩帶 ========== */
+function drawCert(){
+ const c=document.createElement('canvas');c.width=1600;c.height=1131;const g=c.getContext('2d');
+ g.fillStyle='#FBF8F2';g.fillRect(0,0,1600,1131);
+ g.strokeStyle='#C96442';g.lineWidth=10;g.strokeRect(50,50,1500,1031);g.lineWidth=2;g.strokeRect(75,75,1450,981);
+ g.textAlign='center';g.fillStyle='#2B2A27';
+ const serif='"Noto Serif TC","Songti TC","PMingLiU",serif';
+ g.font=`700 84px ${serif}`;g.fillText('結業證書',800,260);
+ g.font=`36px ${serif}`;g.fillStyle='#6F6A5F';g.fillText('Claude Cowork 基礎入門班',800,330);
+ const name=(Course.P.name||'').trim()||'學員';
+ g.fillStyle='#A94E31';g.font=`700 110px ${serif}`;g.fillText(name,800,560);
+ g.fillStyle='#2B2A27';g.font=`38px ${serif}`;g.fillText('完成全部 6 個單元的互動練習與小測驗',800,660);
+ const sc=Course.score(),mx=Course.max(),pct=sc/mx;
+ g.fillText(`積分 ${sc} / ${mx}　稱號：${pct>=.9?'Cowork 達人':pct>=.7?'合格的 AI 同事':'見習生'}`,800,730);
+ g.fillStyle='#6F6A5F';g.font=`30px ${serif}`;g.fillText(new Date().toLocaleDateString('zh-TW'),800,900);
+ const a=document.createElement('a');a.download='Cowork結業證書_'+name+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+}
+function confetti(){
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ const cv=document.createElement('canvas');cv.id='confetti';cv.width=innerWidth;cv.height=innerHeight;document.body.appendChild(cv);
+ const g=cv.getContext('2d'),cols=['#C96442','#3E7C59','#3B6EA5','#D9A441','#2B2A27'];
+ const ps=Array.from({length:90},()=>({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,r:Math.random()*6+3,c:cols[Math.random()*5|0],a:Math.random()*6}));
+ let f=0;(function loop(){g.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;g.save();g.translate(p.x,p.y);g.rotate(p.a);g.fillStyle=p.c;g.fillRect(-p.r,-p.r/2,p.r*2,p.r);g.restore()});
+  if(++f<110)requestAnimationFrame(loop);else cv.remove()})();
+}
+
+/* ========== 啟動 ========== */
+window.addEventListener('DOMContentLoaded',()=>{
+ const q=new URLSearchParams(location.search);
+ if(q.get('teacher')==='1'){Course.teacher=true;store.set('cowork-teacher',true)}
+ renderSim();
+ let start=0;for(let i=0;i<UNITS.length;i++){if(Course.unlocked(i)&&!Course.unitDone(i)){start=i;break}start=i}
+ Course.cur=start;Course.renderUnit();setPane('coach');
+ window.addEventListener('beforeunload',()=>{try{speechSynthesis.cancel()}catch(e){}});
+});
+
+</script>
+</body>
+</html>
