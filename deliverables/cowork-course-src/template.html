@@ -8,7 +8,7 @@
 /*CSS*/
 </style>
 </head>
-<body data-pane="coach" data-view="map">
+<body data-pane="coach" data-view="map" data-skin="candy">
 <div id="app">
  <header class="topbar">
   <div class="brand"><div class="logo" aria-hidden="true">✺</div><div><b>Claude Cowork 基礎入門班</b><small>會計新手互動教學・教學仿製介面</small></div></div>
@@ -16,6 +16,7 @@
   <div class="pbar" role="progressbar" aria-label="學習進度"><i id="pbar"></i></div>
   <div class="score" id="score"></div>
   <div class="tspacer"></div>
+  <div class="skins" role="group" aria-label="換膚"><button data-act="skin" data-s="candy" title="糖果粗框" style="--c:#F7C948"></button><button data-act="skin" data-s="paper" title="米色手札" style="--c:#E8E0D0"></button><button data-act="skin" data-s="arcade" title="像素夜" style="--c:#0F1A45"></button><button data-act="skin" data-s="navy" title="簡報藍" style="--c:#183868"></button></div>
   <div class="panes"><button class="tbtn on" data-act="pane" data-p="coach">課程</button><button class="tbtn" data-act="pane" data-p="sim">模擬器</button></div>
   <button class="tbtn" id="teacher" data-act="teacher" aria-pressed="false" title="解鎖全部單元、顯示答案提示">老師模式</button>
   <button class="tbtn" data-act="reset">重置進度</button>
@@ -28,8 +29,21 @@
  <section id="view-layers" class="view" aria-label="分層卡片"></section>
  <section id="view-overview" class="view" aria-label="全景"></section>
  <div class="layout">
-  <section class="coach" aria-label="課程內容"><nav class="units" id="units" aria-label="單元"></nav><div class="unit" id="unit"></div></section>
-  <section class="stage" aria-label="Cowork 模擬器"><div class="sim" id="sim"></div></section>
+  <section class="coach" aria-label="課程內容">
+   <div class="rd-top"><button class="icon-btn" data-act="menu" aria-label="開啟目錄">▤</button><div class="rd-title"><b>Cowork 基礎入門班</b><small id="rd-sub"></small></div><span class="rd-count" id="rd-count"></span></div>
+   <div class="rd-body" id="unit"></div>
+   <div class="rd-foot"><button class="circ" data-act="prev" aria-label="上一課">‹</button><div class="segs" id="segs" role="tablist" aria-label="課程進度"></div><button class="circ go" data-act="next" aria-label="下一課">›</button></div>
+  </section>
+  <section class="stage" aria-label="Cowork 模擬器">
+   <div class="deco" aria-hidden="true">
+    <svg class="d1" viewBox="0 0 50 50"><path d="M25 3 47 45H3z"/></svg>
+    <svg class="d2" viewBox="0 0 50 50"><path d="M3 47V3a44 44 0 0 1 44 44z"/></svg>
+    <svg class="d3" viewBox="0 0 50 50"><path d="M25 2 31 19 48 25 31 31 25 48 19 31 2 25 19 19z"/></svg>
+    <svg class="d4" viewBox="0 0 50 50"><path d="M20 4h10v16h16v10H30v16H20V30H4V20h16z"/></svg>
+   </div>
+   <div class="sticker" aria-hidden="true">TAP ANYTHING<b>每個都能按，真的</b></div>
+   <div class="sim" id="sim"></div>
+  </section>
  </div>
 </div>
 <div id="sheet" class="sheet-bg" hidden data-act="sheet-bg"></div>

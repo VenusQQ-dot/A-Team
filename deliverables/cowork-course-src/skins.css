@@ -1,0 +1,175 @@
+
+/* ===== 換膚按鈕 / 貼紙 / 裝飾 ===== */
+.skins{display:flex;gap:6px;align-items:center}
+.skins button{width:24px;height:24px;border-radius:50%;background:var(--c);border:2px solid var(--line);padding:0;position:relative}
+.skins button.on{outline:3px solid var(--accent);outline-offset:2px}
+.skins button::after{content:attr(title);position:absolute;top:30px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--card);font-size:11px;padding:1px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:60}
+.skins button:hover::after{opacity:1}
+.sticker,.deco{display:none}
+.stage{position:relative}
+.sim{z-index:1}
+
+/* ================= 糖果粗框 ================= */
+body[data-skin="candy"]{
+ --bg:#F7C948;--paper:#FFF7E3;--card:#FFFDF6;--ink:#171717;--muted:#5A5446;--line:#171717;
+ --accent:#FF6B3D;--accent-d:#E0501F;--accent-soft:#FFD8C8;--green:#1E9E5A;--green-soft:#CBF09B;
+ --blue:#3B5CFF;--blue-soft:#CFE0FF;--warn:#E5322D;--warn-soft:#FFC7C0;--amber:#8A5A00;--amber-soft:#FFE79A;
+ --soft:#FFEFC2;--soft2:#FFD966;--bubble:#FFD966;--mmbg:#FFF3D1;--dot:#E5A81C;--bw:3px;--r:14px;
+ --inv:#171717;--inv-fg:#fff;--sh:4px 4px 0 #171717;
+ --font-head:"Avenir Next","Nunito","Arial Rounded MT Bold","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+ background:var(--bg) radial-gradient(circle at 2px 2px,var(--dot) 2px,transparent 0) 0 0/24px 24px;
+}
+body[data-skin="candy"] .topbar{background:var(--paper);border-bottom:3px solid var(--ink)}
+body[data-skin="candy"] .logo{border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);border-radius:10px}
+body[data-skin="candy"] .stage{background:none}
+body[data-skin="candy"] .layout{gap:0}
+body[data-skin="candy"] .coach{background:var(--paper);border:4px solid var(--ink);border-radius:26px;margin:14px 0 14px 14px;box-shadow:6px 6px 0 var(--ink)}
+body[data-skin="candy"] .sim{border:4px solid var(--ink);border-radius:28px;box-shadow:8px 8px 0 var(--ink)}
+body[data-skin="candy"] .sim-chrome{background:#B9A8FF;border-bottom:3px solid var(--ink)}
+body[data-skin="candy"] .sb{background:#E4DBFF;border-right:3px solid var(--ink)}
+body[data-skin="candy"] .rp{background:#FFD3EC;border-left:3px solid var(--ink)}
+body[data-skin="candy"] .modes{background:#fff;border:3px solid var(--ink)}
+body[data-skin="candy"] .modes button.on{background:var(--ink);color:#fff;box-shadow:none}
+body[data-skin="candy"] .sim-badge{background:#fff;border:2px solid var(--ink);color:var(--ink);font-weight:700}
+body[data-skin="candy"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.empty,.upill,.tip,.cards .kcard span,.menu-list button,.pcard,.sample){border:3px solid var(--ink)}
+body[data-skin="candy"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.pcard,.menu-list button){box-shadow:4px 4px 0 var(--ink)}
+body[data-skin="candy"] .sample{border-style:dashed}
+body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.upill,.vctl button){border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
+body[data-skin="candy"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.sg,.bk,.fchip):active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+body[data-skin="candy"] :is(.sg,.bk,.fchip,.item,.kcard):hover{transform:translate(-1px,-2px) rotate(-.4deg)}
+body[data-skin="candy"] .vsw{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+body[data-skin="candy"] .vsw button.on{background:var(--ink);color:#fff}
+body[data-skin="candy"] .btn{background:var(--accent);color:#fff;font-weight:800}
+body[data-skin="candy"] .btn.ghost{background:var(--card);color:var(--ink)}
+body[data-skin="candy"] .chip.pri,body[data-skin="candy"] .send{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+body[data-skin="candy"] .send{border-radius:50%}
+body[data-skin="candy"] .opt.good{background:var(--green-soft)}
+body[data-skin="candy"] .step.ok,body[data-skin="candy"] .q.ok{border-color:var(--ink)}
+body[data-skin="candy"] .chk{border:3px solid var(--ink)}
+body[data-skin="candy"] .pbar{height:14px;border:3px solid var(--ink);background:#fff}
+body[data-skin="candy"] .pbar i{background:var(--green)}
+body[data-skin="candy"] .home{max-width:600px}
+body[data-skin="candy"] .composer{border-radius:18px}
+body[data-skin="candy"] .rd-h,body[data-skin="candy"] .hello h1,body[data-skin="candy"] .lyh{font-weight:900;letter-spacing:-.01em}
+body[data-skin="candy"] .toast{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);color:#fff}
+body[data-skin="candy"] .toast.ok{background:var(--green)}
+body[data-skin="candy"] .sticker{display:block;position:absolute;right:44px;bottom:0;z-index:6;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:3px 12px;transform:rotate(3deg);font-size:11px;letter-spacing:.12em;line-height:1.3;border-radius:6px;text-align:center;pointer-events:none}
+body[data-skin="candy"] .sticker b{display:block;font-size:14px;letter-spacing:0}
+body[data-skin="candy"] .deco{display:block;position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+body[data-skin="candy"] .deco svg{position:absolute;stroke:var(--ink);stroke-width:3}
+body[data-skin="candy"] .deco .d1{right:-6px;top:90px;width:70px;fill:#FF8A6B}
+body[data-skin="candy"] .deco .d2{right:8px;bottom:90px;width:52px;fill:#B9A8FF}
+body[data-skin="candy"] .deco .d3{left:-10px;bottom:30px;width:56px;fill:#9BE564}
+body[data-skin="candy"] .deco .d4{left:6px;top:10px;width:40px;fill:#fff}
+body[data-skin="candy"] .vtag{border:2px solid #fff}
+/* 心智圖 / 分層卡片 / 全景 */
+body[data-skin="candy"] .mmbar,body[data-skin="candy"] .mmlegend{background:var(--paper);border-bottom:3px solid var(--ink)}
+body[data-skin="candy"] #mmv{background:var(--mmbg)}
+body[data-skin="candy"] #mmsvg path{stroke-width:3.4}
+body[data-skin="candy"] .mn-box{border-width:3px;box-shadow:3px 3px 0 var(--ink);border-color:var(--ink)!important}
+body[data-skin="candy"] .mn-go{border-width:2.5px;box-shadow:2px 2px 0 var(--ink)}
+body[data-skin="candy"] .mn-t{border:3px solid var(--ink)}
+body[data-skin="candy"] .mn.has.open .mn-t{background:#fff}
+body[data-skin="candy"] .view{background:none}
+body[data-skin="candy"] .vwrap2{background:var(--paper);border:4px solid var(--ink);border-radius:26px;box-shadow:6px 6px 0 var(--ink);margin:16px auto 80px;padding:22px 20px 26px}
+body[data-skin="candy"] .dash{border:3px dashed var(--ink);background:rgba(255,255,255,.55)}
+body[data-skin="candy"] .bk.bl{background:#CFE0FF}
+body[data-skin="candy"] .bk.br{background:#FFE0B8}
+body[data-skin="candy"] .bk.gr{background:#CBF09B}
+body[data-skin="candy"] .bk.big,body[data-skin="candy"] .bk.step{background:var(--card)}
+body[data-skin="candy"] .bk{border-color:var(--ink)!important}
+body[data-skin="candy"] .sheet-bg{background:rgba(23,23,23,.55)}
+body[data-skin="candy"] .vstage{background:#FFF7E3}
+body[data-skin="candy"] .seg{border-color:var(--ink)}
+
+/* ================= 像素夜 ================= */
+body[data-skin="arcade"]{
+ --bg:#070B24;--paper:#0F1A45;--card:#16235E;--ink:#E7EEFF;--muted:#9CAEEF;--line:#4D6BF0;
+ --accent:#FFD23F;--accent-d:#FFB703;--accent-soft:#3B3A12;--green:#3DDC84;--green-soft:#0F4A31;
+ --blue:#7FB0FF;--blue-soft:#16346B;--warn:#FF5C7A;--warn-soft:#4A1426;--amber:#FFD23F;--amber-soft:#3F3410;
+ --soft:#0C1538;--soft2:#1E2F7A;--bubble:#1E2F7A;--mmbg:#080E2B;--dot:#16225C;--bw:3px;--r:0px;
+ --inv:#FFD23F;--inv-fg:#0B1030;--sh:4px 4px 0 #000;
+ --font-head:"Courier New","Noto Sans Mono CJK TC",ui-monospace,monospace;
+ background:var(--bg) radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/20px 20px;
+ font-family:ui-monospace,"Courier New","Noto Sans TC",monospace;
+}
+body[data-skin="arcade"] *{border-radius:0!important}
+body[data-skin="arcade"] :is(.skins button,.circ,.send,.chk,.dot,.logo,.vcard .vn,.sw,.sw::after,.mn-t,.num,.sn,.dots i){border-radius:50%!important}
+body[data-skin="arcade"] .topbar{background:#0A1238;border-bottom:3px solid var(--line)}
+body[data-skin="arcade"] .coach{background:var(--paper);border:3px solid var(--line);margin:12px 0 12px 12px;box-shadow:5px 5px 0 #000}
+body[data-skin="arcade"] .stage{background:none}
+body[data-skin="arcade"] .sim{border:3px solid var(--line);box-shadow:6px 6px 0 #000}
+body[data-skin="arcade"] .sim-chrome{background:#1A2A78}
+body[data-skin="arcade"] .sb{background:#0C1538}
+body[data-skin="arcade"] .rp{background:#0C1538}
+body[data-skin="arcade"] :is(.step,.q,.item,.sg,.bk,.vwrap,.composer,.modal,.sheet,.fchip,.perm,.builder,.cert,.empty,.upill,.tip,.kcard span,.menu-list button,.pcard,.mn-box){border:3px solid var(--line)!important;box-shadow:4px 4px 0 #000}
+body[data-skin="arcade"] :is(.btn,.chip,.tbtn,.mini,.mtab,.mmtools button,.lytabs button,.opt,.circ,.icon-btn,.vctl button){border:3px solid var(--line);box-shadow:3px 3px 0 #000}
+body[data-skin="arcade"] :is(.btn,.chip,.circ,.opt,.sg,.bk):active{transform:translate(3px,3px);box-shadow:none}
+body[data-skin="arcade"] :is(.btn,.chip.pri,.send,.vplay,.circ.go,.upill.on .n,.num,.sn,.step.ok .chk){color:#0B1030!important}
+body[data-skin="arcade"] .step.ok .chk{background:var(--green)}
+body[data-skin="arcade"] .btn,body[data-skin="arcade"] .chip.pri,body[data-skin="arcade"] .send{background:var(--accent)}
+body[data-skin="arcade"] .pcard .ph{color:#0B1030;background:#FFD23F}
+body[data-skin="arcade"] .pcard.dg .ph{background:#FF8FA3}
+body[data-skin="arcade"] .vsw{background:#0C1538;border:3px solid var(--line)}
+body[data-skin="arcade"] .vsw button,body[data-skin="arcade"] .modes button{color:var(--muted)}
+body[data-skin="arcade"] .modes{background:#0C1538;border:3px solid var(--line)}
+body[data-skin="arcade"] .modes button.on{background:var(--accent);color:#0B1030}
+body[data-skin="arcade"] .vsw button.on{background:var(--accent);color:#0B1030}
+body[data-skin="arcade"] .pbar{border:3px solid var(--line);height:14px;background:#0C1538}
+body[data-skin="arcade"] .pbar i{background:var(--accent)}
+body[data-skin="arcade"] .toast{border:3px solid var(--accent);background:#0A1238;color:var(--ink)}
+body[data-skin="arcade"] .toast.ok{background:#0F4A31}
+body[data-skin="arcade"] .toast.warn{background:#4A1426}
+body[data-skin="arcade"] #mmv{background:var(--mmbg)}
+body[data-skin="arcade"] .mmbar,body[data-skin="arcade"] .mmlegend{background:#0A1238;border-color:var(--line)}
+body[data-skin="arcade"] .mn-box{border-color:var(--line)}
+body[data-skin="arcade"] .vwrap2{background:var(--paper);border:3px solid var(--line);box-shadow:5px 5px 0 #000;margin:16px auto 80px;padding:22px 20px}
+body[data-skin="arcade"] .dash{border:3px dashed var(--line)}
+body[data-skin="arcade"] .bk::after{color:var(--accent)}
+body[data-skin="arcade"] .vstage{background:#0C1538}
+body[data-skin="arcade"] .vstage{color:var(--ink)}
+body[data-skin="arcade"] .vcard.on{background:#2A3A00}
+body[data-skin="arcade"] .tip{background:var(--amber-soft)}
+body[data-skin="arcade"] .sample{background:var(--soft)}
+body[data-skin="arcade"] .sheet-bg{background:rgba(0,0,0,.7)}
+body[data-skin="arcade"] .m-u{color:var(--ink)}
+body[data-skin="arcade"] .perm{background:#2D2410}
+body[data-skin="arcade"] .perm.danger{background:#3A1220}
+body[data-skin="arcade"] .xl th{background:#1E2F7A;color:var(--ink);border-color:var(--line)}
+body[data-skin="arcade"] .xl td{border-color:#2A3C90;color:var(--ink)}
+body[data-skin="arcade"] .xl .bad td{background:var(--warn-soft);color:#FF8FA3}
+body[data-skin="arcade"] .xl .warn td{background:var(--amber-soft);color:#FFD23F}
+body[data-skin="arcade"] .md,body[data-skin="arcade"] .mail{background:var(--soft);border-color:var(--line);color:var(--ink)}
+body[data-skin="arcade"] .vcol,body[data-skin="arcade"] .vbox,body[data-skin="arcade"] .vf{color:var(--ink)}
+body[data-skin="arcade"] .vcol span,body[data-skin="arcade"] .vbox small{color:var(--muted)}
+
+/* ================= 簡報藍 ================= */
+body[data-skin="navy"]{
+ --bg:#0E2246;--paper:#F4F7FC;--card:#FFFFFF;--ink:#0F2447;--muted:#5A6C8F;--line:#CBD6E8;
+ --accent:#F5A623;--accent-d:#D98A0B;--accent-soft:#FFEBCB;--green:#1F8A5B;--green-soft:#D6EFE2;
+ --blue:#2E5CB8;--blue-soft:#DBE6FA;--soft:#EDF2FA;--soft2:#DCE5F4;--bubble:#DCE5F4;--mmbg:#EEF3FB;--dot:#2A4170;
+ --inv:#0F2447;--inv-fg:#fff;--r:10px;--font-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+ background:linear-gradient(160deg,#0B1C3C,#12305E 60%,#0E2246);
+}
+body[data-skin="navy"] .topbar{background:#0A1832;border-bottom:1px solid #22406F;color:#fff}
+body[data-skin="navy"] .topbar .brand small,body[data-skin="navy"] .score{color:#9DB0D6}
+body[data-skin="navy"] .score b{color:#fff}
+body[data-skin="navy"] .topbar .tbtn{background:#14284b;color:#fff;border-color:#2C4A7D}
+body[data-skin="navy"] .vsw{background:#14284b}
+body[data-skin="navy"] .vsw button{color:#B9C8E6}
+body[data-skin="navy"] .vsw button.on{background:var(--accent);color:#0F2447}
+body[data-skin="navy"] .pbar{background:#22406F}
+body[data-skin="navy"] .stage{background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0) 0 0/22px 22px}
+body[data-skin="navy"] .coach{background:var(--paper);border:0;margin:12px 0 12px 12px;border-radius:16px}
+body[data-skin="navy"] .sim{border:1px solid #2C4A7D;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+body[data-skin="navy"] .btn,body[data-skin="navy"] .chip.pri,body[data-skin="navy"] .send,body[data-skin="navy"] .circ.go{background:var(--accent);color:#0F2447}
+body[data-skin="navy"] .seg.cur{background:var(--accent)}
+body[data-skin="navy"] .mmbar,body[data-skin="navy"] .mmlegend{background:#0A1832;border-color:#22406F;color:#B9C8E6}
+body[data-skin="navy"] .mmbar .mtab{background:#14284b;color:#fff;border-color:#2C4A7D}
+body[data-skin="navy"] .mmtools button{background:#14284b;color:#fff;border-color:#2C4A7D}
+body[data-skin="navy"] #mmv{background:var(--mmbg)}
+body[data-skin="navy"] .vwrap2{background:var(--paper);border-radius:16px;margin:16px auto 80px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+body[data-skin="navy"] .view .lyh{color:#0F2447}
+body[data-skin="navy"] .mn-box{border-radius:2px}
+body[data-skin="navy"] .tip{background:#FFF3DB}
+body[data-skin="navy"] .vtag{background:#0A1832}

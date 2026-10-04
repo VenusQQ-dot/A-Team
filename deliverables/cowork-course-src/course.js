@@ -3,9 +3,9 @@ class Player{
  constructor(host,scenes,key){
   Object.assign(this,{h:host,sc:scenes,key,t:0,playing:false,idx:-1,speed:1,cap:true,tts:false,done:false,started:false,raf:0,last:0});
   this.total=scenes.reduce((a,s)=>a+s.dur,0);this.starts=[];let c=0;scenes.forEach(s=>{this.starts.push(c);c+=s.dur});
-  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vcap"></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
+  host.innerHTML=`<div class="vwrap"><div class="vstage"><div class="vscene"></div><div class="vtag"></div><div class="vcap"><span></span></div><button class="vplay" data-v="play" aria-label="播放動畫">▶ <span>播放動畫</span></button></div>
   <div class="vctl"><button class="pp" data-v="toggle" aria-label="播放或暫停">▶</button><input class="vseek" type="range" min="0" max="1000" value="0" aria-label="影片進度"><span class="vtime">0:00 / ${fmt(this.total)}</span><button data-v="speed" aria-label="播放速度">1x</button><button data-v="cap" class="on">字幕</button><button data-v="tts" title="用瀏覽器朗讀字幕">旁白</button><button data-v="full">全螢幕</button></div></div>`;
-  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);
+  this.wrap=$('.vwrap',host);this.stage=$('.vstage',host);this.scene=$('.vscene',host);this.capEl=$('.vcap',host);this.capSpan=$('.vcap span',host);this.tagEl=$('.vtag',host);
   this.seek=$('.vseek',host);this.timeEl=$('.vtime',host);this.pp=$('.pp',host);this.playBtn=$('.vplay',host);
   host.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;const a=b.dataset.v;
    if(a==='play'||a==='toggle'){this.playing?this.pause():this.play()}
@@ -16,7 +16,7 @@ class Player{
   this.seek.addEventListener('input',()=>{this.started=true;this.playBtn.classList.add('hide');this.t=this.seek.value/1000*this.total;this.draw(this.t);this.checkDone()});
   this.ro=new ResizeObserver(()=>{this.stage.style.fontSize=Math.max(6,this.stage.clientWidth/58)+'px'});this.ro.observe(this.stage);
   this.stage.style.fontSize=Math.max(6,this.stage.clientWidth/58)+'px';
-  this.draw(1.6);this.timeEl.textContent='0:00 / '+fmt(this.total);
+  this.draw(3.8);this.timeEl.textContent='0:00 / '+fmt(this.total);
  }
  say(txt){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();if(!txt||!this.tts)return;const u=new SpeechSynthesisUtterance(txt);u.lang='zh-TW';u.rate=1.05;speechSynthesis.speak(u)}catch(e){}}
  play(){
@@ -38,9 +38,10 @@ class Player{
  draw(t){
   let i=0;for(let k=0;k<this.sc.length;k++)if(t>=this.starts[k])i=k;
   const local=t-this.starts[i];
-  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capEl.textContent=this.sc[i].cap;
+  if(i!==this.idx){this.scene.innerHTML=this.sc[i].html;this.capSpan.textContent=this.sc[i].cap;this.tagEl.textContent=this.sc[i].tag||'';
    if(this.playing&&this.idx!==-1)this.say(this.sc[i].cap);this.idx=i}
   $$('[data-at]',this.scene).forEach(e=>e.classList.toggle('in',local>=+e.dataset.at));
+  $$('[data-win]',this.scene).forEach(e=>{const [a,b]=e.dataset.win.split(',').map(Number);e.classList.toggle('on',local>=a&&local<b)});
   $$('[data-prog]',this.scene).forEach(e=>{const [a,d]=e.dataset.prog.split(',').map(Number);const p=clamp((local-a)/d);e.style.setProperty('--p',p);
    if(e.dataset.type!==undefined){const f=e.dataset.type;e.textContent=f.slice(0,Math.ceil(f.length*p))+(p>0&&p<1?'▍':'')}});
   this.seek.value=Math.round(t/this.total*1000);this.timeEl.textContent=fmt(t)+' / '+fmt(this.total);
@@ -52,15 +53,19 @@ class Player{
 const STORE_KEY='cowork-course-v1';
 const POINTS={step:10,quiz1:5,quiz2:2};
 const hintOpen={};const wrong={};
+const LESSONS=['看動畫','懂重點','動手做','小測驗'];
+const LMETA=[['▶ 動畫',''],['▣ 重點卡','y'],['✎ 練習',''],['? 測驗','b']];
+const LMIN=[1,1,3,2];
 const Course={
- cur:0,player:null,
- P:Object.assign({steps:{},quiz:{},name:'',cel:{}},store.get(STORE_KEY,{})),
+ cur:0,slide:0,player:null,
+ P:Object.assign({steps:{},quiz:{},name:'',cel:{},seen:{}},store.get(STORE_KEY,{})),
  teacher:store.get('cowork-teacher',false),
  save(){store.set(STORE_KEY,this.P)},
  stepsDone(u){return u.steps.every(s=>this.P.steps[s.id])},
- quizDone(u,i){return u.quiz.every((_,q)=>this.P.quiz[u.id+'-'+q])},
- unitDone(i){const u=UNITS[i];return this.stepsDone(u)&&this.quizDone(u,i)},
+ quizDone(u){return u.quiz.every((_,q)=>this.P.quiz[u.id+'-'+q])},
+ unitDone(i){const u=UNITS[i];return this.stepsDone(u)&&this.quizDone(u)},
  unlocked(i){return this.teacher||i===0||this.unitDone(i-1)},
+ slideDone(i,s){const u=UNITS[i];if(s===0)return !!this.P.steps[u.steps[0].id];if(s===1)return !!this.P.seen[u.id+'-1'];if(s===2)return this.stepsDone(u);return this.quizDone(u)},
  score(){let s=0;UNITS.forEach(u=>{u.steps.forEach(x=>{if(this.P.steps[x.id])s+=POINTS.step});u.quiz.forEach((_,q)=>{s+=this.P.quiz[u.id+'-'+q]||0})});return s},
  max(){return UNITS.reduce((a,u)=>a+u.steps.length*POINTS.step+u.quiz.length*POINTS.quiz1,0)},
  evaluate(){
@@ -70,55 +75,74 @@ const Course={
  },
  afterProgress(){
   const i=this.cur;this.renderNav();this.renderFoot();
-  if(this.unitDone(i)&&!this.P.cel[i]){this.P.cel[i]=1;this.save();confetti();toast(i===UNITS.length-1?'全部單元完成！往下領取結業證書':'單元完成！下一單元已解鎖','ok')}
+  if(this.unitDone(i)&&!this.P.cel[i]){this.P.cel[i]=1;this.save();confetti();toast(i===UNITS.length-1?'全部單元完成！到最後一課領結業證書':'單元完成！可以前往下一單元','ok')}
  },
- go(i,force){
+ go(i,force,slide){
   if(!force&&!this.unlocked(i)){toast('請先完成上一個單元的練習與小測驗','warn');return}
-  if(this.player)this.player.destroy();
-  this.cur=i;this.renderUnit();this.evaluate();$('.coach').scrollTop=0;
+  this.cur=i;this.slide=slide||0;this.renderUnit();this.evaluate();
+ },
+ step(d){
+  let s=this.slide+d,u=this.cur;
+  if(s<0){if(u===0)return;u--;s=3}
+  else if(s>3){
+   if(u===UNITS.length-1){toast('這是最後一課了，辛苦了！','ok');return}
+   if(!this.unitDone(u)&&!this.teacher){toast('先完成這個單元的練習與小測驗，才能進入下一單元','warn');return}
+   u++;s=0;
+  }
+  this.go(u,true,s);
  },
  renderTop(){
-  const sc=this.score(),mx=this.max();
+  const sc=this.score(),mx=this.max(),u=UNITS[this.cur];
   $('#pbar').style.width=Math.round(sc/mx*100)+'%';
   $('#score').innerHTML=`積分 <b>${sc}</b> / ${mx}`;
   const t=$('#teacher');t.classList.toggle('on',this.teacher);t.setAttribute('aria-pressed',this.teacher);
+  $('#rd-sub').textContent=`階段 ${this.cur+1}：${u.short}`;
+  $('#rd-count').textContent=`${this.cur*4+this.slide+1} / ${UNITS.length*4}`;
+  const pv=$('[data-act="prev"]'),nx=$('[data-act="next"]');
+  if(pv)pv.disabled=this.cur===0&&this.slide===0;
+  if(nx)nx.disabled=this.cur===UNITS.length-1&&this.slide===3;
  },
  renderNav(){
-  $('#units').innerHTML=UNITS.map((u,i)=>`<button class="upill ${i===this.cur?'on':''} ${this.unitDone(i)?'done':''} ${this.unlocked(i)?'':'lock'}" data-act="unit" data-i="${i}"><span class="n">${this.unitDone(i)?'✓':this.unlocked(i)?i+1:'🔒'}</span>${u.short}</button>`).join('');
+  $('#segs').innerHTML=UNITS.map((u,i)=>`<div class="sgrp">${[0,1,2,3].map(s=>`<button class="seg ${this.slideDone(i,s)?'done':''} ${i===this.cur&&s===this.slide?'cur':''} ${this.unlocked(i)?'':'lock'}" data-act="seg" data-u="${i}" data-s="${s}" aria-label="單元${i+1} 第${s+1}課 ${LESSONS[s]}" title="單元${i+1}・${LESSONS[s]}"></button>`).join('')}</div>`).join('');
  },
  renderUnit(){
-  const u=UNITS[this.cur],n=this.cur+1;
-  $('#unit').innerHTML=`<div class="kick">單元 ${n} / ${UNITS.length}</div><h2 class="serif">${u.title}</h2><p class="goal">${u.goal} <button class="mini" data-act="open-map" data-m="${UNITMAP[u.id]}">對照心智圖</button></p>
-  <div id="player"></div>
-  <h3>重點卡 <em>點一下翻面看會計比喻</em></h3><div class="cards">${u.cards.map(c=>`<div class="kcard" data-act="flip" role="button" tabindex="0" aria-label="${c.f}，點一下翻面"><div><span class="f"><b>${c.f}</b><small>${c.s}</small></span><span class="b">${c.b}</span></div></div>`).join('')}</div>
-  <h3>實作練習 <em>在右邊模擬器操作，會自動打勾</em></h3><ul class="steps" id="steps"></ul>
-  ${u.builder?builderHtml():''}
-  <h3>小測驗</h3><div class="quiz" id="quiz"></div>
-  <div id="foot"></div>`;
-  this.player=new Player($('#player'),VIDEOS[u.id],u.id);
+  const u=UNITS[this.cur],n=this.cur+1,s=this.slide;
+  if(this.player){this.player.destroy();this.player=null}
+  let h=`<div class="rd-tag"><span class="chip2">單元 ${n} · 第 ${s+1} 課</span></div><h2 class="rd-h">${u.short}｜${LESSONS[s]}</h2>
+  <div class="rd-meta"><span class="chip2 ${LMETA[s][1]}">${LMETA[s][0]}</span><span>約 ${LMIN[s]} 分鐘</span><button class="mini" data-act="open-map" data-m="${UNITMAP[u.id]}">對照心智圖</button></div>
+  <div class="tip">${pix('bulb','#8A5A00',20)}<span>${u.tips[s]}</span></div>`;
+  if(s===0)h+=`<p class="goal"><b>${u.title}</b><br>${u.goal}</p><div id="player"></div>`;
+  if(s===1){h+=`<div class="cards">${u.cards.map(c=>`<div class="kcard" data-act="flip" role="button" tabindex="0" aria-label="${c.f}，點一下翻面"><div><span class="f"><b>${c.f}</b><small>${c.s}</small></span><span class="b">${c.b}</span></div></div>`).join('')}</div>`;this.P.seen[u.id+'-1']=1;this.save()}
+  if(s===2){
+   if(u.sample)h+=`<div class="sample"><b>${u.sample.t}</b>${u.sample.rows.map(esc).join('<br>')}</div>`;
+   (u.prompts||[]).forEach((p,i)=>{h+=`<div class="pcard ${p.danger?'dg':''}"><div class="ph">${pix('chat','#2B2A27',16)}<span class="grow">${p.t}</span></div><div class="pb">${esc(p.text)}</div><div class="pa"><button class="mini" data-act="copy" data-i="${i}">複製</button><button class="mini solid" data-act="send-prompt" data-i="${i}">送到模擬器輸入框 →</button></div></div>`});
+   h+=`<h3 class="rd-sec">實作練習 <em>在右邊模擬器操作，會自動打勾</em></h3><ul class="steps" id="steps"></ul>${u.builder?builderHtml():''}`;
+  }
+  if(s===3)h+=`<div class="quiz" id="quiz"></div><div id="foot"></div>`;
+  $('#unit').innerHTML=h;$('#unit').scrollTop=0;
+  if(s===0)this.player=new Player($('#player'),VIDEOS[u.id],u.id);
   this.renderSteps();this.renderQuiz();this.renderFoot();this.renderNav();this.renderTop();
-  if(u.builder)buildPrompt();
+  if(s===2&&u.builder)buildPrompt();
  },
  renderSteps(){
-  const u=UNITS[this.cur];
-  $('#steps').innerHTML=u.steps.map((s,i)=>{const ok=this.P.steps[s.id];
-   return `<li class="step ${ok?'ok':''}"><div class="row"><span class="chk">${ok?IC.check:''}</span><span class="tx">${i+1}. ${s.text}</span><span class="acts">${ok?'':`<button class="mini" data-act="hint" data-id="${s.id}">提示</button>`}${this.teacher&&!ok?`<button class="mini" data-act="force" data-id="${s.id}">略過</button>`:''}</span></div>${hintOpen[s.id]&&!ok?`<div class="hint">💡 ${s.hint}（模擬器中對應的位置已閃爍標示）</div>`:''}</li>`}).join('');
+  const el=$('#steps');if(!el)return;const u=UNITS[this.cur];
+  el.innerHTML=u.steps.map((s,i)=>{const ok=this.P.steps[s.id];
+   return `<li class="step ${ok?'ok':''}"><div class="row"><span class="chk">${ok?IC.check:''}</span><span class="tx">${i+1}. ${s.text}</span><span class="acts">${ok?'':`<button class="mini" data-act="hint" data-id="${s.id}">提示</button>`}${this.teacher&&!ok?`<button class="mini" data-act="force" data-id="${s.id}">略過</button>`:''}</span></div>${hintOpen[s.id]&&!ok?`<div class="hint">💡 ${s.hint}${s.sel==='.vplay'?'（這步在第 1 課）':'（模擬器中對應的位置已閃爍標示）'}</div>`:''}</li>`}).join('');
  },
  renderQuiz(){
-  const u=UNITS[this.cur];
-  $('#quiz').innerHTML=u.quiz.map((q,qi)=>{const key=u.id+'-'+qi,got=this.P.quiz[key],bad=wrong[key]||[];
+  const el=$('#quiz');if(!el)return;const u=UNITS[this.cur];
+  el.innerHTML=u.quiz.map((q,qi)=>{const key=u.id+'-'+qi,got=this.P.quiz[key],bad=wrong[key]||[];
    return `<div class="q ${got?'ok':''}"><p>Q${qi+1}. ${q.q}</p><div class="opts">${q.o.map((o,oi)=>`<button class="opt ${got&&oi===q.a?'good':''} ${bad.includes(oi)?'bad':''} ${this.teacher&&!got&&oi===q.a?'tip':''}" data-act="ans" data-q="${qi}" data-o="${oi}" ${got?'disabled':''}>${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>${got?`<div class="why">✓ ${q.why}</div>`:bad.length?'<div class="why" style="color:var(--warn);background:var(--warn-soft)">再想想，換一個選項試試。</div>':''}</div>`}).join('');
  },
  renderFoot(){
-  const i=this.cur,u=UNITS[i],done=this.unitDone(i),last=i===UNITS.length-1;
-  let h=`<div class="nextbar"><button class="btn ghost" data-act="unit" data-i="${i-1}" ${i===0?'disabled':''}>← 上一單元</button>`;
-  h+=last?`<span></span>`:`<button class="btn" data-act="unit" data-i="${i+1}" ${done||this.teacher?'':'disabled'}>${done||this.teacher?'下一單元 →':'完成練習與測驗後解鎖'}</button>`;
-  h+='</div>';
+  const el=$('#foot');if(!el)return;
+  const i=this.cur,last=i===UNITS.length-1;let h='';
+  if(!this.unitDone(i))h=`<p class="goal" style="margin-top:14px">完成本單元全部練習與測驗後，按右下角 › 進入下一單元。</p>`;
   if(last&&UNITS.every((_,k)=>this.unitDone(k))){
    const sc=this.score(),mx=this.max(),pct=sc/mx,rank=pct>=.9?'Cowork 達人':pct>=.7?'合格的 AI 同事':'見習生';
    h+=`<div class="cert"><h3>結業！你的成績</h3><div class="big">${sc} / ${mx}</div><p>稱號：<b>${rank}</b></p><input class="fld" id="cert-name" placeholder="輸入姓名" value="${esc(this.P.name||'')}" aria-label="姓名"><br><button class="btn" data-act="cert">下載結業證書 PNG</button></div>`;
-  }
-  $('#foot').innerHTML=h;
+  }else if(this.unitDone(i)&&!last)h=`<p class="goal" style="margin-top:14px">✓ 本單元完成！按右下角 › 前往單元 ${i+2}。</p>`;
+  el.innerHTML=h;
  }
 };
 
@@ -135,8 +159,23 @@ function buildPrompt(){
 }
 
 /* ========== 全域事件 ========== */
+function setSkin(s){
+ if(!['candy','paper','arcade','navy'].includes(s))s='candy';
+ document.body.dataset.skin=s;$$('.skins button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));store.set('cowork-skin',s);
+ if(document.body.dataset.view==='map'&&typeof mmShow==='function')requestAnimationFrame(()=>mmShow());
+}
+function copyText(t){try{if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(()=>true).catch(()=>false)}}catch(e){}
+ try{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();return Promise.resolve(ok)}catch(e){return Promise.resolve(false)}}
 const GA={
- unit(el){const i=+el.dataset.i;if(i>=0&&i<UNITS.length)Course.go(i)},
+ skin(el){setSkin(el.dataset.s)},
+ prev(){Course.step(-1)},next(){Course.step(1)},
+ seg(el){const u=+el.dataset.u,s=+el.dataset.s;if($('#sheet'))closeSheet();if(!Course.unlocked(u)){toast('先完成前面的單元，這一課才會解鎖','warn');return}Course.go(u,true,s)},
+ menu(){
+  $('#sheet').innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="課程目錄"><button class="x" data-act="sheet-close" aria-label="關閉">×</button><h3 class="serif" style="font-size:22px">課程目錄</h3><div class="menu-list">${UNITS.map((u,i)=>{const d=Course.unitDone(i),lk=!Course.unlocked(i),sd=u.steps.filter(x=>Course.P.steps[x.id]).length,qd=u.quiz.filter((_,q)=>Course.P.quiz[u.id+'-'+q]).length;return `<button class="${i===Course.cur?'on':''} ${d?'done':''} ${lk?'lock':''}" data-act="seg" data-u="${i}" data-s="0"><span class="n">${d?'✓':lk?'🔒':i+1}</span><span><b>${u.title}</b><small>練習 ${sd}/${u.steps.length}・測驗 ${qd}/${u.quiz.length}</small></span></button>`}).join('')}</div></div>`;
+  $('#sheet').hidden=false;
+ },
+ copy(el){const p=UNITS[Course.cur].prompts[+el.dataset.i];copyText(p.text).then(ok=>toast(ok?'已複製！貼到 Cowork 輸入框就能用':'瀏覽器不允許複製，請手動選取文字','ok'))},
+ 'send-prompt'(el){const p=UNITS[Course.cur].prompts[+el.dataset.i];S.prompt=p.text;S.mode='cowork';S.view='home';S.modal=null;renderSim();emit('prompt_built');toast('已送到輸入框！接著確認資料夾，再按送出','ok');if(matchMedia('(max-width:1000px)').matches)setPane('sim')},
  flip(el){el.classList.toggle('flip')},
  hint(el){
   const u=UNITS[Course.cur],s=u.steps.find(x=>x.id===el.dataset.id);hintOpen[s.id]=true;Course.renderSteps();
@@ -210,5 +249,6 @@ window.addEventListener('DOMContentLoaded',()=>{
  renderSim();
  let start=0;for(let i=0;i<UNITS.length;i++){if(Course.unlocked(i)&&!Course.unitDone(i)){start=i;break}start=i}
  Course.cur=start;Course.renderUnit();setPane('coach');
+ setSkin(q.get('skin')||store.get('cowork-skin','candy'));
  window.addEventListener('beforeunload',()=>{try{speechSynthesis.cancel()}catch(e){}});
 });

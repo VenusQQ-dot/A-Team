@@ -332,7 +332,7 @@ function setView(v,skipMap){
 function gotoUnit(u){
  setView('learn');
  if(typeof Course!=='undefined'){
-  const lk=!Course.unlocked(u-1);Course.go(u-1,true);
+  const lk=!Course.unlocked(u-1);Course.go(u-1,true,2);
   if(lk)toast('這個單元通常排在前面單元之後；已先帶你過來看，積分照算','ok');
  }
 }
