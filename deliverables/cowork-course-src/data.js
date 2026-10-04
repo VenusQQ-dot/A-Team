@@ -131,10 +131,10 @@ const PREVIEW={
 
 /* ========== 名詞小辭典 / 配對遊戲 ========== */
 const MATCH={
- modes:{opts:['Chat','Cowork','Code'],items:[
+ modes:{opts:['Chat','Cowork'],items:[
   {id:'m-a',q:'想問：「應付帳款和應付票據差在哪？」',a:'Chat',why:'純問答，不需要動檔案，用 Chat。'},
   {id:'m-b',q:'資料夾裡有 200 張發票掃描檔，要整理成 Excel',a:'Cowork',why:'要讀很多檔案、做出新檔案，這是 Cowork 的工作。'},
-  {id:'m-c',q:'工程師要修改公司報表系統的程式碼',a:'Code',why:'寫與改程式是 Code 的工作。'}]},
+  {id:'m-c',q:'請它把資料夾裡的檔案，依日期重新命名',a:'Cowork',why:'要動到你電腦裡的檔案，用 Cowork（會先問你許可）。'}]},
  files:{opts:['Excel','Word','簡報'],items:[
   {id:'f-a',q:'把三家報價整理成一張表，還要自動算合計',a:'Excel',why:'要表格、要算數字，用 Excel；Claude 會放進真正的公式。'},
   {id:'f-b',q:'把開會的雜亂筆記，寫成有標題與待辦事項的文件',a:'Word',why:'以文字為主的文件，用 Word。'},
@@ -157,10 +157,10 @@ const FILES=(from,to,note)=>`<div class="vs vs-d"><div class="vfiles">${from.map
 const VTAGS={1:['三種模式','Cowork 在做什麼','三句話帶走'],2:['四個區塊','三個入口'],3:['選對資料夾','授權前三件事'],4:['看範例','四要素'],5:['三種擴充','Gmail 範例'],6:['排程','該不該允許','安全清單']};
 const VIDEOS={
  1:[
-  {dur:5,cap:'先搞懂：Claude 有三種用法——Chat 聊天、Cowork 幫你做事、Code 寫程式。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚三個模式，就不會用錯地方',['Chat 問答','Cowork 動手做','Code 寫程式'])},
-  {dur:9,cap:'Chat 負責問答；Cowork 像同事，能讀你授權的資料夾、產出檔案；Code 給工程師寫程式。',html:COMPARE([{ic:'chat',h:'Chat',lines:['問答、寫作','解釋會計準則','不碰你的檔案']},{ic:'layers',h:'Cowork',cls:'hot',lines:['讀你授權的資料夾','做完整件任務','產出 Excel、簡報']},{ic:'code',h:'Code',lines:['寫程式、改專案','給工程師用','今天先不用管']}])},
+  {dur:5,cap:'先搞懂：Claude 有兩種常用的用法——Chat 聊天、Cowork 幫你做事。',html:T('第 1 單元','Chat 回答你<br>Cowork 幫你「動手做」','先分清楚這兩個，就不會用錯地方',['Chat 問答','Cowork 動手做'])},
+  {dur:9,cap:'Chat 負責問答，不碰你的檔案；Cowork 像同事，能讀你授權的資料夾、做出檔案。',html:COMPARE([{ic:'chat',h:'Chat',lines:['問答、寫作','解釋會計準則','不碰你的檔案']},{ic:'layers',h:'Cowork',cls:'hot',lines:['讀你授權的資料夾','做完整件任務','產出 Excel、簡報']}])},
   {dur:9,cap:'例如把 12 張發票丟給 Cowork：它會讀檔、辨識、整理成 Excel，就像新來的助理。',html:FILES(['發票_001.pdf','發票_002.jpg','發票_003.pdf','發票_004.jpg'],'發票彙整.xlsx','自動整理完成')},
-  {dur:7,cap:'帶走這三句：問問題用 Chat，交代任務用 Cowork。接著到右邊模擬器實際點點看。',html:LIST('三句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾','Code：寫程式，給工程師'])}],
+  {dur:8,cap:'帶走這兩句：問問題用 Chat，交代任務用 Cowork。畫面上看到的 Code 不用管，這門課不教。',html:LIST('兩句話帶走',['Chat：問問題','Cowork：交付任務，要給資料夾'])}],
  2:[
   {dur:5,cap:'打開 Cowork，你會看到三個區塊：側邊欄、輸入框、進度面板。',html:T('第 3 單元','三個區塊，看懂就會用','像認識一間新辦公室的格局',['側邊欄','輸入框','資料夾','進度面板'])},
   {dur:9,cap:'從左到右：側邊欄找功能、輸入框下指令、選資料夾給資料、右側看進度。',html:FLOW([{ic:'book',l:'側邊欄',s:'新任務・排程・自訂'},{ic:'chat',l:'輸入框',s:'寫下要做什麼'},{ic:'folder',l:'資料夾',s:'給它資料'},{ic:'check',l:'進度面板',s:'看做到哪一步'}])},
@@ -188,21 +188,20 @@ const VIDEOS={
 const has=e=>LOG.has(e);
 const U=(id,text,hint,sel,check)=>({id,text,hint,sel,check});
 const UNITS=[
- {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，並點側邊欄上方的 Code 分頁；不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat、Cowork、Code，知道什麼任務該交給誰。',
-  cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'},{f:'Code',s:'寫程式',b:'像請 IT 工程師蓋系統：專門寫與改程式。會計同仁通常用不到，知道有這個就好。'}],
+ {id:1,tips:['播放後可開字幕與旁白；拖曳時間軸能跳到任何一段。','點卡片翻面，背面是生活比喻。','先玩配對遊戲，再到模擬器輸入框左下角切換 Chat／Cowork，不怕按錯，這是練習環境。','答錯可以重答，解析會告訴你為什麼。'],short:'認識 Cowork',title:'Cowork 是什麼？和 Chat 差在哪？',goal:'分清楚 Chat 和 Cowork，知道什麼任務該交給誰。（畫面上另有 Code，是給工程師用的，這門課不教。）',
+  cards:[{f:'Chat',s:'問答',b:'像到櫃台問業務：你問，它答。不會碰你電腦裡的檔案。例：「應付票據是什麼？」'},{f:'Cowork',s:'請它動手做',b:'像把一疊單據交給新同事：你給「資料夾」和任務，他自己讀、整理、做出檔案。例：整理 200 張發票。'}],
   match:'modes',
   steps:[
    U('1-1','看完動畫（拖曳時間軸到最後也算）','按動畫中央的「播放動畫」','.vplay',()=>has('video_done:1')),
    U('1-2','在模擬器輸入框左下角，切到「Chat」看看','輸入框左下角的 Chat｜Cowork 切換鈕','[data-act="mode"][data-m="chat"]',()=>has('mode_chat')),
-   U('1-3','再點側邊欄上方的「Code」分頁看看','側邊欄最上面 Cowork｜Code 的右邊','[data-act="mode"][data-m="code"]',()=>has('mode_code')),
-   U('1-4','切回「Cowork」（今天的主角）','輸入框左下角的 Cowork；在 Code 畫面則按中間的按鈕','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&has('mode_code')&&S.mode==='cowork'),
-   U('1-5','完成「三種模式」配對小遊戲（3 題）','在上方的配對遊戲，替每個情境選一個名詞','#match',()=>MATCH.modes.items.every(x=>has('match_ok:'+x.id)))],
+   U('1-4','切回「Cowork」（今天的主角）','輸入框左下角的 Cowork','[data-act="mode"][data-m="cowork"]',()=>has('mode_chat')&&S.mode==='cowork'),
+   U('1-5','完成「Chat 或 Cowork」配對小遊戲（3 題）','在上方的配對遊戲，替每個情境選一個名詞','#match',()=>MATCH.modes.items.every(x=>has('match_ok:'+x.id)))],
   quiz:[
-   {q:'「把 200 張發票整理成 Excel」最適合用哪個模式？',o:['Chat','Cowork','Code'],a:1,why:'需要讀檔、處理多個檔案並產出 Excel，這是 Cowork 的強項。'},
-   {q:'「請用白話解釋收入認列五步驟」最適合用哪個模式？',o:['Cowork','Code','Chat'],a:2,why:'純問答不需要碰檔案，用 Chat 最快。'},
+   {q:'「把 200 張發票整理成 Excel」最適合用哪個模式？',o:['Chat','Cowork','自己一張張手打'],a:1,why:'需要讀檔、處理多個檔案並產出 Excel，這是 Cowork 的強項。'},
+   {q:'「請用白話解釋收入認列五步驟」最適合用哪個模式？',o:['Cowork','兩個都不行','Chat'],a:2,why:'純問答不需要碰檔案，用 Chat 最快。'},
    {q:'Cowork 和 Chat 最大的差別是？',o:['Cowork 能在你授權的資料夾內讀寫檔案、完成多步驟任務','Cowork 回答比較長','Cowork 不需要網路'],a:0,why:'關鍵是「能動手做」：在你授權的範圍內讀、寫、整理檔案。'},
-   {q:'Chat、Cowork、Code，一句話怎麼分？',o:['問答／動手做／寫程式','免費／付費／企業','手機／平板／電腦'],a:0,why:'Chat 是問答，Cowork 是請它動手做，Code 是寫程式。'},
-   {q:'主管要你把 12 個月的對帳單合併成一個 Excel，用哪個最合適？',o:['Chat','Code','Cowork'],a:2,why:'要讀很多檔案、做出新檔案，用 Cowork。'}]},
+   {q:'Chat 和 Cowork，一句話怎麼分？',o:['問答／動手做','免費／付費','手機／電腦'],a:0,why:'Chat 是問答，Cowork 是請它動手做。'},
+   {q:'主管要你把 12 個月的對帳單合併成一個 Excel，用哪個最合適？',o:['Chat','自己手動合併','Cowork'],a:2,why:'要讀很多檔案、做出新檔案，用 Cowork。'}]},
  {id:7,tips:['這一課只講四個名詞，每個都有生活比喻。','翻開卡片，先看一句話，再看比喻。','先玩配對，再到模擬器找「排程」「自訂」「專案」在哪。','四個名詞各有場景題，答錯可再試。'],short:'四個名詞',title:'Skill、MCP、專案、排程：四個名詞一次講白',goal:'用生活比喻，分清楚 Skill、MCP（連接器）、Project（專案）、排程各是什麼。',match:'ext',
   cards:[{f:'Skill（技能）',s:'做事說明書',b:'像公司作業手冊（SOP）：把做法寫一次，之後每次照著做。例：月結報表格式。'},{f:'MCP（連接器）',s:'接外部工具的插頭',b:'像電子對帳介面：讓 Claude 連到 Gmail、雲端硬碟。MCP 是插頭規格的名字，畫面上多半叫「連接器」。'},{f:'Project（專案）',s:'專案資料夾',b:'像一個專案檔案夾：同一件事的說明和資料放一起，之後做事都共用，不用重講。'},{f:'排程',s:'鬧鐘',b:'像月結行事曆加一張交辦單：設好時間，到點自動做。每次都是全新對話，指令要寫清楚。'}],
   steps:[
@@ -225,7 +224,7 @@ const UNITS=[
    U('2-5','回到新任務，點輸入框下方的資料夾按鈕（Work in a project or folder）','先回「新任務」，再點「Work in a project or folder」','[data-act="folder-open"]',()=>has('folder_chip'))],
   quiz:[
    {q:'想知道 Claude 做到第幾步，要看哪裡？',o:['側邊欄','任務畫面右側的進度面板','Chat 模式'],a:1,why:'進度面板會列出每個步驟的狀態與產出的檔案。'},
-   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Code 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
+   {q:'想讓 Claude 每個月自動產生報表，要去哪裡設定？',o:['排程','資料夾','Chat 模式'],a:0,why:'排程可以指定頻率與時間，讓任務定時執行。'}]},
  {id:3,tips:['重點只有一個：只給需要的，其他不給。','「最小權限」是會計內控的老朋友。','先看「個人文件」裡有什麼，再決定授權哪個。','三題，全是授權資料夾的實戰判斷。'],short:'授權資料夾',title:'授權資料夾：只給需要的，其他不給',goal:'學會最小權限：選對資料夾，避開敏感資料。',
   cards:[{f:'授權資料夾',s:'資料來源',b:'像只借出一個抽屜的鑰匙，而不是整間檔案室。'},{f:'最小權限',s:'內控觀念',b:'只給完成工作所需的最少權限，就是內控的職務分工精神。'},{f:'先複製副本',s:'安全做法',b:'會計師查帳也先影印底稿，不直接動原始憑證。'}],
   steps:[

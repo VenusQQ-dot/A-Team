@@ -51,7 +51,7 @@ const sidebar=()=>`<aside class="sb">
 
 function main(){
  if(S.mode==='chat')return chatView();
- if(S.mode==='code')return modeNote('code','Code：寫程式','給工程師寫程式、改專案用。會計同仁日常整理資料，通常用不到這裡。','例：幫我修改這個 Python 腳本');
+ if(S.mode==='code')return modeNote('code','Code（這門課不教）','Code 是給工程師寫程式用的。這門課的重點是 Cowork，不需要用到這裡。','回到 Cowork，繼續練習');
  if(S.view==='projects')return projView();
  if(S.view==='artifacts')return artView();
  if(S.view==='scheduled')return schedView();
